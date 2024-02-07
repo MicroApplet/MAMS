@@ -1,0 +1,25 @@
+server:
+  port: 10001
+
+spring:
+  application:
+    name: mams-app
+  main:
+    allow-bean-definition-overriding: true
+  config:
+    import: optional:nacos:${spring.application.name}.${spring.cloud.nacos.config.file-extension}
+  cloud:
+    nacos:
+      config:
+        username: nacos
+        password: nacos
+        server-addr: localhost:8848
+        group: mams
+        file-extension: yaml
+        namespace: public
+      discovery:
+        username: nacos
+        password: nacos
+        namespace: public
+        server-addr: localhost:8848
+        group: mams
