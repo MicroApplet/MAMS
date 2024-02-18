@@ -50,6 +50,4 @@ public class MamsBizHttpResException extends RuntimeException {
             return this.msgCn;
         return "Empty Error Message";
     }
-
-
 }

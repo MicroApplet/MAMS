@@ -1,18 +1,9 @@
 server:
-  port: 20001
+  port: 10001
 
 spring:
   application:
     name: mams-app
-  threads:
-    virtual:
-      enabled: true   # 启用虚拟线程
-  task:
-    scheduling:
-      thread-name-prefix: mams-sch-
-    execution:
-      thread-name-prefix: mams-asy-   # 线程名前缀
-
   main:
     allow-bean-definition-overriding: true
   config:

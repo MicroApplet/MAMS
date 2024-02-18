@@ -77,8 +77,9 @@
         <module>mams-common-web</module>
         <module>mams-common-bus</module>
         <module>mams-gateway</module>
+        <module>mams-service-demo</module>
         <module>mams-service-app</module>
-        <module>mams-service-app/mams-service-app-web</module>
+        <module>mams-common-bean</module>
     </modules>
 
     <properties>

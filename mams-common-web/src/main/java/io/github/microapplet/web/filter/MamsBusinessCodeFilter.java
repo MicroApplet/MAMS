@@ -16,51 +16,67 @@
 
 package io.github.microapplet.web.filter;
 
-import org.reactivestreams.Publisher;
-import org.springframework.core.io.buffer.DataBuffer;
-import org.springframework.core.io.buffer.DataBufferUtils;
-import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.http.server.reactive.ServerHttpResponseDecorator;
-import org.springframework.web.server.ServerWebExchange;
-import org.springframework.web.server.WebFilter;
-import org.springframework.web.server.WebFilterChain;
-import reactor.core.publisher.Mono;
+import io.github.microapplet.web.error.DefaultSuccessResCode;
+import io.github.microapplet.web.log.TrackerKeyConfiguration;
+import jakarta.annotation.Resource;
+import jakarta.servlet.*;
+import jakarta.servlet.annotation.WebFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.MDC;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
 
-import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+import java.util.List;
+import java.util.UUID;
+
+import static io.github.microapplet.web.error.MamsBizHttpResExceptionAdvice.*;
 
 /**
  * MamsBusinessCodeFilter
+ *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0.0
  * @since 2024/2/6, &nbsp;&nbsp; <em>version:1.0.0</em>
  */
-@SuppressWarnings("unused")
-public class MamsBusinessCodeFilter implements WebFilter {
+@Component
+@Order(Integer.MIN_VALUE)
+@WebFilter(urlPatterns = "/**")
+public class MamsBusinessCodeFilter implements Filter {
+    @Resource
+    private TrackerKeyConfiguration trackerKeyConfiguration;
+
     @Override
-    @SuppressWarnings("NullableProblems")
-    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
-        ServerHttpResponse original = exchange.getResponse();
-        // 创建新的response装饰对象，并传入原始response对象，然后重写writeWith方法
-        ServerHttpResponseDecorator newResponse = new ServerHttpResponseDecorator(original) {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+        HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
 
-            @Override
-            public Mono<Void> writeWith(Publisher<? extends DataBuffer> body) {
-                Mono<DataBuffer> mono = DataBufferUtils.join(body)
-                        .map(buffer -> {
-                            try {
-                                String data = buffer.toString(StandardCharsets.UTF_8);
-                                // String mutatedData = mutate(data); // 此处修改返回内容
-                                byte[] bytes = data.getBytes(StandardCharsets.UTF_8);
-                                getHeaders().setContentLength(bytes.length); // ①
-                                return this.bufferFactory().wrap(bytes); // ②
-                            } finally {
-                                DataBufferUtils.release(buffer); // ③
-                            }
-                        });
+        try {
+            // 链路追踪
+            MDC.put(this.trackerKeyConfiguration.getTrackerKey(), parseTraceId(httpServletRequest));
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            String code = httpServletResponse.getHeader(CODE_HEADER_NAME);
+            if (StringUtils.isNotBlank(code))
+                return;
+            // 添加默认响应
+            httpServletResponse.setHeader(CODE_HEADER_NAME, DefaultSuccessResCode.SUCCESS.getCode());
+            httpServletResponse.setHeader(MESSAGE_HEADER_NAME, DefaultSuccessResCode.SUCCESS.getMsg());
+            httpServletResponse.setHeader(CN_MESSAGE_HEADER_NAME, DefaultSuccessResCode.SUCCESS.getMsgCn());
+        } finally {
+            // 清理MDC，防止OOM
+            MDC.remove(this.trackerKeyConfiguration.getTrackerKey());
+        }
+    }
 
-                return super.writeWith(mono);
-            }
-        };
-        return chain.filter(exchange.mutate().response(newResponse).build());
+    private String parseTraceId(HttpServletRequest httpServletRequest) {
+        List<String> trackerHeaders = this.trackerKeyConfiguration.getTrackerHeaders();
+        for (String trackerHeader : trackerHeaders) {
+            String header = httpServletRequest.getHeader(trackerHeader);
+            if (StringUtils.isNotBlank(header))
+                return header;
+        }
+        return UUID.randomUUID().toString();
     }
 }

@@ -14,21 +14,21 @@
  * limitations under the License.
  */
 
-package io.github.microapplet;
+package io.github.microapplet.nacos.discovery;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * Micro Applet Management Service Application Service Bootstrap
+ * Nacos Discovery Configuration
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0.0
- * @since 2024/2/18, &nbsp;&nbsp; <em>version:1.0.0</em>
+ * @version 1.0
+ * @since 2024/1/5, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@SpringBootApplication
-public class MamsAppServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MamsAppServiceApplication.class);
-    }
+@RefreshScope
+@Configuration
+@EnableDiscoveryClient
+public class NacosDiscoveryConfiguration {
 }

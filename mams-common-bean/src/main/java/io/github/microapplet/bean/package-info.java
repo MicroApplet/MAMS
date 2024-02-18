@@ -14,21 +14,6 @@
  * limitations under the License.
  */
 
-package io.github.microapplet;
-
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- * Micro Applet Management Service Application Service Bootstrap
+package io.github.microapplet.bean;/*
  *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0.0
- * @since 2024/2/18, &nbsp;&nbsp; <em>version:1.0.0</em>
  */
-@SpringBootApplication
-public class MamsAppServiceApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(MamsAppServiceApplication.class);
-    }
-}

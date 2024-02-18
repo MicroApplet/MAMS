@@ -23,13 +23,12 @@
         <groupId>io.github.microapplet</groupId>
         <artifactId>mams</artifactId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
     </parent>
 
-    <artifactId>mams-service-app</artifactId>
+    <artifactId>mams-service-demo</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>mams-service-app-web</module>
+        <module>mams-service-demo-web</module>
     </modules>
 
     <properties>
@@ -37,5 +36,6 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
 
 </project>
