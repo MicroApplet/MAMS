@@ -21,9 +21,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringJoiner;
 import java.util.stream.Collectors;
@@ -46,42 +48,40 @@ public class MamsBizHttpResExceptionAdvice {
     public static final String DEBUG_ENABLE_NAME = "X-MAMS-DEBUG-ENABLE";
 
     @ExceptionHandler(value = MamsBizHttpResException.class)
-    public void handleMamsBizHttpResException(MamsBizHttpResException e,
-                                              HttpServletRequest request,
-                                              HttpServletResponse response) {
+    public void handleMamsBizHttpResException(@NotNull MamsBizHttpResException e,
+                                              @NotNull HttpServletRequest request,
+                                              @NotNull HttpServletResponse response) {
 
         response.setHeader(CODE_HEADER_NAME, e.getCode());
         response.setHeader(MESSAGE_HEADER_NAME, e.getMsg());
-        response.setHeader(CN_MESSAGE_HEADER_NAME,e.getMsgCn());
+        response.setHeader(CN_MESSAGE_HEADER_NAME, e.getMsgCn());
         String enableDebug = request.getHeader(DEBUG_ENABLE_NAME);
-        if (StringUtils.equalsIgnoreCase(enableDebug,Boolean.TRUE.toString())){
-            List<Object> errs = e.getErrs();
-            if (CollectionUtils.isNotEmpty(errs)){
-                String errLines = errs.stream().map(String::valueOf).collect(Collectors.joining("\r\n"));
-                response.setHeader(DEBUG_ERR_LINES_NAME, errLines);
-            }
-        }
+        if (!StringUtils.equalsIgnoreCase(enableDebug, Boolean.TRUE.toString()))
+            return;
+        List<Object> errs = e.getErrs();
+        if (CollectionUtils.isEmpty(errs))
+            return;
+
+        String errLines = errs.stream().map(String::valueOf).collect(Collectors.joining("\r\n"));
+        response.setHeader(DEBUG_ERR_LINES_NAME, errLines);
     }
 
     @ExceptionHandler(value = Throwable.class)
     public void handleThrowable(Throwable throwable,
-                                HttpServletRequest request,
-                                HttpServletResponse response){
+                                @NotNull HttpServletRequest request,
+                                @NotNull HttpServletResponse response) {
 
-        response.setHeader(CODE_HEADER_NAME,"-500");
-        response.setHeader(MESSAGE_HEADER_NAME,"The System is Busy!");
-        response.setHeader(CN_MESSAGE_HEADER_NAME,"系统繁忙!");
+        response.setHeader(CODE_HEADER_NAME, DefaultErrorResCode.BUSY.getCode());
+        response.setHeader(MESSAGE_HEADER_NAME, DefaultErrorResCode.BUSY.getMsg());
+        response.setHeader(CN_MESSAGE_HEADER_NAME, DefaultErrorResCode.BUSY.getMsgCn());
         String enableDebug = request.getHeader(DEBUG_ENABLE_NAME);
-        if (StringUtils.equalsIgnoreCase(enableDebug,Boolean.TRUE.toString())){
-            StringJoiner sj = new StringJoiner("\r\n");
-            String message = throwable.getMessage();
-            sj.add(message);
-            Throwable[] suppressed = throwable.getSuppressed();
-            for (Throwable t : suppressed) {
-                sj.add("\t" + t.getMessage());
-            }
+        if (!StringUtils.equalsIgnoreCase(enableDebug, Boolean.TRUE.toString()))
+            return;
+        StringJoiner sj = new StringJoiner("\r\n");
+        sj.add(throwable.getMessage());
+        Throwable[] suppressed = throwable.getSuppressed();
+        Arrays.stream(suppressed).map(Throwable::getMessage).forEach(t -> sj.add("\t").add(t));
 
-            response.setHeader(DEBUG_ERR_LINES_NAME, sj.toString());
-        }
+        response.setHeader(DEBUG_ERR_LINES_NAME, sj.toString());
     }
 }
