@@ -42,18 +42,42 @@ public class MamsThreadConfiguration {
     @EnableAsync
     @Configuration
     static class ExecutorConfig implements InitializingBean {
-        @Autowired
         private TaskDecorator taskDecorator;
-        @Autowired
         private RejectedExecutionHandler rejectedExecutionHandler;
-        @Autowired(required = false)
         private List<SimpleAsyncTaskExecutor> simpleAsyncTaskExecutors;
-        @Autowired(required = false)
         private List<ThreadPoolTaskExecutor> threadPoolTaskExecutors;
-        @Autowired(required = false)
         private List<ThreadPoolTaskScheduler> threadPoolTaskSchedulers;
-        @Autowired(required = false)
         private List<SimpleAsyncTaskScheduler> simpleAsyncTaskSchedulers;
+
+        @Autowired
+        public void setTaskDecorator(TaskDecorator taskDecorator) {
+            this.taskDecorator = taskDecorator;
+        }
+
+        @Autowired
+        public void setRejectedExecutionHandler(RejectedExecutionHandler rejectedExecutionHandler) {
+            this.rejectedExecutionHandler = rejectedExecutionHandler;
+        }
+
+        @Autowired(required = false)
+        public void setSimpleAsyncTaskExecutors(List<SimpleAsyncTaskExecutor> simpleAsyncTaskExecutors) {
+            this.simpleAsyncTaskExecutors = simpleAsyncTaskExecutors;
+        }
+
+        @Autowired(required = false)
+        public void setThreadPoolTaskExecutors(List<ThreadPoolTaskExecutor> threadPoolTaskExecutors) {
+            this.threadPoolTaskExecutors = threadPoolTaskExecutors;
+        }
+
+        @Autowired(required = false)
+        public void setThreadPoolTaskSchedulers(List<ThreadPoolTaskScheduler> threadPoolTaskSchedulers) {
+            this.threadPoolTaskSchedulers = threadPoolTaskSchedulers;
+        }
+
+        @Autowired(required = false)
+        public void setSimpleAsyncTaskSchedulers(List<SimpleAsyncTaskScheduler> simpleAsyncTaskSchedulers) {
+            this.simpleAsyncTaskSchedulers = simpleAsyncTaskSchedulers;
+        }
 
         @Override
         public void afterPropertiesSet() {
