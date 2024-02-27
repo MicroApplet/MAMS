@@ -45,11 +45,29 @@ public final class DataRes<T> implements ResCode {
         return res;
     }
 
+    public static <T> DataRes<T> of(ResCode resCode, T data) {
+        DataRes<T> res = new DataRes<>();
+        res.setCode(resCode.getCode());
+        res.setMsg(resCode.getMsg());
+        res.setMsgCn(resCode.getMsgCn());
+        res.setData(data);
+        return res;
+    }
+
     public static <T> DataRes<T> of(String code, String msg, String msgCn) {
         DataRes<T> res = new DataRes<>();
         res.setCode(code);
         res.setMsg(msg);
         res.setMsgCn(msgCn);
+        return res;
+    }
+
+    public static <T> DataRes<T> of(String code, String msg, String msgCn, T data) {
+        DataRes<T> res = new DataRes<>();
+        res.setCode(code);
+        res.setMsg(msg);
+        res.setMsgCn(msgCn);
+        res.setData(data);
         return res;
     }
 }
