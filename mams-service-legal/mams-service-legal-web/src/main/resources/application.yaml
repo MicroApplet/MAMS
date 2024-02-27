@@ -1,9 +1,18 @@
 server:
-  port: 20000
+  port: 20002
 
 spring:
   application:
-    name: mams-demo
+    name: mams-legal
+  threads:
+    virtual:
+      enabled: true   # 启用虚拟线程
+  task:
+    scheduling:
+      thread-name-prefix: mams-sch-
+    execution:
+      thread-name-prefix: mams-asy-   # 线程名前缀
+
   main:
     allow-bean-definition-overriding: true
   config:

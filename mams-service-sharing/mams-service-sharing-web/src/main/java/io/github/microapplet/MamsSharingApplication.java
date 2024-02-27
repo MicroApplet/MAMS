@@ -20,18 +20,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * <pre>
- * MAMS 应用服务启动器
- * MAMS Application Service Bootstrap
- * </pre>
+ * Micro Applet Management Service Sharing Application
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @since 2024/2/6, &nbsp;&nbsp; <em>version:</em>
+ * @version 1.0.0
+ * @since 2024/2/27, &nbsp;&nbsp; <em>version:1.0.0</em>
  */
 @SpringBootApplication
-public class MamsAppServiceApplication {
-
+public class MamsSharingApplication {
     public static void main(String[] args) {
-        SpringApplication.run(MamsAppServiceApplication.class);
+        SpringApplication.run(MamsSharingApplication.class);
     }
 }

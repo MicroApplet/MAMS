@@ -14,6 +14,24 @@
  * limitations under the License.
  */
 
-package io.github.microapplet;/*
+package io.github.microapplet;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * <pre>
+ * MAMS 用户服务启动
+ * Micro Applet Management Service User Application
+ * </pre>
  *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0.0
+ * @since 2024/2/27, &nbsp;&nbsp; <em>version:1.0.0</em>
  */
+@SpringBootApplication
+public class MAMSUserServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MAMSUserServiceApplication.class);
+    }
+}

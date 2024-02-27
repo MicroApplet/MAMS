@@ -21,7 +21,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
+import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -48,9 +48,9 @@ public class MamsBizHttpResExceptionAdvice {
     public static final String DEBUG_ENABLE_NAME = "X-MAMS-DEBUG-ENABLE";
 
     @ExceptionHandler(value = MamsBizHttpResException.class)
-    public void handleMamsBizHttpResException(@NotNull MamsBizHttpResException e,
-                                              @NotNull HttpServletRequest request,
-                                              @NotNull HttpServletResponse response) {
+    public void handleMamsBizHttpResException(@NonNull MamsBizHttpResException e,
+                                              @NonNull HttpServletRequest request,
+                                              @NonNull HttpServletResponse response) {
 
         response.setHeader(CODE_HEADER_NAME, e.getCode());
         response.setHeader(MESSAGE_HEADER_NAME, e.getMsg());
@@ -68,8 +68,8 @@ public class MamsBizHttpResExceptionAdvice {
 
     @ExceptionHandler(value = Throwable.class)
     public void handleThrowable(Throwable throwable,
-                                @NotNull HttpServletRequest request,
-                                @NotNull HttpServletResponse response) {
+                                @NonNull HttpServletRequest request,
+                                @NonNull HttpServletResponse response) {
 
         response.setHeader(CODE_HEADER_NAME, DefaultErrorResCode.BUSY.getCode());
         response.setHeader(MESSAGE_HEADER_NAME, DefaultErrorResCode.BUSY.getMsg());

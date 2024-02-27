@@ -50,7 +50,28 @@ public class IndexController implements EnvironmentAware, ApplicationContextAwar
 
     @GetMapping("/index")
     public String index() {
-        return applicationName() + " Index".toUpperCase();
+        String s = """
+                <!DOCTYPE html>
+                <html lang="zh_CH">
+                <head>
+                    <meta charset="utf-8"/>
+                    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta http-equiv="Cache-Control" content="no-store"/>
+                    <meta http-equiv="Pragma" content="no-cache"/>
+                    <title>Micro Applet Management Service</title>
+                </head>
+                <body style="margin: auto; align-items: center;">
+                <div style="height: 100%; align-items: center;">
+                    <div style="text-align: center; align-items: center; ">
+                        <div style="font-size: 30px; font-weight: 800; color: black">Welcome to %s</div>
+                    </div>
+                </div>
+                </body>
+                </html>""";
+
+        return String.format(s, applicationName());
     }
 
     private String applicationName() {
