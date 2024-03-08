@@ -26,8 +26,10 @@ import org.springframework.scheduling.concurrent.*;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.context.request.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.RejectedExecutionHandler;
 
 /**
@@ -103,17 +105,12 @@ public class MamsThreadConfiguration {
         return runnable -> {
             try {
                 // 将日志上下文加入子线程
-                Map<String, String> context = MDC.getCopyOfContextMap();
-
-                // 将网络请求上下文加入子线程
-                RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+                Map<String, String> context = Optional.ofNullable( MDC.getCopyOfContextMap()).orElseGet(HashMap::new);
                 return () -> {
                     try {
-                        RequestContextHolder.setRequestAttributes(requestAttributes);
                         MDC.setContextMap(context);
                         runnable.run();
                     } finally {
-                        RequestContextHolder.resetRequestAttributes();
                         MDC.clear();
                     }
                 };
