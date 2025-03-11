@@ -1,0 +1,19 @@
+knife4j:
+  basic:
+    enable: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: io.github.microapplet
+
+spring:
+  application:
+    name: User Auth

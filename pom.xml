@@ -20,7 +20,7 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <groupId>io.github.microapplet</groupId>
+    <groupId>io.github.microapplet.mams</groupId>
     <artifactId>mams</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
@@ -74,74 +74,39 @@
     </scm>
 
     <modules>
-        <module>mams-common-web</module>
-        <module>mams-common-bus</module>
-        <module>mams-gateway</module>
-        <module>mams-service-demo</module>
-        <module>mams-service-app</module>
-        <module>mams-common-bean</module>
-        <module>mams-service-legal</module>
-        <module>mams-service-user</module>
-        <module>mams-service-push</module>
-        <module>mams-service-sharing</module>
-        <module>mams-service-sharing/mams-service-sharing-web</module>
-        <module>mams-service-user/mams-service-user-web</module>
-        <module>mams-channel-wechat-common</module>
+        <module>application</module>
+        <module>user</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
-        <spring-boot.version>3.2.1</spring-boot.version>
-        <spring-cloud.version>2023.0.0</spring-cloud.version>
-        <spring-cloud-alibaba.version>2022.0.0.0</spring-cloud-alibaba.version>
-        <mybatis-plus.version>3.5.5</mybatis-plus.version>
-        <wechat.version>1.0.0-SNAPSHOT</wechat.version>
-        <disruptor.version>3.4.4</disruptor.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring-boot.version}</version>
+                <groupId>io.github.microapplet</groupId>
+                <artifactId>commons-triple-dependencies</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.alibaba.cloud</groupId>
-                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
-                <version>${spring-cloud-alibaba.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-bom</artifactId>
-                <version>${mybatis-plus.version}</version>
+                <groupId>io.github.microapplet</groupId>
+                <artifactId>commons-zen-dependencies</artifactId>
+                <version>1.0.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
             <dependency>
                 <groupId>io.github.microapplet</groupId>
                 <artifactId>wechat-zen-pom</artifactId>
-                <version>${wechat.version}</version>
+                <version>1.0.0-SNAPSHOT</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <dependency>
-                <groupId>com.lmax</groupId>
-                <artifactId>disruptor</artifactId>
-                <version>${disruptor.version}</version>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
