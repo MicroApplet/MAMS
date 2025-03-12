@@ -1,6 +1,11 @@
 knife4j:
   basic:
     enable: true
+  setting:
+    enable-document-manage: false
+    enable-after-script: false
+    enable-open-api: false
+    enable-footer: false
 
 springdoc:
   swagger-ui:
@@ -17,3 +22,13 @@ springdoc:
 spring:
   application:
     name: User Auth
+  datasource:
+    driver-class-name: ${MAMS_DB_DRIVER}
+    url: ${MAMS_DB_URL}
+    username: ${MAMS_DB_USERNAME}
+    password: ${MAMS_DB_PASSWORD}
+  redis:
+    host: ${MAMS_REDIS_HOST}
+    port: ${MAMS_REDIS_PORT}
+    password: ${MAMS_REDIS_PASSWORD}
+    database: ${MAMS_REDIS_DB}

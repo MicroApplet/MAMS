@@ -44,6 +44,8 @@ import org.springframework.web.bind.annotation.*;
 public class UserAuthenticateController {
     private final LoginService loginService;
 
+
+
     @ResultWrap
     @HasRole(Tourist.code)
     @Operation(summary = "登录")

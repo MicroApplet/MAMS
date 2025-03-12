@@ -14,47 +14,34 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.model;
+package io.github.microapplet.mams.user.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import io.github.microapplet.mams.user.model.User;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 微信渠道登录用户
+ * 手机号用户
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/2/24, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Data
-public class WeChatChlUser implements Serializable {
-    private static final long serialVersionUID = -2939564810854146058L;
+public class PhoneUserPo implements Serializable {
+    private static final long serialVersionUID = -3681633596778544809L;
 
     /**
-     * 微信公众平台用户编号
+     * 用户授权手机号
      */
-    private String openid;
-
-    /**
-     * 所属公众平台应用用户的联合id
-     */
-    private String unionId;
-
-    /**
-     * 用户所属微信公众平台应用
-     */
-    private String appid;
-
-    /**
-     * 微信公众平台应用类型:
-     * <ul>
-     *     <li>1. 公众号</li>
-     *     <li>2. 小程序</li>
-     * </ul>
-     */
-    private String appType;
+    private String phone;
 
     /**
      * 用户编号
@@ -65,10 +52,16 @@ public class WeChatChlUser implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime createTime;
 
     /**
      * 更新时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;
 }

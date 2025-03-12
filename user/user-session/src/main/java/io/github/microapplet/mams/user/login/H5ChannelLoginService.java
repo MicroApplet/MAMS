@@ -24,7 +24,6 @@ import io.github.microapplet.mams.user.session.SessionUser;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -35,8 +34,10 @@ import java.util.Objects;
  * @since 2025/3/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-public class H5ChannelLoginService implements ChannelLoginService{
-    @Resource private UserRepository userRepository;
+public class H5ChannelLoginService implements ChannelLoginService {
+    @Resource
+    private UserRepository userRepository;
+
     @Override
     public String chlCode() {
         return "H5";
@@ -48,21 +49,18 @@ public class H5ChannelLoginService implements ChannelLoginService{
         String username = loginParameter.getUsername();
         String password = loginParameter.getUserCode();
 
-        User user = this.userRepository.queryByAppidUsernameAndPassword(appid,username, password);
+        User user = this.userRepository.queryByAppidUsernameAndPassword(appid, username, password);
         if (Objects.isNull(user))
             UserResCode.UserNameOrPasswordErr.throwBiz();
         SessionUser sessionUser = new SessionUser();
-        sessionUser.setId("");// TODO
-        sessionUser.setAuthorization("");// TODO
         sessionUser.setAppid(appid);
         sessionUser.setUserid(user.getId());
         sessionUser.setChlCode(loginParameter.getChlCode());
         sessionUser.setChlAppid(loginParameter.getChlAppid());
         sessionUser.setChlAppType(loginParameter.getChlAppType());
         sessionUser.setNickname(user.getNickname());
-        sessionUser.setUsername(user.getUserName());
+        sessionUser.setUsername(user.getUsername());
         sessionUser.setUserCode(password);
-
         return sessionUser;
     }
 }

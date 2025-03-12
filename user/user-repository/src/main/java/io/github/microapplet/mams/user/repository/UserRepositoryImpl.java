@@ -16,10 +16,12 @@
 
 package io.github.microapplet.mams.user.repository;
 
+import io.github.microapplet.mams.user.mapper_service.UserMapperService;
 import io.github.microapplet.mams.user.model.User;
+import io.github.microapplet.mams.user.po.UserPo;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
+import javax.annotation.Resource;
 
 /**
  * 用户数据仓库
@@ -30,24 +32,17 @@ import java.time.LocalDateTime;
  */
 @Component
 public class UserRepositoryImpl implements UserRepository {
+    @Resource private UserMapperService userMapperService;
+
     @Override
     public User queryByUserid(String userid) {
-        // TODO
-        return null;
+        UserPo po = userMapperService.queryByUserId(userid);
+        return UserPo.fromPo(po);
     }
 
     @Override
     public User queryByAppidUsernameAndPassword(String appid, String username, String password) {
-        User user = new User();
-        user.setId("aaa");
-        user.setAppid("bbb");
-        user.setNickname("ccc");
-        user.setUserName("ddd");
-        user.setPassword("eee");
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
-
-        // TODO
-        return user;
+        UserPo po = userMapperService.queryByAppidUsernameAndPassword(appid,username, password);
+        return UserPo.fromPo(po);
     }
 }

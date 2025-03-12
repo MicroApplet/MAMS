@@ -177,8 +177,12 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
 
         if (StringUtils.isBlank(authorization)) {
             authorization = UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY);
+            if (StringUtils.isBlank(getId()))
+                setId(authorization);
             setAuthorization(authorization);
         }
+        if (Objects.isNull(issueAt))
+            setIssueAt(new Date(System.currentTimeMillis()));
         String jwtToken = JWT.create()
                 .withClaim(APPID, appid)
                 .withClaim(SESSION_ID, authorization)
@@ -190,7 +194,7 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
                 .withClaim(USERNAME, username)
                 .withClaim(USER_CODE, userCode)
                 .withClaim(AUTHORIZATION, authorization)
-                .withIssuedAt(Optional.ofNullable(issueAt).orElseGet(() -> new Date(System.currentTimeMillis())))
+                .withIssuedAt(issueAt)
                 .withExpiresAt(new Date(System.currentTimeMillis() + timeout.toMillis()))
                 .withIssuer("MicroBank")
                 .sign(Algorithm.HMAC256(jwtSecret));

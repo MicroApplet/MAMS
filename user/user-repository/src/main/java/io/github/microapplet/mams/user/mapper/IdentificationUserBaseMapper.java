@@ -14,14 +14,19 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.repository;
+package io.github.microapplet.mams.user.mapper;
+
+import com.mybatisflex.core.BaseMapper;
+import io.github.microapplet.mams.user.po.IdentificationUserPo;
+import org.springframework.stereotype.Repository;
 
 /**
- * 手机号渠道用户仓库
+ * 证件用户表持久化
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface PhoneUserRepository {
+@Repository
+public interface IdentificationUserBaseMapper extends BaseMapper<IdentificationUserPo> {
 }

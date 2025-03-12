@@ -19,7 +19,6 @@ package io.github.microapplet.mams.user.config;
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.Operation;
-import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
@@ -32,10 +31,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 import javax.annotation.Resource;
-
-import java.util.function.BiConsumer;
-
-import static io.swagger.v3.oas.models.security.SecurityScheme.Type.APIKEY;
 
 /**
  * Knife文档配置
@@ -60,19 +55,12 @@ public class Knife4jConfig {
      */
     @Bean
     public GlobalOpenApiCustomizer orderGlobalOpenApiCustomizer() {
-        return new GlobalOpenApiCustomizer(){
-            @Override
-            public void customise(OpenAPI openApi) {
-                openApi.getPaths().forEach(new BiConsumer<String, PathItem>() {
-                    @Override
-                    public void accept(String s, PathItem pathItem) {
-                        for (Operation readOperation : pathItem.readOperations()) {
-                            readOperation.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
-                        }
+        return openApi ->
+                openApi.getPaths().forEach((s, pathItem) -> {
+                    for (Operation readOperation : pathItem.readOperations()) {
+                        readOperation.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
                     }
                 });
-            }
-        };
     }
 
     @Bean
