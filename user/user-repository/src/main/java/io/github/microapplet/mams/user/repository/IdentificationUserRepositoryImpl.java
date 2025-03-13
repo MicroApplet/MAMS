@@ -18,17 +18,9 @@ package io.github.microapplet.mams.user.repository;
 
 import io.github.microapplet.mams.user.mapper_service.IdentificationUserMapperService;
 import io.github.microapplet.mams.user.model.IdentificationUser;
-import org.springframework.beans.factory.annotation.Autowired;
+import io.github.microapplet.mams.user.po.IdentificationUserPo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Supplier;
 
 /**
  * 证件用户数据仓库
@@ -38,27 +30,13 @@ import java.util.function.Supplier;
  * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
+@AllArgsConstructor
 public class IdentificationUserRepositoryImpl implements IdentificationUserRepository {
-    private final Map<String, IdentificationUser> map = new HashMap<>();
     private final IdentificationUserMapperService identificationUserMapperService;
-    private final ScheduledExecutorService scheduledExecutorService;
-
-    public IdentificationUserRepositoryImpl(
-            @Autowired IdentificationUserMapperService identificationUserMapperService,
-            @Autowired(required = false) ScheduledExecutorService scheduledExecutorService) {
-        this.identificationUserMapperService = identificationUserMapperService;
-        this.scheduledExecutorService = Optional.ofNullable(scheduledExecutorService).orElseGet(() -> Executors.newScheduledThreadPool(1));
-    }
-
 
     @Override
-    public IdentificationUser cache(String sessionId) {
-        this.scheduledExecutorService.schedule(() -> map.remove(sessionId), 3, TimeUnit.HOURS);
-        return map.get(sessionId);
-    }
-
-    @Override
-    public void cache(String sessionId, IdentificationUser user) {
-        map.put(sessionId, user);
+    public void save(IdentificationUser user) {
+        IdentificationUserPo po = IdentificationUserPo.toPo(user);
+        this.identificationUserMapperService.save(po);
     }
 }

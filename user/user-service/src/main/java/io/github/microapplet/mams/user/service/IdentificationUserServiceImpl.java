@@ -16,13 +16,6 @@
 
 package io.github.microapplet.mams.user.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import io.github.microapplet.mams.user.cons.Gender;
 import io.github.microapplet.mams.user.cons.IdCardType;
 import io.github.microapplet.mams.user.cons.Nationality;
@@ -37,8 +30,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * 证件用户服务
@@ -48,10 +39,13 @@ import java.time.LocalDateTime;
  * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-public class IdentificationUserServiceImpl implements IdentificationUserService{
-    @Resource private IdentificationUserRepository identificationUserRepository;
-    @Resource private IdentificationUserCache identificationUserCache;
-    @Resource private WeChatCVRemoting weChatCVRemoting;
+public class IdentificationUserServiceImpl implements IdentificationUserService {
+    @Resource
+    private IdentificationUserRepository identificationUserRepository;
+    @Resource
+    private IdentificationUserCache identificationUserCache;
+    @Resource
+    private WeChatCVRemoting weChatCVRemoting;
 
     @Override
     public IdentificationUser authenticate(MultipartFile file) {
@@ -71,8 +65,14 @@ public class IdentificationUserServiceImpl implements IdentificationUserService{
         user.setIssueDate(idCardCVOcrRes.validStart());
         user.setIssueExpires(idCardCVOcrRes.validEnd());
 
-        this.identificationUserCache.merge(user);
+        // TODO 本地存储证件的正反面，并且负载到 文件编号
 
+        this.identificationUserCache.merge(user);
+        // 正反面都有
+        if (user.frontAndBack()) {
+            user.setUserId(current.getId());
+            this.identificationUserRepository.save(user);
+        }
         return user;
     }
 }

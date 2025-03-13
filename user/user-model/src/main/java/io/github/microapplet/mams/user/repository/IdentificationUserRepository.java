@@ -27,7 +27,5 @@ import io.github.microapplet.mams.user.model.IdentificationUser;
  */
 public interface IdentificationUserRepository {
 
-    IdentificationUser cache(String sessionId);
-
-    void cache(String sessionId, IdentificationUser user);
+    void save(IdentificationUser user);
 }

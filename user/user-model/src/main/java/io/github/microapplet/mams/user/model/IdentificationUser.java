@@ -143,6 +143,10 @@ public class IdentificationUser implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;
 
+    public boolean frontAndBack(){
+        return StringUtils.isNotBlank(getIdNo()) && Objects.nonNull(getIssueDate());
+    }
+
     private <T> void merge(Supplier<T> getter, Supplier<T> supplier, Consumer<T> setter) {
         if (Objects.isNull(getter.get()))
             setter.accept(supplier.get());

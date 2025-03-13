@@ -39,6 +39,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * 用户证件
@@ -201,5 +203,29 @@ public class IdentificationUserPo implements Serializable {
         po.setCreateTime(user.getCreateTime());
         po.setUpdateTime(user.getUpdateTime());
         return po;
+    }
+
+    private <T> void merge(Supplier<T> getter, Supplier<T> supplier, Consumer<T> setter) {
+        if (Objects.isNull(getter.get()))
+            setter.accept(supplier.get());
+    }
+
+    public void merge(IdentificationUserPo exist) {
+        merge(this::getId, exist::getId, this::setId);
+        merge(this::getUserId, exist::getUserId, this::setUserId);
+        merge(this::getIdNo, exist::getIdNo, this::setIdNo);
+        merge(this::getIdType, exist::getIdType, this::setIdType);
+        merge(this::getName, exist::getName, this::setName);
+        merge(this::getGender, exist::getGender, this::setGender);
+        merge(this::getNationality, exist::getNationality, this::setNationality);
+        merge(this::getBirthday, exist::getBirthday, this::setBirthday);
+        merge(this::getAddress, exist::getAddress, this::setAddress);
+        merge(this::getIssueOrg, exist::getIssueOrg, this::setIssueOrg);
+        merge(this::getIssueDate, exist::getIssueDate, this::setIssueDate);
+        merge(this::getIssueExpires, exist::getIssueExpires, this::setIssueExpires);
+        merge(this::getFrontFileId, exist::getFrontFileId, this::setFrontFileId);
+        merge(this::getBackFileId, exist::getBackFileId, this::setBackFileId);
+        merge(this::getCreateTime, exist::getCreateTime, this::setCreateTime);
+        merge(this::getUpdateTime, exist::getUpdateTime, this::setUpdateTime);
     }
 }
