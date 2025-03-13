@@ -25,9 +25,8 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-session</artifactId>
-    <name>User Session</name>
-    <description>用户会话库</description>
+    <artifactId>user-service</artifactId>
+    <name>User Service</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -36,39 +35,14 @@
     </properties>
 
     <dependencies>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>io.github.microapplet</groupId>
-            <artifactId>commons-security-core</artifactId>
-        </dependency>
-
-
-        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>io.github.microapplet.mams</groupId>
             <artifactId>user-model</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
         <dependency>
-            <groupId>com.auth0</groupId>
-            <artifactId>java-jwt</artifactId>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>jakarta.servlet</groupId>
-            <artifactId>jakarta.servlet-api</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
+            <groupId>io.github.microapplet</groupId>
+            <artifactId>wechat-common-remoting</artifactId>
         </dependency>
     </dependencies>
 

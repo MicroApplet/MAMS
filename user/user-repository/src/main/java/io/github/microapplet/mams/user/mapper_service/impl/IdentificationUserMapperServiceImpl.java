@@ -14,20 +14,26 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.mapper_service;
+package io.github.microapplet.mams.user.mapper_service.impl;
 
-import com.mybatisflex.core.service.IService;
-import io.github.microapplet.mams.user.po.UserPo;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
+import io.github.microapplet.mams.user.mapper.IdentificationUserBaseMapper;
+import io.github.microapplet.mams.user.mapper_service.IdentificationUserMapperService;
+import io.github.microapplet.mams.user.po.IdentificationUserPo;
+import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
- * 用户表信息持久化
+ * 证件用户数据仓库
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserMapperService extends IService<UserPo> {
-    UserPo queryByUserId(String userid);
+@Component
+public class IdentificationUserMapperServiceImpl
+        extends ServiceImpl<IdentificationUserBaseMapper, IdentificationUserPo>
+        implements IdentificationUserMapperService {
 
-    UserPo queryByAppidAndUsername(String appid, String username);
 }

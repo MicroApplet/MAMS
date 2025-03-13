@@ -14,20 +14,27 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.mapper_service;
+package io.github.microapplet.mams.user.parameter;
 
-import com.mybatisflex.core.service.IService;
-import io.github.microapplet.mams.user.po.UserPo;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
- * 用户表信息持久化
+ * 用户注册参数
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserMapperService extends IService<UserPo> {
-    UserPo queryByUserId(String userid);
+@Data
+public abstract class RegisterUserParameter implements Serializable {
 
-    UserPo queryByAppidAndUsername(String appid, String username);
+    @NotBlank(message = "未指定用户所属应用")
+    protected String appid;
+    @NotBlank(message = "未指定用户注册渠道")
+    protected String chlCode;
+    protected String chlAppid;
+    protected String chlAppType;
 }

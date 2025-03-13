@@ -34,8 +34,13 @@ public enum UserResCode implements ResCode {
     UnSupportLoginChl(false,"100005","暂不支持该渠道登录"),
     NullLoginParameterErr(false,"100004","登录参数不能为空"),
     UserNameOrPasswordErr(false, "100003", "用户名或者密码错误"),
-    UserNameTaken(false, "100001", "用户名被占用"),
-    UserNotLogin(false, "100002", "用户未登录");
+    UserNotLogin(false, "100002", "用户未登录"){
+        @Override
+        public int getStatus() {
+            return 401;
+        }
+    },
+    UserNameTaken(false, "100001", "用户名被占用");
 
     private final boolean success;
     private final String code;

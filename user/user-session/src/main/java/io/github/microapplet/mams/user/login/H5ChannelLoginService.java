@@ -16,6 +16,7 @@
 
 package io.github.microapplet.mams.user.login;
 
+import io.github.microapplet.common.utils.PasswordStorage;
 import io.github.microapplet.mams.user.model.User;
 import io.github.microapplet.mams.user.parameter.LoginParameter;
 import io.github.microapplet.mams.user.repository.UserRepository;
@@ -49,18 +50,18 @@ public class H5ChannelLoginService implements ChannelLoginService {
         String username = loginParameter.getUsername();
         String password = loginParameter.getUserCode();
 
-        User user = this.userRepository.queryByAppidUsernameAndPassword(appid, username, password);
+        User user = this.userRepository.queryByAppidUsername(appid, username);
         if (Objects.isNull(user))
             UserResCode.UserNameOrPasswordErr.throwBiz();
+
+        boolean passwordCheck = PasswordStorage.verifyPassword(password, user.getPassword());
+        if (!passwordCheck)
+            UserResCode.UserNameOrPasswordErr.throwBiz();
+
         SessionUser sessionUser = new SessionUser();
-        sessionUser.setAppid(appid);
         sessionUser.setUserid(user.getId());
-        sessionUser.setChlCode(loginParameter.getChlCode());
-        sessionUser.setChlAppid(loginParameter.getChlAppid());
-        sessionUser.setChlAppType(loginParameter.getChlAppType());
         sessionUser.setNickname(user.getNickname());
         sessionUser.setUsername(user.getUsername());
-        sessionUser.setUserCode(password);
         return sessionUser;
     }
 }

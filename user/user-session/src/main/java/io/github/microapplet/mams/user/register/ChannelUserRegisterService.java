@@ -14,38 +14,37 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.repository;
+package io.github.microapplet.mams.user.register;
 
 import io.github.microapplet.mams.user.model.User;
+import io.github.microapplet.mams.user.parameter.LoginParameter;
+import io.github.microapplet.mams.user.parameter.RegisterUserParameter;
+import io.github.microapplet.mams.user.session.SessionUser;
 
 /**
- * 用户数据仓库
+ * 渠道用户注册服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserRepository {
+public interface ChannelUserRegisterService {
 
     /**
-     * 用用户编号获取用户信息
+     * 登录渠道
      *
-     * @param userid {@link String userid}
-     * @return {@link User }
+     * @return {@link String }
      * @since 2025/3/10
      */
-    User queryByUserid(String userid);
+    String chlCode();
+
 
     /**
-     * 用户名、密码查询用户信息
-	 * @param username {@link String username}
-     * @return {@link User }
+     * 渠道登录
+     *
+     * @param parameter {@link LoginParameter loginParameter}
+     * @return {@link SessionUser }
      * @since 2025/3/11
      */
-    User queryByAppidUsername(String appid, String username);
-
-    User createInAppid(String appid);
-    User createInAppid(String appid, String username);
-
-    User register(User user);
+    User register(RegisterUserParameter parameter);
 }

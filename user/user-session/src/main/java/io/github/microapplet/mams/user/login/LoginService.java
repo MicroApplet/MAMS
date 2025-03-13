@@ -28,10 +28,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * 用户登录服务
@@ -70,6 +67,11 @@ public class LoginService {
         if (Objects.isNull(service))
             UserResCode.UnSupportLoginChl.throwBiz();
         SessionUser login = service.login(loginParameter);
+        login.setChlCode(chlCode);
+        login.setChlAppid(loginParameter.getChlAppid());
+        login.setChlAppType(loginParameter.getChlAppType());
+        login.setUserCode(loginParameter.getUserCode());
+        login.setIssueAt(new Date(System.currentTimeMillis()));
         login.authorization(StringUtils.EMPTY, this.jwtConfProperty, this.jwtTokenCache);
         return login;
     }

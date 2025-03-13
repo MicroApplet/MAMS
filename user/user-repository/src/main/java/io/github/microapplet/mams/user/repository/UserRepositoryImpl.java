@@ -19,9 +19,11 @@ package io.github.microapplet.mams.user.repository;
 import io.github.microapplet.mams.user.mapper_service.UserMapperService;
 import io.github.microapplet.mams.user.model.User;
 import io.github.microapplet.mams.user.po.UserPo;
+import io.github.microapplet.mams.user.res.UserResCode;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 /**
  * 用户数据仓库
@@ -32,7 +34,8 @@ import javax.annotation.Resource;
  */
 @Component
 public class UserRepositoryImpl implements UserRepository {
-    @Resource private UserMapperService userMapperService;
+    @Resource
+    private UserMapperService userMapperService;
 
     @Override
     public User queryByUserid(String userid) {
@@ -41,8 +44,35 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User queryByAppidUsernameAndPassword(String appid, String username, String password) {
-        UserPo po = userMapperService.queryByAppidUsernameAndPassword(appid,username, password);
+    public User queryByAppidUsername(String appid, String username) {
+        UserPo po = userMapperService.queryByAppidAndUsername(appid, username);
+        return UserPo.fromPo(po);
+    }
+
+    @Override
+    public User createInAppid(String appid) {
+        UserPo userPo = new UserPo();
+        userPo.setAppid(appid);
+        this.userMapperService.save(userPo);
+        return UserPo.fromPo(userPo);
+    }
+
+    @Override
+    public User createInAppid(String appid, String username) {
+        UserPo userPo = new UserPo();
+        userPo.setAppid(appid);
+        userPo.setUsername(username);
+        this.userMapperService.save(userPo);
+        return UserPo.fromPo(userPo);
+    }
+
+    @Override
+    public User register(User user) {
+        UserPo exist = this.userMapperService.queryByAppidAndUsername(user.getAppid(), user.getUsername());
+        if (Objects.nonNull(exist))
+            UserResCode.UserNameTaken.throwBiz();
+        UserPo po = UserPo.toPo(user);
+        this.userMapperService.save(po);
         return UserPo.fromPo(po);
     }
 }

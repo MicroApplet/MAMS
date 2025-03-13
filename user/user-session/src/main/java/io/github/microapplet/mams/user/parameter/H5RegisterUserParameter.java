@@ -14,20 +14,32 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.mapper_service;
+package io.github.microapplet.mams.user.parameter;
 
-import com.mybatisflex.core.service.IService;
-import io.github.microapplet.mams.user.po.UserPo;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
+
+import javax.validation.constraints.NotBlank;
 
 /**
- * 用户表信息持久化
+ * H5 平台用户注册参数
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserMapperService extends IService<UserPo> {
-    UserPo queryByUserId(String userid);
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public final class H5RegisterUserParameter extends RegisterUserParameter {
+    private static final long serialVersionUID = 8008877176287866616L;
 
-    UserPo queryByAppidAndUsername(String appid, String username);
+    private String nickname;
+
+    @NotBlank(message = "请输入用户名")
+    private String username;
+
+    @NotBlank(message = "请输入用户密码")
+    private String password;
 }

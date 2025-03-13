@@ -16,36 +16,18 @@
 
 package io.github.microapplet.mams.user.repository;
 
-import io.github.microapplet.mams.user.model.User;
+import io.github.microapplet.mams.user.model.IdentificationUser;
 
 /**
- * 用户数据仓库
+ * 证件用户数据仓库
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserRepository {
+public interface IdentificationUserRepository {
 
-    /**
-     * 用用户编号获取用户信息
-     *
-     * @param userid {@link String userid}
-     * @return {@link User }
-     * @since 2025/3/10
-     */
-    User queryByUserid(String userid);
+    IdentificationUser cache(String sessionId);
 
-    /**
-     * 用户名、密码查询用户信息
-	 * @param username {@link String username}
-     * @return {@link User }
-     * @since 2025/3/11
-     */
-    User queryByAppidUsername(String appid, String username);
-
-    User createInAppid(String appid);
-    User createInAppid(String appid, String username);
-
-    User register(User user);
+    void cache(String sessionId, IdentificationUser user);
 }

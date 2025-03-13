@@ -18,6 +18,7 @@ package io.github.microapplet.mams.user.chl.wx.session;
 
 import io.github.microapplet.mams.user.parameter.LoginParameter;
 import io.github.microapplet.mams.user.session.SessionUser;
+import io.github.microapplet.wechat.application.WeChatApplication;
 import io.github.microapplet.wechat.application.WeChatApplicationType;
 
 /**
@@ -42,5 +43,5 @@ public interface WeChatChlUserLoginService {
      * @return {@link SessionUser }
      * @since 2025/3/12
      */
-    SessionUser login(LoginParameter loginParameter);
+    WeChatChlLoginUser login(WeChatApplication weChatApplication, LoginParameter loginParameter);
 }

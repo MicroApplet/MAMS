@@ -18,6 +18,7 @@
         <module>user-auth-web</module>
         <module>user-repository</module>
         <module>user-chl</module>
+        <module>user-service</module>
     </modules>
 
     <properties>

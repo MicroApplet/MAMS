@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.po;
+package io.github.microapplet.mams.user.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -23,40 +23,32 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-import com.mybatisflex.annotation.Column;
-import com.mybatisflex.annotation.Id;
-import com.mybatisflex.annotation.KeyType;
-import com.mybatisflex.annotation.Table;
-import com.mybatisflex.core.keygen.KeyGenerators;
 import io.github.microapplet.mams.user.cons.Gender;
 import io.github.microapplet.mams.user.cons.Nationality;
-import io.github.microapplet.mams.user.model.IdentificationUser;
-import io.github.microapplet.mams.user.model.User;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
- * 用户证件
+ * 证件用户
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/5, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Data
-@Table("user_identification")
-public class IdentificationUserPo implements Serializable {
-    private static final long serialVersionUID = 6527329698947167518L;
-
+public class IdentificationUser implements Serializable {
+    private static final long serialVersionUID = -978494929467769911L;
 
     /**
      * 编号
      */
-    @Id(keyType = KeyType.Generator,value = KeyGenerators.snowFlakeId)
     private String id;
 
     /**
@@ -84,12 +76,12 @@ public class IdentificationUserPo implements Serializable {
     /**
      * 性别
      */
-    private String gender;
+    private Gender gender;
 
     /**
      * 民族
      */
-    private String nationality;
+    private Nationality nationality;
 
     /**
      * 出生日期
@@ -138,7 +130,6 @@ public class IdentificationUserPo implements Serializable {
     /**
      * 创建日期
      */
-    @Column(onInsertValue = "now()")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -150,56 +141,29 @@ public class IdentificationUserPo implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
-
-    @SuppressWarnings("DuplicatedCode")
-    public static IdentificationUserPo toPo(IdentificationUser user){
-        if (Objects.isNull(user))
-            return null;
-        IdentificationUserPo po = new IdentificationUserPo();
-        po.setId(user.getId());
-        po.setUserId(user.getUserId());
-        po.setIdNo(user.getIdNo());
-        po.setIdType(user.getIdType());
-        po.setName(user.getName());
-        po.setGender(Optional.of(user).map(IdentificationUser::getGender).map(Gender::getValue).orElse("未知"));
-        po.setNationality(Optional.of(user).map(IdentificationUser::getNationality).map(Nationality::getDesc).orElse("汉"));
-        po.setBirthday(user.getBirthday());
-        po.setAddress(user.getAddress());
-        po.setIssueOrg(user.getIssueOrg());
-        po.setIssueDate(user.getIssueDate());
-        po.setIssueExpires(user.getIssueExpires());
-        po.setFrontFileId(user.getFrontFileId());
-        po.setBackFileId(user.getBackFileId());
-        po.setCreateTime(user.getCreateTime());
-        po.setUpdateTime(user.getUpdateTime());
-        return po;
+    private <T> void merge(Supplier<T> getter, Supplier<T> supplier, Consumer<T> setter) {
+        if (Objects.isNull(getter.get()))
+            setter.accept(supplier.get());
     }
 
-
-    @SuppressWarnings("DuplicatedCode")
-    public static IdentificationUser fromPo(IdentificationUserPo user){
-        if (Objects.isNull(user))
-            return null;
-        IdentificationUser po = new IdentificationUser();
-        po.setId(user.getId());
-        po.setUserId(user.getUserId());
-        po.setIdNo(user.getIdNo());
-        po.setIdType(user.getIdType());
-        po.setName(user.getName());
-        po.setGender(Gender.descOf(user.getGender()));
-        po.setNationality(Nationality.ChineseNationality.descOf(user.getNationality()));
-        po.setBirthday(user.getBirthday());
-        po.setAddress(user.getAddress());
-        po.setIssueOrg(user.getIssueOrg());
-        po.setIssueDate(user.getIssueDate());
-        po.setIssueExpires(user.getIssueExpires());
-        po.setFrontFileId(user.getFrontFileId());
-        po.setBackFileId(user.getBackFileId());
-        po.setCreateTime(user.getCreateTime());
-        po.setUpdateTime(user.getUpdateTime());
-        return po;
+    public void merge(IdentificationUser exist) {
+        merge(this::getId, exist::getId, this::setId);
+        merge(this::getUserId, exist::getUserId, this::setUserId);
+        merge(this::getIdNo, exist::getIdNo, this::setIdNo);
+        merge(this::getIdType, exist::getIdType, this::setIdType);
+        merge(this::getName, exist::getName, this::setName);
+        merge(this::getGender, exist::getGender, this::setGender);
+        merge(this::getNationality, exist::getNationality, this::setNationality);
+        merge(this::getBirthday, exist::getBirthday, this::setBirthday);
+        merge(this::getAddress, exist::getAddress, this::setAddress);
+        merge(this::getIssueOrg, exist::getIssueOrg, this::setIssueOrg);
+        merge(this::getIssueDate, exist::getIssueDate, this::setIssueDate);
+        merge(this::getIssueExpires, exist::getIssueExpires, this::setIssueExpires);
+        merge(this::getFrontFileId, exist::getFrontFileId, this::setFrontFileId);
+        merge(this::getBackFileId, exist::getBackFileId, this::setBackFileId);
+        merge(this::getCreateTime, exist::getCreateTime, this::setCreateTime);
+        merge(this::getUpdateTime, exist::getUpdateTime, this::setUpdateTime);
     }
 }

@@ -17,6 +17,7 @@
 package io.github.microapplet.mams.user.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -77,4 +78,16 @@ public class User implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;
+
+    @JsonIgnore
+    private transient String sessionId;
+    @JsonIgnore
+    private transient String chlCode;
+    @JsonIgnore
+    private transient String chlAppid;
+    @JsonIgnore
+    private transient String chlAppType;
+    @JsonIgnore
+    private transient String userCode;
+
 }

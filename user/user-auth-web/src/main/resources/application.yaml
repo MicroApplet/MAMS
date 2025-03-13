@@ -19,6 +19,12 @@ springdoc:
       paths-to-match: '/**'
       packages-to-scan: io.github.microapplet
 
+
+server:
+  port: 10001
+  servlet:
+    context-path: /user/auth
+
 spring:
   application:
     name: User Auth
@@ -32,3 +38,11 @@ spring:
     port: ${MAMS_REDIS_PORT}
     password: ${MAMS_REDIS_PASSWORD}
     database: ${MAMS_REDIS_DB}
+
+mybatis-flex:
+  configuration:
+    log-impl: ${MYBATIS_LOG_IMPL:org.apache.ibatis.logging.stdout.StdOutImpl}
+
+logging:
+  level:
+    root: ${DEFAULT_LOG_LEVEL:info}

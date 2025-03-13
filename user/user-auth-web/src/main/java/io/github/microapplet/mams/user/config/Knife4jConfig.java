@@ -31,6 +31,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Knife文档配置
@@ -58,7 +60,9 @@ public class Knife4jConfig {
         return openApi ->
                 openApi.getPaths().forEach((s, pathItem) -> {
                     for (Operation readOperation : pathItem.readOperations()) {
-                        readOperation.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
+                        List<SecurityRequirement> security = readOperation.getSecurity();
+                        if (Objects.isNull(security))
+                            readOperation.addSecurityItem(new SecurityRequirement().addList(HttpHeaders.AUTHORIZATION));
                     }
                 });
     }

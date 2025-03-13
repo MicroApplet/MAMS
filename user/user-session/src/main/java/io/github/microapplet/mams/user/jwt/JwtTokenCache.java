@@ -39,4 +39,6 @@ public interface JwtTokenCache {
      * 获取 JWT 缓存
      */
     String get(String authorization);
+
+    void delete(String authorization);
 }

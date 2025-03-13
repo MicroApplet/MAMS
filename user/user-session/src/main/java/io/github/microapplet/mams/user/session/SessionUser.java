@@ -43,6 +43,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * 当前会话用户
@@ -74,7 +75,7 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
 
     @Resource
     @JsonIgnore
-    private transient CurrentUserBean currentUserBean;
+    private transient CurrentUserBeanImpl currentUserBean;
 
     @Resource
     @JsonIgnore
@@ -153,12 +154,15 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
         fromToken(authorization, jwtConfProperty, jwtTokenCache);
     }
 
-    public User user() {
+    public User user(Consumer<User> consumer) {
         String userid = getUserid();
         if (StringUtils.isBlank(userid))
             throw UserResCode.UserNotLogin.bizException();
 
-        return this.userRepository.queryByUserid(userid);
+        User user = this.userRepository.queryByUserid(userid);
+        if (Objects.nonNull(consumer) && Objects.nonNull(user))
+            consumer.accept(user);
+        return user;
     }
 
     @Override
@@ -169,6 +173,11 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
     @Override
     public List<Role> hasRole() {
         return this.roleService.queryRoleByUserid(this.getUserid());
+    }
+
+
+    public void logout() {
+        this.jwtTokenCache.delete(this.authorization);
     }
 
     public void authorization(String authorization, JwtConfProperty jwtConfProperty, JwtTokenCache jwtTokenCache) {
@@ -217,6 +226,7 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
             setNickname(body(NICKNAME, jwt));
             setUsername(body(USERNAME, jwt));
             setUserCode(body(USER_CODE, jwt));
+            setAuthorization(authorization);
             authorization(authorization, jwtConfProperty, jwtTokenCache);
             setIssueAt(jwt.getIssuedAt());
         } catch (Throwable t) {
@@ -243,4 +253,5 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
             return StringUtils.EMPTY;
         return Optional.ofNullable(jwt).map(item -> item.getClaim(key)).map(Claim::asString).orElse(StringUtils.EMPTY);
     }
+
 }

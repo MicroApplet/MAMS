@@ -14,38 +14,42 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.repository;
+package io.github.microapplet.mams.user.chl.wx.session;
 
-import io.github.microapplet.mams.user.model.User;
+import lombok.Data;
+
+import java.io.Serializable;
 
 /**
- * 用户数据仓库
+ * 微信渠道登录用户
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserRepository {
+@Data
+public class WeChatChlLoginUser implements Serializable {
+    private static final long serialVersionUID = -5030753457104268490L;
 
     /**
-     * 用用户编号获取用户信息
-     *
-     * @param userid {@link String userid}
-     * @return {@link User }
-     * @since 2025/3/10
+     * 微信公众平台用户编号
      */
-    User queryByUserid(String userid);
-
+    private String openid;
     /**
-     * 用户名、密码查询用户信息
-	 * @param username {@link String username}
-     * @return {@link User }
-     * @since 2025/3/11
+     * 微信公众平台应用编号
      */
-    User queryByAppidUsername(String appid, String username);
+    private String wxAppid;
+    /**
+     * 微信公众平台应用类型
+     */
+    private String wxAppType;
+    /**
+     * 微信公众平台应用联合编号
+     */
+    private String unionId;
+    /**
+     * 微信公众平台用户授权手机号
+     */
+    private String phone;
 
-    User createInAppid(String appid);
-    User createInAppid(String appid, String username);
-
-    User register(User user);
 }

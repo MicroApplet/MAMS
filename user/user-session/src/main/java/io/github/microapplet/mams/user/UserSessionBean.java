@@ -64,6 +64,11 @@ public class UserSessionBean {
             public String get(String authorization) {
                 return cache.get(authorization);
             }
+
+            @Override
+            public void delete(String authorization) {
+                cache.remove(authorization);
+            }
         };
     }
 
@@ -83,6 +88,11 @@ public class UserSessionBean {
             @Override
             public String get(String authorization) {
                 return cache.get(authorization);
+            }
+
+            @Override
+            public void delete(String authorization) {
+                cache.remove(authorization);
             }
         };
     }

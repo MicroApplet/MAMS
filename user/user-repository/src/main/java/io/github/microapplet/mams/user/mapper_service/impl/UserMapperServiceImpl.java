@@ -41,11 +41,10 @@ public class UserMapperServiceImpl extends ServiceImpl<UserBaseMapper, UserPo> i
     }
 
     @Override
-    @Cacheable(value = UserCacheConfig.Name.AppidAndUsernameAndPassword, key = "#appid and #username and #password", sync = true)
-    public UserPo queryByAppidUsernameAndPassword(String appid, String username, String password) {
+    @Cacheable(value = UserCacheConfig.Name.AppidAndUsernameAndPassword, key = "#appid +':'+ #username",sync = true)
+    public UserPo queryByAppidAndUsername(String appid, String username) {
         return queryChain()
                 .where(UserPo::getAppid).eq(appid)
-                .and(UserPo::getUsername).eq(username)
-                .and(UserPo::getPassword).eq(password).one();
+                .and(UserPo::getUsername).eq(username).one();
     }
 }

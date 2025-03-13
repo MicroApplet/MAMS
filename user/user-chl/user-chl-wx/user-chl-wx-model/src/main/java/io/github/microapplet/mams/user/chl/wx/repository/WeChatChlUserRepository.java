@@ -16,6 +16,11 @@
 
 package io.github.microapplet.mams.user.chl.wx.repository;
 
+import io.github.microapplet.mams.user.chl.wx.model.WeChatChlUser;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Objects;
+
 /**
  * 微信渠道用户数据仓库
  *
@@ -24,4 +29,42 @@ package io.github.microapplet.mams.user.chl.wx.repository;
  * @since 2025/3/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface WeChatChlUserRepository {
+
+    /**
+     * 用户注册
+     *
+     * @param condition {@link WeChatChlUser condition}
+     * @return {@link WeChatChlUser }
+     * @since 2025/3/13
+     */
+    WeChatChlUser register(WeChatChlUser condition);
+
+    /**
+     * 根据openid ，查询微信渠道用户信息
+     *
+     * @param openid {@link String openid}
+     * @return {@link WeChatChlUser }
+     * @since 2025/3/13
+     */
+    WeChatChlUser queryByOpenid(String openid);
+
+    /**
+     * 根据openid查询，如果查询不到则注册
+     *
+     * @param condition {@link WeChatChlUser condition}
+     * @return {@link WeChatChlUser }
+     * @since 2025/3/13
+     */
+    default WeChatChlUser queryOrRegister(WeChatChlUser condition) {
+        if (Objects.isNull(condition) || StringUtils.isBlank(condition.getOpenid()))
+            return condition;
+
+        WeChatChlUser weChatChlUser = queryByOpenid(condition.getOpenid());
+        if (Objects.nonNull(weChatChlUser))
+            return weChatChlUser;
+
+        return register(condition);
+    }
+
+    void update(WeChatChlUser wxChlUser);
 }

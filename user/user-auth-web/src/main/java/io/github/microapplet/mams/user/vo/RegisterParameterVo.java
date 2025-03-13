@@ -14,20 +14,34 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.mapper_service;
+package io.github.microapplet.mams.user.vo;
 
-import com.mybatisflex.core.service.IService;
-import io.github.microapplet.mams.user.po.UserPo;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 /**
- * 用户表信息持久化
+ * H5平台用户注册参数
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserMapperService extends IService<UserPo> {
-    UserPo queryByUserId(String userid);
+@Data
+@Schema(description = "平台用户注册参数")
+public class RegisterParameterVo implements Serializable {
+    private static final long serialVersionUID = -1664193247605823795L;
 
-    UserPo queryByAppidAndUsername(String appid, String username);
+    @Schema(description = "昵称")
+    private String nickname;
+
+    @NotBlank(message = "请输入用户名")
+    private String username;
+
+    @Schema(description = "密码")
+    private String password;
+
+
 }

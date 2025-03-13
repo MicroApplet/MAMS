@@ -14,20 +14,4 @@
  * limitations under the License.
  */
 
-package io.github.microapplet.mams.user.mapper_service;
-
-import com.mybatisflex.core.service.IService;
-import io.github.microapplet.mams.user.po.UserPo;
-
-/**
- * 用户表信息持久化
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/3/12, &nbsp;&nbsp; <em>version:1.0</em>
- */
-public interface UserMapperService extends IService<UserPo> {
-    UserPo queryByUserId(String userid);
-
-    UserPo queryByAppidAndUsername(String appid, String username);
-}
+package io.github.microapplet.mams.user.service;
