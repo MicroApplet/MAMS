@@ -15,3 +15,18 @@
  */
 
 package io.github.microapplet.mams.user.service;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 用户服务 Spring Bean
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/3/14, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+@Configuration
+@ComponentScan
+public class UserServiceBean {
+}

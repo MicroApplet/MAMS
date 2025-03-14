@@ -99,15 +99,4 @@ public class Knife4jConfig {
                 .pathsToExclude(apiDocPath())
                 .build();
     }
-
-    @Bean
-    public GroupedOpenApi userIndexOpenApi() {
-        String[] paths = {"/index"};
-        return GroupedOpenApi.builder().group("Index")
-                .addOpenApiCustomiser(openApi -> openApi.info(
-                        new Info().title("Index API").version("v1.0")))
-                .pathsToMatch(paths)
-                .pathsToExclude(apiDocPath())
-                .build();
-    }
 }

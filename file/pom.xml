@@ -21,38 +21,23 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.microapplet.mams</groupId>
-        <artifactId>user</artifactId>
+        <artifactId>mams</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-repository</artifactId>
-    <name>User Repository</name>
+    <artifactId>file</artifactId>
+    <packaging>pom</packaging>
+    <name>File</name>
+    <modules>
+        <module>file-web</module>
+        <module>file-cloud</module>
+        <module>file-api</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencies>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>io.github.microapplet.mams</groupId>
-            <artifactId>user-model</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
 
 </project>

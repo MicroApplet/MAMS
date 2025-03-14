@@ -76,6 +76,7 @@
     <modules>
         <module>application</module>
         <module>user</module>
+        <module>file</module>
     </modules>
 
     <properties>

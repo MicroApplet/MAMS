@@ -21,13 +21,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>io.github.microapplet.mams</groupId>
-        <artifactId>user</artifactId>
+        <artifactId>file</artifactId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-auth-web</artifactId>
-    <name>User Auth Web</name>
-    <description>用户认证网络应用</description>
+    <artifactId>file-web</artifactId>
+    <name>File Web</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -36,67 +35,27 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>io.github.microapplet</groupId>
-            <artifactId>commons-cache-redis</artifactId>
-        </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>io.github.microapplet</groupId>
-            <artifactId>commons-security-core</artifactId>
-        </dependency>
-
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>io.github.microapplet</groupId>
             <artifactId>commons-web-mvc</artifactId>
         </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>io.github.microapplet</groupId>
             <artifactId>commons-web-knife4j-mvc</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>io.github.microapplet.mams</groupId>
-            <artifactId>user-model</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.microapplet.mams</groupId>
-            <artifactId>user-session</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.microapplet.mams</groupId>
-            <artifactId>user-repository</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.microapplet.mams</groupId>
-            <artifactId>user-service</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <groupId>io.github.microapplet</groupId>
+            <artifactId>commons-common</artifactId>
         </dependency>
 
         <dependency>
-            <groupId>com.mybatis-flex</groupId>
-            <artifactId>mybatis-flex-spring-boot-starter</artifactId>
+            <groupId>io.github.microapplet.mams</groupId>
+            <artifactId>file-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <dependency>
-            <groupId>com.zaxxer</groupId>
-            <artifactId>HikariCP</artifactId>
-        </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-        </dependency>
+
 
     </dependencies>
 
