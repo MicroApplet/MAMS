@@ -17,6 +17,7 @@
 package io.github.microapplet.mams.user.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -127,6 +128,12 @@ public class IdentificationUser implements Serializable {
      */
     private String backFileId;
 
+    @JsonIgnore
+    private transient String fileId;
+    @JsonIgnore
+    private transient Boolean front;
+
+
     /**
      * 创建日期
      */
@@ -144,6 +151,11 @@ public class IdentificationUser implements Serializable {
     private LocalDateTime updateTime;
 
     public boolean frontAndBack(){
+        if  (Boolean.TRUE.equals(front))
+            setFrontFileId(fileId);
+        if (Boolean.FALSE.equals(front))
+            setBackFileId(fileId);
+
         return StringUtils.isNotBlank(getIdNo()) && Objects.nonNull(getIssueDate());
     }
 
@@ -170,4 +182,5 @@ public class IdentificationUser implements Serializable {
         merge(this::getCreateTime, exist::getCreateTime, this::setCreateTime);
         merge(this::getUpdateTime, exist::getUpdateTime, this::setUpdateTime);
     }
+
 }

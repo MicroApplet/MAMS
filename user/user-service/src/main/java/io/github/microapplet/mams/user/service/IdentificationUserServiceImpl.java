@@ -16,6 +16,9 @@
 
 package io.github.microapplet.mams.user.service;
 
+import io.github.microapplet.common.context.IORes;
+import io.github.microapplet.common.context.Result;
+import io.github.microapplet.mams.file.api.FileApi;
 import io.github.microapplet.mams.user.cons.Gender;
 import io.github.microapplet.mams.user.cons.IdCardType;
 import io.github.microapplet.mams.user.cons.Nationality;
@@ -30,6 +33,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.Collections;
+import java.util.Optional;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
 
 /**
  * 证件用户服务
@@ -46,26 +53,54 @@ public class IdentificationUserServiceImpl implements IdentificationUserService 
     private IdentificationUserCache identificationUserCache;
     @Resource
     private WeChatCVRemoting weChatCVRemoting;
+    @Resource
+    private FileApi fileApi;
+    @Resource
+    private Executor executor;
 
     @Override
     public IdentificationUser authenticate(MultipartFile file) {
         User current = CurrentUserBean.current(null);
-        String appid = current.getChlAppid();
-        IdCardCVOcrRes idCardCVOcrRes = this.weChatCVRemoting.idCard(appid, file);
-
         IdentificationUser user = new IdentificationUser();
-        user.setUserId(current.getId());
-        user.setIdNo(idCardCVOcrRes.getId());
-        user.setIdType(IdCardType.ResidentIdentityCard.getCode());
-        user.setName(idCardCVOcrRes.getName());
-        Gender gender = Gender.descOf(idCardCVOcrRes.getGender());
-        user.setGender(gender);
-        user.setNationality(Nationality.ChineseNationality.descOf(idCardCVOcrRes.getNationality()));
-        user.setAddress(idCardCVOcrRes.getAddr());
-        user.setIssueDate(idCardCVOcrRes.validStart());
-        user.setIssueExpires(idCardCVOcrRes.validEnd());
+        CountDownLatch countDownLatch = new CountDownLatch(2);
 
-        // TODO 本地存储证件的正反面，并且负载到 文件编号
+        // 文件底片留痕
+        executor.execute(() -> {
+            try {
+                Result<String> fileIdRes = fileApi.upload(file);
+                Optional.ofNullable(fileIdRes).map(Result::getData).ifPresent(user::setFileId);
+            } finally {
+                countDownLatch.countDown();
+            }
+        });
+
+        // 证件识别
+        executor.execute(() -> {
+            try {
+                String appid = current.getChlAppid();
+                IdCardCVOcrRes idCardCVOcrRes = weChatCVRemoting.idCard(appid, file);
+                boolean front = idCardCVOcrRes.front();
+                user.setFront(front);
+                user.setUserId(current.getId());
+                user.setIdNo(idCardCVOcrRes.getId());
+                user.setIdType(IdCardType.ResidentIdentityCard.getCode());
+                user.setName(idCardCVOcrRes.getName());
+                Gender gender = Gender.descOf(idCardCVOcrRes.getGender());
+                user.setGender(gender);
+                user.setNationality(Nationality.ChineseNationality.descOf(idCardCVOcrRes.getNationality()));
+                user.setAddress(idCardCVOcrRes.getAddr());
+                user.setIssueDate(idCardCVOcrRes.validStart());
+                user.setIssueExpires(idCardCVOcrRes.validEnd());
+            } finally {
+                countDownLatch.countDown();
+            }
+        });
+
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            IORes.TimeoutErr.create(Collections.singletonList("文件处理超时")).throwBiz();
+        }
 
         this.identificationUserCache.merge(user);
         // 正反面都有

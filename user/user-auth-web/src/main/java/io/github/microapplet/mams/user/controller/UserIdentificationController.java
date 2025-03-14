@@ -17,10 +17,7 @@
 package io.github.microapplet.mams.user.controller;
 
 import io.github.microapplet.mams.user.model.IdentificationUser;
-import io.github.microapplet.mams.user.model.User;
 import io.github.microapplet.mams.user.service.IdentificationUserService;
-import io.github.microapplet.mams.user.session.CurrentUserBean;
-import io.github.microapplet.mams.user.session.CurrentUserBeanImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
@@ -33,7 +30,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.InputStream;
 
 /**
  * 用户证件相关服务
