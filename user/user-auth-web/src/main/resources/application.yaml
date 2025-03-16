@@ -17,7 +17,7 @@ springdoc:
   group-configs:
     - group: 'default'
       paths-to-match: '/**'
-      packages-to-scan: io.github.microapplet
+      packages-to-scan: com.asialjim.microapplet
 
 
 server:
@@ -27,7 +27,7 @@ server:
 
 spring:
   application:
-    name: User Auth
+    name: UserAuth
   datasource:
     driver-class-name: ${MAMS_DB_DRIVER}
     url: ${MAMS_DB_URL}
@@ -38,6 +38,11 @@ spring:
     port: ${MAMS_REDIS_PORT}
     password: ${MAMS_REDIS_PASSWORD}
     database: ${MAMS_REDIS_DB}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER}
+
 
 mybatis-flex:
   configuration:
@@ -46,3 +51,8 @@ mybatis-flex:
 logging:
   level:
     root: ${DEFAULT_LOG_LEVEL:info}
+mams:
+  cloud:
+    file:
+      name: FileService
+      context: /file
