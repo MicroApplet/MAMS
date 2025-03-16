@@ -17,7 +17,7 @@ springdoc:
   group-configs:
     - group: 'File'
       paths-to-match: '/file/**'
-      packages-to-scan: io.github.microapplet.mams.file.controller
+      packages-to-scan: com.asialjim.microapplet.mams.file.controller
 
 
 server:
@@ -27,4 +27,8 @@ server:
 
 spring:
   application:
-    name: File Service
+    name: FileService
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${NACOS_SERVER}
