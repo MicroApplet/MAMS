@@ -133,6 +133,7 @@
     </dependencies>
 
 
+
     <build>
         <!--发布到maven 中央仓库-->
         <plugins>
@@ -263,6 +264,9 @@
                     <execution>
                         <id>sign-artifacts</id>
                         <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>
@@ -288,5 +292,6 @@
             </plugin>
         </plugins>
     </build>
+
 
 </project>
