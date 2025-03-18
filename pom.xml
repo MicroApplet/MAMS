@@ -146,7 +146,6 @@
                     <publishingServerId>ossrh</publishingServerId>
                     <autoPublish>true</autoPublish>
                     <deploymentName>MicroAppletManagementService</deploymentName>
-                    <waitUntil>published</waitUntil>
                 </configuration>
             </plugin>
 
