@@ -113,7 +113,6 @@
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>remote-net-http-apache</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
