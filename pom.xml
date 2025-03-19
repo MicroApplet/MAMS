@@ -168,7 +168,7 @@
                 <configuration>
                     <publishingServerId>ossrh</publishingServerId>
                     <autoPublish>true</autoPublish>
-                    <deploymentName>WeChat</deploymentName>
+                    <deploymentName>MAMS</deploymentName>
                     <ignorePublishedComponents>true</ignorePublishedComponents>
                     <waitUntil>validated</waitUntil>
                 </configuration>
@@ -335,4 +335,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>
