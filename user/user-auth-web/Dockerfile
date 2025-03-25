@@ -4,6 +4,7 @@ FROM openjdk:8
 
 #将./hello-world.jar添加到容器的/opt目录中
 COPY ./*.jar /opt
+COPY ./mams.env /opt
 
 #指定dockerfile的命令在哪个目录下执行
 WORKDIR /opt
