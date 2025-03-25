@@ -11,11 +11,11 @@ docker rmi ${group_name}/${app_name}:${app_version}
 
 pwd
 ls -la
-chmod +r microbank_user_auth.env
+chmod +r mams.env
 # 打包编译docker镜像
 docker build -t ${group_name}/${app_name}:${app_version} .
 docker run -p 10001:10001 --name ${app_name} \
---env-file microbank_user_auth.env \
+--env-file mams.env \
 -e TZ="Asia/Shanghai" \
 -v /etc/localtime:/etc/localtime \
 -d ${group_name}/${app_name}:${app_version}
