@@ -1,0 +1,1 @@
+sh /app/docker/mams/user/user-auth-web/package.sh

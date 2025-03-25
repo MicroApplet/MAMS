@@ -1,0 +1,1 @@
+sh /app/docker/mams/file/file-web/run.sh
