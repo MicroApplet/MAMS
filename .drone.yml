@@ -13,6 +13,7 @@ steps: # 定义流水线执行步骤，这些步骤将顺序执行
         path: /app/docker/mams # 将应用打包好的Jar和执行脚本挂载出来
     commands:
       - $MAVEN_HOME/bin/mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true
+      - cp -r ./* /app/docker/mams
       - cd /app/docker/mams
       - chmod +x package.sh
       - sh package.sh
