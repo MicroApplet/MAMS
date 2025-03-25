@@ -13,11 +13,11 @@ EXPOSE 10001
 
 #容器运行后执行的命令(该命令在WORKDIR指定的工作目录下执行)
 #注意：多个CMD指令只有最后一个会生效
-CMD java -jar *.jar
+CMD nohup java -jar *.jar /root/logs/output.log 2>&1 &
 
 #在构建镜像时执行的命令
 #我这边用它来打印java的环境变量
 RUN java -version
 
 #添加该镜像的元数据
-LABEL version="1.0" description="用户认证服务" by="Asial Jim"
+LABEL version="latest" description="用户认证服务" by="Asial Jim"

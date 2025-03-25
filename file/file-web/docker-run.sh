@@ -2,7 +2,7 @@
 # 定义应用组名
 group_name='mams'
 # 定义应用名称
-app_name='user-auth'
+app_name='file'
 # 定义应用版本
 app_version='latest'
 docker stop ${app_name}
