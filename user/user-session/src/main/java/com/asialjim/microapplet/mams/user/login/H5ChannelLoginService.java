@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.login;
 
 import com.asialjim.microapplet.common.utils.PasswordStorage;
+import com.asialjim.microapplet.mams.user.cons.Channel;
 import com.asialjim.microapplet.mams.user.model.User;
 import com.asialjim.microapplet.mams.user.parameter.LoginParameter;
 import com.asialjim.microapplet.mams.user.repository.UserRepository;
@@ -41,7 +42,7 @@ public class H5ChannelLoginService implements ChannelLoginService {
 
     @Override
     public String chlCode() {
-        return "H5";
+        return Channel.H5.getCode();
     }
 
     @Override

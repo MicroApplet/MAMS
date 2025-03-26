@@ -40,6 +40,11 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-common</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>user-model</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

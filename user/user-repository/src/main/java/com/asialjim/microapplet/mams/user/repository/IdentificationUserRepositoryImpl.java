@@ -20,7 +20,12 @@ import com.asialjim.microapplet.mams.user.mapper_service.IdentificationUserMappe
 import com.asialjim.microapplet.mams.user.model.IdentificationUser;
 import com.asialjim.microapplet.mams.user.po.IdentificationUserPo;
 import lombok.AllArgsConstructor;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 证件用户数据仓库
@@ -38,5 +43,25 @@ public class IdentificationUserRepositoryImpl implements IdentificationUserRepos
     public void save(IdentificationUser user) {
         IdentificationUserPo po = IdentificationUserPo.toPo(user);
         this.identificationUserMapperService.save(po);
+    }
+
+    @Override
+    public List<IdentificationUser> queryByUserid(String userId) {
+        List<IdentificationUserPo> po = this.identificationUserMapperService.queryByUserid(userId);
+        if (CollectionUtils.isEmpty(po))
+            return Collections.emptyList();
+        return po.stream().map(IdentificationUserPo::fromPo).collect(Collectors.toList());
+    }
+
+    @Override
+    public IdentificationUser queryByUseridAndIdType(String userId, String idType) {
+        IdentificationUserPo po = this.identificationUserMapperService.queryByUseridAndIdType(userId,idType);
+        return IdentificationUserPo.fromPo(po);
+    }
+
+    @Override
+    public void updateById(IdentificationUser user) {
+        IdentificationUserPo po = IdentificationUserPo.toPo(user);
+        this.identificationUserMapperService.updateById(po);
     }
 }

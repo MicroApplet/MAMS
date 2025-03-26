@@ -18,6 +18,8 @@ package com.asialjim.microapplet.mams.user.repository;
 
 import com.asialjim.microapplet.mams.user.model.IdentificationUser;
 
+import java.util.List;
+
 /**
  * 证件用户数据仓库
  *
@@ -28,4 +30,11 @@ import com.asialjim.microapplet.mams.user.model.IdentificationUser;
 public interface IdentificationUserRepository {
 
     void save(IdentificationUser user);
+
+    List<IdentificationUser> queryByUserid(String userId);
+
+    IdentificationUser queryByUseridAndIdType(String userId, String idType);
+
+    void updateById(IdentificationUser user);
+
 }

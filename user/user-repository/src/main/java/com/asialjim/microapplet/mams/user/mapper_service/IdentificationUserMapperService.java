@@ -19,6 +19,8 @@ package com.asialjim.microapplet.mams.user.mapper_service;
 import com.asialjim.microapplet.mams.user.po.IdentificationUserPo;
 import com.mybatisflex.core.service.IService;
 
+import java.util.List;
+
 /**
  * 证件用户表持久化
  *
@@ -27,4 +29,7 @@ import com.mybatisflex.core.service.IService;
  * @since 2025/3/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface IdentificationUserMapperService extends IService<IdentificationUserPo> {
+    List<IdentificationUserPo> queryByUserid(String userId);
+
+    IdentificationUserPo queryByUseridAndIdType(String userId, String idType);
 }

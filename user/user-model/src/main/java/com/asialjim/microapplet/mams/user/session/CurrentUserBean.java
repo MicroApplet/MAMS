@@ -48,13 +48,19 @@ public interface CurrentUserBean {
         CurrentUserBean.Holder.instance._logout();
     }
 
-    static <Q,R> R function(Function<Q,R> function){
+    static <R> R function(Function<MamsSession, R> function) {
         return Holder.instance._function(function);
+    }
+
+    static MamsSession session() {
+        return Holder.instance._session();
     }
 
     User _current(Consumer<User> consumer);
 
-    <Q, R> R _function(Function<Q, R> function);
+    MamsSession _session();
+
+    <R> R _function(Function<MamsSession, R> function);
 
     void _logout();
 }

@@ -30,6 +30,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum WxUserChlRes implements ResCode {
+    CurrentUserLoginChannelErr(false,"CHL:WX:03","当前用户未从微信渠道登录"),
     WeChatAppTypeNotSupport(false, "CHL:WX:02", "不支持该类型微信公众平台应用登录"),
     WeChatPlatformAppNotSupport(false, "CHL:WX:01", "不支持该微信公众平台应用"),
     WeChatChannel(false, "CHL:WX", "微信渠道业务代码");

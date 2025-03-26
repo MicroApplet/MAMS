@@ -1,17 +1,17 @@
 /*
- *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.user.session;
@@ -55,7 +55,7 @@ import java.util.function.Consumer;
 @Data
 @Scope("request")
 @Component(SessionUser.sessionUser)
-public class SessionUser implements CurrentRoles, CurrentPermission, Serializable {
+public class SessionUser implements MamsSession, CurrentRoles, CurrentPermission, Serializable {
     private static final long serialVersionUID = 1405110836520718924L;
     public static final String sessionUser = "innerCurrentSessionUser";
     public static final String SESSION_ID = "sessionId";
@@ -64,6 +64,8 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
     public static final String CHANNEL_CODE = "chlCode";
     public static final String CHANNEL_APP_ID = "chlAppid";
     public static final String CHANNEL_APP_TYPE = "chlAppType";
+    public static final String CHANNEL_USER_ID = "chlOpenid";
+    public static final String CHANNEL_UNION_ID = "chlUnionId";
     public static final String NICKNAME = "nickname";
     public static final String USERNAME = "username";
     public static final String USER_CODE = "userCode";
@@ -127,6 +129,8 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
      * 登录渠道应用类型:H5/wechat-app-type
      */
     private String chlAppType;
+    private String chlOpenid;
+    private String chlUnionId;
 
     /**
      * 用户昵称
@@ -199,6 +203,8 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
                 .withClaim(CHANNEL_CODE, chlCode)
                 .withClaim(CHANNEL_APP_ID, chlAppid)
                 .withClaim(CHANNEL_APP_TYPE, chlAppType)
+                .withClaim(CHANNEL_USER_ID, chlOpenid)
+                .withClaim(CHANNEL_UNION_ID,chlUnionId)
                 .withClaim(NICKNAME, nickname)
                 .withClaim(USERNAME, username)
                 .withClaim(USER_CODE, userCode)
@@ -223,6 +229,8 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
             setChlCode(body(CHANNEL_CODE, jwt));
             setChlAppid(body(CHANNEL_APP_ID, jwt));
             setChlAppType(body(CHANNEL_APP_TYPE, jwt));
+            setChlOpenid(body(CHANNEL_USER_ID, jwt));
+            setChlUnionId(body(CHANNEL_UNION_ID,jwt));
             setNickname(body(NICKNAME, jwt));
             setUsername(body(USERNAME, jwt));
             setUserCode(body(USER_CODE, jwt));
@@ -253,5 +261,4 @@ public class SessionUser implements CurrentRoles, CurrentPermission, Serializabl
             return StringUtils.EMPTY;
         return Optional.ofNullable(jwt).map(item -> item.getClaim(key)).map(Claim::asString).orElse(StringUtils.EMPTY);
     }
-
 }

@@ -14,10 +14,26 @@
  *   limitations under the License.
  */
 
-package com.asialjim.microapplet.mams;
+package com.asialjim.microapplet.mams.user.res;
 
-public class Main {
-    public static void main(String[] args) {
-        System.out.println("Hello world!");
-    }
+import com.asialjim.microapplet.common.context.ResCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+/**
+ * 用户相关响应代码
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/2/27, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+@Getter
+@AllArgsConstructor
+public enum IdentifiedUserResCode implements ResCode {
+    CannotUseOthersIdCard(false,"ID-CARD:01","该证件号已被其他账号使用,请联系客服"),
+    Ok(true,"0","Ok");
+
+    private final boolean success;
+    private final String code;
+    private final String msg;
 }

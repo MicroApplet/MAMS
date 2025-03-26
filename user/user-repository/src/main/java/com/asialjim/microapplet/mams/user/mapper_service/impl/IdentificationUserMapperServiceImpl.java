@@ -22,6 +22,8 @@ import com.asialjim.microapplet.mams.user.po.IdentificationUserPo;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * 证件用户数据仓库
  *
@@ -34,4 +36,13 @@ public class IdentificationUserMapperServiceImpl
         extends ServiceImpl<IdentificationUserBaseMapper, IdentificationUserPo>
         implements IdentificationUserMapperService {
 
+    @Override
+    public List<IdentificationUserPo> queryByUserid(String userId) {
+        return queryChain().where(IdentificationUserPo::getUserId).eq(userId).list();
+    }
+
+    @Override
+    public IdentificationUserPo queryByUseridAndIdType(String userId, String idType) {
+        return queryChain().where(IdentificationUserPo::getUserId).eq(userId).where(IdentificationUserPo::getIdType).eq(idType).one();
+    }
 }

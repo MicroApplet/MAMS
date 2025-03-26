@@ -44,7 +44,7 @@ public class CurrentUserBeanImpl implements CurrentUserBean, ApplicationContextA
 
     @Override
     public User _current(Consumer<User> consumer) {
-        SessionUser sessionUser = sessionUser();
+        SessionUser sessionUser = (SessionUser) _session();
         User user = sessionUser.user(consumer);
         user.setSessionId(sessionUser.getId());
         user.setChlCode(sessionUser.getChlCode());
@@ -55,11 +55,10 @@ public class CurrentUserBeanImpl implements CurrentUserBean, ApplicationContextA
     }
 
     @Override
-    public <Q, R> R _function(Function<Q, R> function) {
+    public <R> R _function(Function<MamsSession, R> function) {
         try {
-            SessionUser sessionUser = sessionUser();
-            //noinspection unchecked
-            return function.apply((Q) sessionUser);
+            MamsSession sessionUser = _session();
+            return function.apply(sessionUser);
         } catch (Throwable t) {
             return null;
         }
@@ -67,14 +66,15 @@ public class CurrentUserBeanImpl implements CurrentUserBean, ApplicationContextA
 
     @Override
     public void _logout() {
-        sessionUser().logout();
+        _session().logout();
     }
 
-    private SessionUser sessionUser() {
-        try {
+    public MamsSession _session(){
+       try {
             return applicationContext.getBean(SessionUser.sessionUser, SessionUser.class);
         } catch (Throwable t) {
             throw UserResCode.UserNotLogin.bizException();
         }
     }
+
 }

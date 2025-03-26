@@ -19,6 +19,7 @@ package com.asialjim.microapplet.mams.user.chl.wx.session;
 import com.asialjim.microapplet.mams.user.chl.wx.WxUserChlRes;
 import com.asialjim.microapplet.mams.user.chl.wx.model.WeChatChlUser;
 import com.asialjim.microapplet.mams.user.chl.wx.repository.WeChatChlUserRepository;
+import com.asialjim.microapplet.mams.user.cons.Channel;
 import com.asialjim.microapplet.mams.user.login.ChannelLoginService;
 import com.asialjim.microapplet.mams.user.model.User;
 import com.asialjim.microapplet.mams.user.parameter.LoginParameter;
@@ -66,7 +67,7 @@ public class WeChatChannelLoginService implements ChannelLoginService, Applicati
 
     @Override
     public String chlCode() {
-        return "wechat";
+        return Channel.WeChat.getCode();
     }
 
     @Override

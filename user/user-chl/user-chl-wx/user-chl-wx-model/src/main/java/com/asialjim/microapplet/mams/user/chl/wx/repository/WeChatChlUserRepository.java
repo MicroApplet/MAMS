@@ -19,6 +19,7 @@ package com.asialjim.microapplet.mams.user.chl.wx.repository;
 import com.asialjim.microapplet.mams.user.chl.wx.model.WeChatChlUser;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -67,4 +68,6 @@ public interface WeChatChlUserRepository {
     }
 
     void update(WeChatChlUser wxChlUser);
+
+    List<WeChatChlUser> queryByUserid(String id);
 }

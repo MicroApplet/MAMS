@@ -1,19 +1,22 @@
 /*
- *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *   limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
+package com.asialjim.microapplet.mams.user.chl.wx.repository.po;
+
+import com.asialjim.microapplet.mams.user.chl.wx.model.WeChatChlUser;
 import com.asialjim.microapplet.mams.user.model.User;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,6 +31,7 @@ import lombok.Data;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 微信渠道用户表映射
@@ -92,4 +96,34 @@ public class WeChatChlUserPo implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
+
+    public static WeChatChlUser fromPo(WeChatChlUserPo po) {
+        if (Objects.isNull(po))
+            return null;
+        WeChatChlUser usr = new WeChatChlUser();
+        //noinspection DuplicatedCode
+        usr.setOpenid(po.getOpenid());
+        usr.setUnionId(po.getUnionId());
+        usr.setAppid(po.getAppid());
+        usr.setAppType(po.getAppType());
+        usr.setUserid(po.getUserid());
+        usr.setCreateTime(po.getCreateTime());
+        usr.setUpdateTime(po.getUpdateTime());
+        return usr;
+    }
+
+    public static WeChatChlUserPo toPo(WeChatChlUser user) {
+        if (Objects.isNull(user))
+            return null;
+        WeChatChlUserPo po = new WeChatChlUserPo();
+        //noinspection DuplicatedCode
+        po.setOpenid(user.getOpenid());
+        po.setUnionId(user.getUnionId());
+        po.setAppid(user.getAppid());
+        po.setAppType(user.getAppType());
+        po.setUserid(user.getUserid());
+        po.setCreateTime(user.getCreateTime());
+        po.setUpdateTime(user.getUpdateTime());
+        return po;
+    }
 }
