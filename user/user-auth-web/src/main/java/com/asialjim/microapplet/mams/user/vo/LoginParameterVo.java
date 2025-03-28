@@ -33,8 +33,8 @@ import java.io.Serializable;
 public class LoginParameterVo implements Serializable {
     private static final long serialVersionUID = 6268575242410458354L;
 
-    @Schema(title = "用户限定编号：如：用户名、手机号、邮箱等")
+    @Schema(description  = "用户限定编号：如：用户名、手机号、邮箱等")
     private String id;
-    @Schema(title = "用户授权码：如：密码，短信验证码，邮箱验证码，用户授权码等")
+    @Schema(description  = "用户授权码：如：密码，短信验证码，邮箱验证码，用户授权码等")
     private String code;
 }

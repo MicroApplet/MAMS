@@ -34,13 +34,13 @@ import java.io.Serializable;
 public class RegisterParameterVo implements Serializable {
     private static final long serialVersionUID = -1664193247605823795L;
 
-    @Schema(description = "昵称")
+    @Schema(description = description = "昵称")
     private String nickname;
 
     @NotBlank(message = "请输入用户名")
     private String username;
 
-    @Schema(description = "密码")
+    @Schema(description = description = "密码")
     private String password;
 
 
