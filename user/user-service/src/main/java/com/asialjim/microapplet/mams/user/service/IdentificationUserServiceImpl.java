@@ -35,6 +35,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Executor;
 
@@ -63,44 +64,31 @@ public class IdentificationUserServiceImpl implements IdentificationUserService 
         User current = CurrentUserBean.current(null);
         IdentificationUser user = new IdentificationUser();
         CountDownLatch countDownLatch = new CountDownLatch(2);
+        // 文件底片留痕
+        CompletableFuture<Void> task1 = CompletableFuture.runAsync(() -> {
+            Result<String> fileIdRes = fileApi.upload(file);
+            Optional.ofNullable(fileIdRes).map(Result::getData).ifPresent(user::setFileId);
+        }, executor);
 
         // 文件底片留痕
-        executor.execute(() -> {
-            try {
-                Result<String> fileIdRes = fileApi.upload(file);
-                Optional.ofNullable(fileIdRes).map(Result::getData).ifPresent(user::setFileId);
-            } finally {
-                countDownLatch.countDown();
-            }
-        });
+        CompletableFuture<Void> task2 = CompletableFuture.runAsync(() -> {
+            String appid = current.getChlAppid();
+            IdCardCVOcrRes idCardCVOcrRes = weChatCVRemoting.idCard(appid, file);
+            boolean front = idCardCVOcrRes.front();
+            user.setFront(front);
+            user.setUserId(current.getId());
+            user.setIdNo(idCardCVOcrRes.getId());
+            user.setIdType(IdCardType.ResidentIdentityCard.getCode());
+            user.setName(idCardCVOcrRes.getName());
+            Gender gender = Gender.descOf(idCardCVOcrRes.getGender());
+            user.setGender(gender);
+            user.setNationality(Nationality.ChineseNationality.descOf(idCardCVOcrRes.getNationality()));
+            user.setAddress(idCardCVOcrRes.getAddr());
+            user.setIssueDate(idCardCVOcrRes.validStart());
+            user.setIssueExpires(idCardCVOcrRes.validEnd());
+        }, executor);
 
-        // 证件识别
-        executor.execute(() -> {
-            try {
-                String appid = current.getChlAppid();
-                IdCardCVOcrRes idCardCVOcrRes = weChatCVRemoting.idCard(appid, file);
-                boolean front = idCardCVOcrRes.front();
-                user.setFront(front);
-                user.setUserId(current.getId());
-                user.setIdNo(idCardCVOcrRes.getId());
-                user.setIdType(IdCardType.ResidentIdentityCard.getCode());
-                user.setName(idCardCVOcrRes.getName());
-                Gender gender = Gender.descOf(idCardCVOcrRes.getGender());
-                user.setGender(gender);
-                user.setNationality(Nationality.ChineseNationality.descOf(idCardCVOcrRes.getNationality()));
-                user.setAddress(idCardCVOcrRes.getAddr());
-                user.setIssueDate(idCardCVOcrRes.validStart());
-                user.setIssueExpires(idCardCVOcrRes.validEnd());
-            } finally {
-                countDownLatch.countDown();
-            }
-        });
-
-        try {
-            countDownLatch.await();
-        } catch (InterruptedException e) {
-            IORes.TimeoutErr.create(Collections.singletonList("文件处理超时")).throwBiz();
-        }
+        CompletableFuture.allOf(task1,task2).join();
 
         this.identificationUserCache.merge(user);
         // 正反面都有

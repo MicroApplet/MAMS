@@ -22,6 +22,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.mybatisflex.annotation.Table;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -35,6 +36,7 @@ import java.time.LocalDateTime;
  * @since 2025/2/24, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Data
+@Table("user_phone")
 public class PhoneUserPo implements Serializable {
     private static final long serialVersionUID = -3681633596778544809L;
 
