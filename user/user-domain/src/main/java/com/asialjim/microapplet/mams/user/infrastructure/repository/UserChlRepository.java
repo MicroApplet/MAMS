@@ -20,6 +20,8 @@ import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 
+import java.util.List;
+
 /**
  * 渠道用户信息存储
  *
@@ -49,4 +51,14 @@ public interface UserChlRepository {
      * @since 2025/4/10
      */
     String saveAndGetId(UserChl target);
+
+    /**
+     * 根据用户编号和应用编号获取该用户的所有渠道用户信息
+     *
+     * @param id       {@link String id}
+     * @param appletId {@link String appletId}
+     * @return {@link List<UserChl> }
+     * @since 2025/4/10
+     */
+    List<UserChl> queryByUseridOfApplet(String id, String appletId);
 }

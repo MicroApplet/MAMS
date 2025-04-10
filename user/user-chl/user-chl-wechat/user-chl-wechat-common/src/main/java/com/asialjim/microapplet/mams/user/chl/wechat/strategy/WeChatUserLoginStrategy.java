@@ -19,8 +19,10 @@ package com.asialjim.microapplet.mams.user.chl.wechat.strategy;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter.WeChatChlAppletAdapter;
 import com.asialjim.microapplet.mams.user.chl.wechat.po.WeChatAppChl;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
-import com.asialjim.microapplet.mams.user.vo.UserRegReq;
+import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
+import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import lombok.AllArgsConstructor;
 
@@ -39,15 +41,22 @@ public abstract class WeChatUserLoginStrategy {
      * 登录渠道应用类型
      */
     public abstract WeChatChlAppType chlAppType();
-
+    public abstract SessionUser doLogin(WeChatAppChl weChatAppChl, UserLoginCommand command);
+    public abstract UserChl doRegistration(WeChatAppChl weChatAppChl,UserRegCommand command);
 
     public final UserChl registration(UserRegCommand command) {
-        UserRegReq req = command.getReq();
+        UserRegOrLoginReq req = command.getReq();
         String chlAppId = req.getChlAppId();
         ChlAppType chlAppType = req.getChlAppType();
         WeChatAppChl weChatAppChl = this.chlAppletAdapter.queryByAppidAndType(chlAppId,chlAppType);
         return doRegistration(weChatAppChl,command);
     }
 
-    public abstract UserChl doRegistration(WeChatAppChl weChatAppChl,UserRegCommand command);
+    public final SessionUser login(UserLoginCommand command){
+        UserRegOrLoginReq req = command.getReq();
+        String chlAppId = req.getChlAppId();
+        ChlAppType chlAppType = req.getChlAppType();
+        WeChatAppChl weChatAppChl = this.chlAppletAdapter.queryByAppidAndType(chlAppId,chlAppType);
+        return doLogin(weChatAppChl, command);
+    }
 }

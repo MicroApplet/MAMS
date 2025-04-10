@@ -19,9 +19,10 @@ package com.asialjim.microapplet.mams.user.domain.strategy;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.ChlTypeResCode;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
-import com.asialjim.microapplet.mams.user.domain.agg.UserAgg;
+import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserChlRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserMainRepository;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
@@ -54,12 +55,12 @@ public abstract class BaseUserAuthenticateStrategy {
             ChlTypeResCode.ChlTypeMismatch.throwBiz();
 
         // 自注册：如果当前会话用户编号为空，则注册一个主用户
-        UserAgg userAgg = command.getUserAgg();
+        UserAggRoot userAgg = command.getUserAgg();
         String chlAppId = command.getReq().getChlAppId();
         ChlAppType chlAppType = command.getReq().getChlAppType();
         String appletId = command.getReq().getAppletId();
         // 当前会话
-        SessionUser sessionUser = userAgg.sessionUser();
+        SessionUser sessionUser = userAgg.getSessionUser();
         // 当前会话用户编号
         String userid = sessionUser.getUserid();
         // 当前会话用户已存在用户编号
@@ -87,8 +88,16 @@ public abstract class BaseUserAuthenticateStrategy {
     /**
      * 执行用户注册功能
      *
-     * @param command {@link UserRegCommand command}
+     * @param command {@link UserRegCommand 用户注册命令}
      * @since 2025/4/10
      */
     protected abstract void doRegistration(UserRegCommand command);
+
+    /**
+     * 用户登录
+	 * @param command {@link UserLoginCommand 用户登录命令}
+     * @return {@link SessionUser }
+     * @since 2025/4/10
+     */
+    public abstract SessionUser login(UserLoginCommand command);
 }

@@ -149,8 +149,8 @@ public class SessionUser implements Serializable {
         if (StringUtils.isBlank(userid))
             throw UserResCode.UserNotLogin.bizException();
 
-        UserAgg userAgg = App.beanAndThen(UserAgg.class, userAgg1 -> userAgg1.sessionUser().setUserid(userid)) ;
-        UserMain user = userAgg.userMain();
+        UserAggRoot userAgg = App.beanAndThen(UserAggRoot.class, userAgg1 -> userAgg1.getSessionUser().setUserid(userid)) ;
+        UserMain user = userAgg.userMainOrThrow(null);
         if (Objects.nonNull(consumer) && Objects.nonNull(user))
             consumer.accept(user);
 
@@ -160,6 +160,11 @@ public class SessionUser implements Serializable {
 
     public void logout() {
         this.jwtTokenCache.delete(this.authorization);
+    }
+
+    public String authorization(){
+        authorization(null);
+        return getAuthorization();
     }
 
     public void authorization(String authorization) {

@@ -50,14 +50,9 @@ public class UserIdCard implements Serializable {
     private String userid;
 
     /**
-     * 用户在哪个机构下进行的实名
-     *
-     * @see UserMain#getOrgId()
-     * @see com.asialjim.microapplet.mams.applet.pojo.Applet#getOrgId()
-     * @see com.asialjim.microapplet.mams.org.pojo.Organization#getId()
+     * 用户所属应用
      */
-    @SuppressWarnings("JavadocReference")
-    private String orgId;
+    private String appletId;
 
     /**
      * 证件号:建议加密存储
@@ -128,4 +123,24 @@ public class UserIdCard implements Serializable {
      * 更新日期
      */
     private LocalDateTime updateTime;
+
+    private transient String fileId;
+    private transient Boolean front;
+
+    public void setFileId(String fileId) {
+        this.fileId = fileId;
+        if (Boolean.TRUE.equals(front))
+            setFrontFileId(fileId);
+        if (Boolean.FALSE.equals(front))
+            setBackFileId(fileId);
+    }
+
+    public void setFront(boolean front) {
+        this.front = front;
+        if (front) {
+            setFrontFileId(getFileId());
+        } else {
+            setBackFileId(getFileId());
+        }
+    }
 }

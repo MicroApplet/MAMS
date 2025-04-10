@@ -14,33 +14,19 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.res;
+package com.asialjim.microapplet.mams.user.infrastructure.adapter;
 
-import com.asialjim.microapplet.common.context.ResCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.asialjim.microapplet.mams.user.infrastructure.adapter.meta.IdCardOcrRes;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 用户相关响应代码
+ * 证件OCR适配器
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum UserResCode implements ResCode {
-    UsernameUnavailable("USER:USERNAME:UNAVAILABLE", "用户名不可用"),
-    UserNotLogin("USER:LOGIN:ERR", "用户未登录"),
-    UserNameOrPasswordErr("USER:NAME-PASSWORD:ERR", "用户名或者密码错误"),
-    UserHasExist("USER:ID-NO:EXIST", "该证件已被其他用户账号注册");
+public interface IdCardOcrAdapter {
 
-    private final String code;
-    private final String msg;
-
-
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
+    IdCardOcrRes ocr(String appid,MultipartFile file);
 }

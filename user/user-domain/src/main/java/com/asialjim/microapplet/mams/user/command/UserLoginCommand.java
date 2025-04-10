@@ -16,21 +16,18 @@
 
 package com.asialjim.microapplet.mams.user.command;
 
-import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.ChlTypeResCode;
-import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
-import java.util.Objects;
 import java.util.Optional;
 
 /**
- * 用户注册命令
+ * 用户登录命令
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
@@ -38,10 +35,9 @@ import java.util.Optional;
  */
 @Data
 @Accessors(chain = true)
-public class UserRegCommand implements Serializable {
-    private static final long serialVersionUID = 6280065545023907004L;
+public class UserLoginCommand implements Serializable {
+    private static final long serialVersionUID = -3853932921226593364L;
 
-    private UserAggRoot userAgg;
     private UserRegOrLoginReq req;
 
     public ChlType regChlType() {
@@ -49,22 +45,14 @@ public class UserRegCommand implements Serializable {
                 .map(UserRegOrLoginReq::getChlType)
                 .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::bizException);
     }
+
     public ChlAppType regChlAppType() {
         return Optional.ofNullable(req)
                 .map(UserRegOrLoginReq::getChlAppType)
                 .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::bizException);
     }
 
-    public UserAggRoot getUserAgg() {
-        if (Objects.nonNull(userAgg))
-            return userAgg;
-        App.beanAndThen(UserAggRoot.class, this::setUserAgg);
-        return userAgg;
+    public static UserLoginCommand commandOf(UserRegOrLoginReq req) {
+        return new UserLoginCommand().setReq(req);
     }
-
-    public static UserRegCommand commandOf(UserRegOrLoginReq req) {
-        return new UserRegCommand().setReq(req);
-    }
-
-
 }

@@ -16,19 +16,22 @@
 
 package com.asialjim.microapplet.mams.user.application;
 
+import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.ChlTypeResCode;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
-import com.asialjim.microapplet.mams.user.domain.agg.UserAgg;
+import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
+import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.domain.strategy.BaseUserAuthenticateStrategy;
+import com.asialjim.microapplet.mams.user.infrastructure.adapter.CurrentUserAdapter;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.asialjim.microapplet.mams.user.res.UserResCode;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
+import java.util.function.Supplier;
 
 /**
  * 用户认证服务
@@ -62,12 +65,31 @@ public class UserAuthenticationService {
      * @since 2025/4/10
      */
     public UserMain registration(UserRegCommand command) {
-        BaseUserAuthenticateStrategy strategy = strategyMap.get(command.regChlType());
-        if (Objects.isNull(strategy))
-            ChlTypeResCode.ChlTypeNotSupport.throwBiz();
+        BaseUserAuthenticateStrategy strategy = strategy(command::regChlType);
 
-        UserAgg userAgg = command.getUserAgg();
+        UserAggRoot userAgg = command.getUserAgg();
         strategy.registration(command);
-        return userAgg.userMain();
+        return userAgg.userMainOrThrow(null);
+    }
+
+    public String login(UserLoginCommand command) {
+        BaseUserAuthenticateStrategy strategy = strategy(command::regChlType);
+
+        SessionUser sessionUser = strategy.login(command);
+        return sessionUser.authorization();
+    }
+
+    private BaseUserAuthenticateStrategy strategy(Supplier<ChlType> command) {
+        return Optional.ofNullable(strategyMap.get(command.get()))
+                .orElseThrow(ChlTypeResCode.ChlTypeNotSupport::bizException);
+    }
+
+    public UserMain current() {
+        UserAggRoot userAgg = App.beanOrThrow(UserAggRoot.class, UserResCode.UserNotLogin::bizException);
+        return userAgg.userMainOrThrow(UserResCode.UserNotLogin::bizException);
+    }
+
+    public void logout() {
+        CurrentUserAdapter.logout();
     }
 }

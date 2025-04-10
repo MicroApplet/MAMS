@@ -16,17 +16,20 @@
 
 package com.asialjim.microapplet.mams.user.chl;
 
+import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.NormalChlAppType;
 import com.asialjim.microapplet.mams.channel.base.NormalChlType;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
-import com.asialjim.microapplet.mams.user.domain.agg.UserAgg;
+import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.domain.strategy.BaseUserAuthenticateStrategy;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserChlRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserMainRepository;
-import com.asialjim.microapplet.mams.user.vo.UserRegReq;
+import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.mams.user.res.UserResCode;
 import org.springframework.lang.NonNull;
@@ -56,13 +59,13 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
 
     @Override
     public void doRegistration(UserRegCommand command) {
-        UserAgg userAgg = command.getUserAgg();
+        UserAggRoot userAgg = command.getUserAgg();
         // 当前会话
-        SessionUser sessionUser = userAgg.sessionUser();
+        SessionUser sessionUser = userAgg.getSessionUser();
         // 当前会话用户编号
         String userid = sessionUser.getUserid();
         // 注册参数
-        UserRegReq req = command.getReq();
+        UserRegOrLoginReq req = command.getReq();
         String username = req.getUsername();
         UserChl exist = this.userChlRepository.queryChlUser(supportType(), NormalChlAppType.H5.getCode(), NormalChlAppType.H5, username);
         if (Objects.nonNull(exist))
@@ -83,5 +86,30 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         // 注册渠道用户
         String id = this.userChlRepository.saveAndGetId(target);
         target.setId(id);
+    }
+
+    @Override
+    public SessionUser login(UserLoginCommand command) {
+        UserRegOrLoginReq loginParameter = command.getReq();
+        String username = loginParameter.getUsername();
+        String password = loginParameter.getCode();
+
+        UserChl user = this.userChlRepository.queryChlUser(supportType(), NormalChlAppType.H5.getCode(), NormalChlAppType.H5, username);
+        if (Objects.isNull(user))
+            UserResCode.UserNameOrPasswordErr.throwBiz();
+
+        boolean passwordCheck = PasswordStorage.verifyPassword(password, user.getChlUserCode());
+        if (!passwordCheck)
+            UserResCode.UserNameOrPasswordErr.throwBiz();
+
+        UserMain userMain = userMainRepository.queryById(user.getId());
+        SessionUser sessionUser = App.beanOrNull(SessionUser.class);
+        sessionUser.setUserid(user.getId());
+        sessionUser.setUsername(user.getChlUserId());
+        sessionUser.setChlType(NormalChlType.H5.getCode());
+        sessionUser.setChlAppid(NormalChlAppType.H5.getCode());
+        sessionUser.setChlAppType(NormalChlAppType.H5.getCode());
+        sessionUser.setNickname(userMain.getNickname());
+        return sessionUser;
     }
 }

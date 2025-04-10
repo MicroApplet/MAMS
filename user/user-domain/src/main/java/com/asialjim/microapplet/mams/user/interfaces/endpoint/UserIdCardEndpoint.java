@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.interfaces.controller;
+package com.asialjim.microapplet.mams.user.interfaces.endpoint;
 
-import com.asialjim.microapplet.mams.user.application.UserAuthenticationService;
-import com.asialjim.microapplet.mams.user.command.UserRegCommand;
-import com.asialjim.microapplet.mams.user.vo.UserRegReq;
-import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.asialjim.microapplet.mams.user.application.UserIdCardService;
+import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 用户认证服务
+ * 用户证件服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
@@ -32,18 +31,18 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @AllArgsConstructor
-public class UserAuthenticateController {
-    private final UserAuthenticationService userAuthenticationService;
+public class UserIdCardEndpoint {
+
+    private final UserIdCardService userIdCardService;
+
 
     /**
-     * 用户注册
-     *
-	 * @param req {@link UserRegReq req}
-     * @return {@link UserMain }
+     * 用户证件注册：通过上传文件
+	 * @param file {@link MultipartFile file}
+     * @return {@link UserIdCard }
      * @since 2025/4/10
      */
-    public UserMain registration(UserRegReq req) {
-        UserRegCommand command = UserRegCommand.commandOf(req);
-        return userAuthenticationService.registration(command);
+    public UserIdCard idCardRegByFile(MultipartFile file) {
+        return this.userIdCardService.idCardRegByFile(file);
     }
 }

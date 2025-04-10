@@ -16,10 +16,14 @@
 
 package com.asialjim.microapplet.mams.user.chl.wechat.strategy;
 
+import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter.WeChatChlAppletAdapter;
 import com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter.WeChatOfficialUserAdapter;
 import com.asialjim.microapplet.mams.user.chl.wechat.po.WeChatAppChl;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
+import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import org.springframework.stereotype.Component;
 
@@ -41,6 +45,19 @@ public class WeChatOfficialUserLoginStrategy extends WeChatUserLoginStrategy {
     @Override
     public WeChatChlAppType chlAppType() {
         return WeChatChlAppType.Official;
+    }
+
+    @Override
+    public SessionUser doLogin(WeChatAppChl weChatAppChl, UserLoginCommand command) {
+        SessionUser sessionUser = App.beanOrNull(SessionUser.class);
+        String code = command.getReq().getCode();
+
+        UserChl user = this.weChatOfficialUserAdapter.login(weChatAppChl, code);
+        sessionUser.setUserid(user.getId());
+        // openid
+        sessionUser.setUsername(user.getChlUserId());
+        sessionUser.setChlType(NormalChlType.WeChat.getCode());
+        return sessionUser;
     }
 
     @Override

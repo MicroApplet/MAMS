@@ -17,6 +17,6 @@
 package com.asialjim.microapplet.mams.user.interfaces;
 /*
 ├── 接口层（interfaces）
-│   ├── ApplicationController  # REST API（创建/查询应用）
+│   ├── ApplicationEndport  # REST API（创建/查询应用） => controller
 │   └── PlatformAdapterFacade   # 多平台配置API
  */

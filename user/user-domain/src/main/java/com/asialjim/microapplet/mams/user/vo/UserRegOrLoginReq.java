@@ -32,7 +32,7 @@ import java.io.Serializable;
  */
 @Data
 @Accessors(chain = true)
-public class UserRegReq implements Serializable {
+public class UserRegOrLoginReq implements Serializable {
     private static final long serialVersionUID = -6188159651042396287L;
 
     /**

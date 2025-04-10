@@ -18,13 +18,14 @@ package com.asialjim.microapplet.mams.user.chl.wechat.strategy;
 
 import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.mams.channel.base.*;
+import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
-import com.asialjim.microapplet.mams.user.domain.agg.UserAgg;
+import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.domain.strategy.BaseUserAuthenticateStrategy;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserChlRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserMainRepository;
-import com.asialjim.microapplet.mams.user.vo.UserRegReq;
+import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.lang.NonNull;
@@ -75,13 +76,13 @@ public class WeChatUserAuthenticationStrategy extends BaseUserAuthenticateStrate
         if (Objects.isNull(strategy))
             ChlTypeResCode.ChlTypeNotSupport.throwBiz();
 
-        UserAgg userAgg = command.getUserAgg();
+        UserAggRoot userAgg = command.getUserAgg();
         // 当前会话
-        SessionUser sessionUser = userAgg.sessionUser();
+        SessionUser sessionUser = userAgg.getSessionUser();
         // 当前会话用户编号
         String userid = sessionUser.getUserid();
 
-        UserRegReq req = command.getReq();
+        UserRegOrLoginReq req = command.getReq();
         UserChl target = strategy.registration(command);
 
         // 合并都主用户
@@ -95,5 +96,17 @@ public class WeChatUserAuthenticationStrategy extends BaseUserAuthenticateStrate
         // 注册渠道用户
         String id = this.userChlRepository.saveAndGetId(target);
         target.setId(id);
+    }
+
+    @Override
+    public SessionUser login(UserLoginCommand command) {
+        WeChatUserLoginStrategy strategy = this.strategyMap.get(command.regChlAppType());
+        if (Objects.isNull(strategy))
+            ChlTypeResCode.ChlTypeNotSupport.throwBiz();
+
+        UserRegOrLoginReq req = command.getReq();
+        SessionUser login = strategy.login(command);
+
+        return null;
     }
 }
