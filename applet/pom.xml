@@ -25,13 +25,12 @@
         <version>1.1.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asialjim.microapplet.mams.user</groupId>
-    <artifactId>user</artifactId>
-    <name>User</name>
+    <groupId>com.asialjim.microapplet.mams.applet</groupId>
+    <artifactId>applet</artifactId>
     <packaging>pom</packaging>
+    <name>Applet</name>
     <modules>
-        <module>user-domain</module>
-        <module>user-chl</module>
+        <module>applet-domain</module>
     </modules>
 
     <properties>

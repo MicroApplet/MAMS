@@ -1,1 +1,0 @@
-sh /app/docker/mams/file/file-web/package.sh

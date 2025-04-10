@@ -20,24 +20,34 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>mams</artifactId>
+        <groupId>com.asialjim.microapplet.mams.applet</groupId>
+        <artifactId>applet</artifactId>
         <version>1.1.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asialjim.microapplet.mams.user</groupId>
-    <artifactId>user</artifactId>
-    <name>User</name>
-    <packaging>pom</packaging>
-    <modules>
-        <module>user-domain</module>
-        <module>user-chl</module>
-    </modules>
+    <artifactId>applet-domain</artifactId>
+    <name>Domain</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams.channel</groupId>
+            <artifactId>channel-base</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+    </dependencies>
 
 </project>

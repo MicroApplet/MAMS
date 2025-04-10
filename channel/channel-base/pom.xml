@@ -20,24 +20,27 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>mams</artifactId>
+        <groupId>com.asialjim.microapplet.mams.channel</groupId>
+        <artifactId>channel</artifactId>
         <version>1.1.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asialjim.microapplet.mams.user</groupId>
-    <artifactId>user</artifactId>
-    <name>User</name>
-    <packaging>pom</packaging>
-    <modules>
-        <module>user-domain</module>
-        <module>user-chl</module>
-    </modules>
+    <artifactId>channel-base</artifactId>
+    <name>Channel Base</name>
+    <description>通用信息</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-common</artifactId>
+        </dependency>
+    </dependencies>
+
 
 </project>

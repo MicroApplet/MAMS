@@ -25,15 +25,8 @@
         <version>1.1.1-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asialjim.microapplet.mams.user.chl</groupId>
-    <artifactId>user-chl</artifactId>
-    <packaging>pom</packaging>
-    <name>User Chl</name>
-    <description>用户渠道</description>
-    <modules>
-        <module>user-chl-h5</module>
-        <module>user-chl-wechat</module>
-    </modules>
+    <artifactId>user-domain</artifactId>
+    <name>User Domain</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -43,10 +36,43 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.asialjim.microapplet.mams.user</groupId>
-            <artifactId>user-domain</artifactId>
+            <groupId>com.asialjim.microapplet.mams.channel</groupId>
+            <artifactId>channel-base</artifactId>
             <version>${project.version}</version>
         </dependency>
-    </dependencies>
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-config-core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.auth0</groupId>
+            <artifactId>java-jwt</artifactId>
+        </dependency>
+
+    </dependencies>
 </project>

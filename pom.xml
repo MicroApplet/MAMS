@@ -73,9 +73,11 @@
     </scm>
 
     <modules>
-        <module>application</module>
+        <module>org</module>
+        <module>applet</module>
         <module>user</module>
-        <module>file</module>
+        <module>channel</module>
+        <module>role</module>
     </modules>
 
     <properties>
