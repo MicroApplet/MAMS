@@ -22,6 +22,8 @@ import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 /**
  * 微信渠道应用类型
  *
@@ -34,6 +36,10 @@ import lombok.Getter;
 public enum WeChatChlAppType implements ChlAppType {
     Official("wechat:official", "微信公众号"),
     Applet("wechat:applet", "微信小程序");
+
+    static{
+        ChlAppType.all.addAll(Arrays.asList(values()));
+    }
 
     private final String code;
 

@@ -17,6 +17,12 @@
 package com.asialjim.microapplet.mams.channel.base;
 
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 渠道类型
  *
@@ -25,6 +31,8 @@ package com.asialjim.microapplet.mams.channel.base;
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface ChlType {
+    List<ChlType> all = new ArrayList<>();
+
     /**
      * 渠道类型编号
      */
@@ -34,4 +42,12 @@ public interface ChlType {
      * 渠道类型描述
      */
     String getDesc();
+
+    static ChlType codeOf(String code) {
+        return all.stream().filter(item -> StringUtils.equals(code, item.getCode())).findFirst().orElse(null);
+    }
+
+    static void support(ChlType chl){
+        // do nothing here
+    }
 }

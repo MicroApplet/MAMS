@@ -14,32 +14,20 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.util.Arrays;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper.UserMainBaseMapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 通用渠道类型
+ * Mapper 扫描
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum NormalChlType implements ChlType {
-    Myself("Myself", "本渠道"),
-    H5("H5", "H5平台、包括PC端"),
-    WeChat("WeChat","微信"),
-    Phone("Phone", "移动电话渠道");
-
-    static {
-        ChlType.all.addAll(Arrays.asList(values()));
-    }
-
-    private final String code;
-    private final String desc;
+@Configuration
+@MapperScan(basePackageClasses = UserMainBaseMapper.class)
+public class MyBatisFlexMapperConfig {
 }

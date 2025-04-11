@@ -53,7 +53,7 @@ public class WeChatOfficialUserLoginStrategy extends WeChatUserLoginStrategy {
         String code = command.getReq().getCode();
 
         UserChl user = this.weChatOfficialUserAdapter.login(weChatAppChl, code);
-        sessionUser.setUserid(user.getId());
+        sessionUser.setUserid(user.getUserid());
         // openid
         sessionUser.setUsername(user.getChlUserId());
         sessionUser.setChlType(NormalChlType.WeChat.getCode());

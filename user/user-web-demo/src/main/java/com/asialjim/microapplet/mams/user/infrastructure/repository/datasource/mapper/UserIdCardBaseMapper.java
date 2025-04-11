@@ -14,33 +14,17 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.role;
+package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserIdCardPo;
+import com.mybatisflex.core.BaseMapper;
 
 /**
- * 用户角色
+ * 用户证件信息ORM
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version: 1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum UserRole implements Role {
-    Tourist(0, "游客", "未登录用户"),
-    Login(1, "登录用户", "已登录"),
-    Phone(1 << 1, "手机号用户", "已授权手机号"),
-    Identification(1 << 2, "证件号用户", "已绑定证件号"),
-
-    Illegal(1L << 63, "非法角色", "非法角色");
-
-    public RoleType getRoleType() {
-        return RoleType.User;
-    }
-
-    private final long code;
-    private final String name;
-    private final String desc;
+public interface UserIdCardBaseMapper extends BaseMapper<UserIdCardPo> {
 }

@@ -101,15 +101,13 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         boolean passwordCheck = PasswordStorage.verifyPassword(password, user.getChlUserCode());
         if (!passwordCheck)
             UserResCode.UserNameOrPasswordErr.throwBiz();
-
-        UserMain userMain = userMainRepository.queryById(user.getId());
-        SessionUser sessionUser = App.beanOrNull(SessionUser.class);
-        sessionUser.setUserid(user.getId());
+        UserAggRoot userAgg = command.getUserAggWithUserid(user.getUserid());
+        SessionUser sessionUser = userAgg.getSessionUser();
+        sessionUser.setUserid(user.getUserid());
         sessionUser.setUsername(user.getChlUserId());
         sessionUser.setChlType(NormalChlType.H5.getCode());
         sessionUser.setChlAppid(NormalChlAppType.H5.getCode());
         sessionUser.setChlAppType(NormalChlAppType.H5.getCode());
-        sessionUser.setNickname(userMain.getNickname());
         return sessionUser;
     }
 }

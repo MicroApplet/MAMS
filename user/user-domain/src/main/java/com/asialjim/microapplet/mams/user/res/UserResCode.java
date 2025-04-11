@@ -31,7 +31,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserResCode implements ResCode {
     UsernameUnavailable("USER:USERNAME:UNAVAILABLE", "用户名不可用"),
-    UserNotLogin("USER:LOGIN:ERR", "用户未登录"),
+    UserNotLogin("USER:LOGIN:ERR", "用户未登录"){
+        @Override
+        public int getStatus() {
+            return 401;
+        }
+    },
     UserNameOrPasswordErr("USER:NAME-PASSWORD:ERR", "用户名或者密码错误"),
     UserHasExist("USER:ID-NO:EXIST", "该证件已被其他用户账号注册");
 

@@ -14,32 +14,27 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.util.Arrays;
+import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.mams.channel.base.ChlAppType;
+import com.asialjim.microapplet.mams.channel.base.ChlType;
+import com.asialjim.microapplet.mams.channel.base.NormalChlAppType;
+import com.asialjim.microapplet.mams.channel.base.NormalChlType;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 通用渠道类型
+ * 启动器
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum NormalChlType implements ChlType {
-    Myself("Myself", "本渠道"),
-    H5("H5", "H5平台、包括PC端"),
-    WeChat("WeChat","微信"),
-    Phone("Phone", "移动电话渠道");
-
-    static {
-        ChlType.all.addAll(Arrays.asList(values()));
+@SpringBootApplication
+public class UserWebDemoApp {
+    public static void main(String[] args) {
+        ChlAppType.support(NormalChlAppType.H5);
+        ChlType.support(NormalChlType.H5);
+        App.voidStart(UserWebDemoApp.class,args);
     }
-
-    private final String code;
-    private final String desc;
 }

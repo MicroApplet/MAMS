@@ -53,7 +53,7 @@ public class WeChatAppletUserLoginStrategy extends WeChatUserLoginStrategy {
         UserChl user = this.weChatOfficialUserAdapter.login(weChatAppChl, code);
 
         SessionUser sessionUser = App.beanOrNull(SessionUser.class);
-        sessionUser.setUserid(user.getId());
+        sessionUser.setUserid(user.getUserid());
         sessionUser.setUsername(user.getChlUserId());
         sessionUser.setChlType(NormalChlType.WeChat.getCode());
         return sessionUser;

@@ -16,14 +16,18 @@
 
 package com.asialjim.microapplet.mams.user.command;
 
+import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.ChlTypeResCode;
+import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
+import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Optional;
 
 /**
@@ -38,6 +42,7 @@ import java.util.Optional;
 public class UserLoginCommand implements Serializable {
     private static final long serialVersionUID = -3853932921226593364L;
 
+    private UserAggRoot userAgg;
     private UserRegOrLoginReq req;
 
     public ChlType regChlType() {
@@ -51,6 +56,24 @@ public class UserLoginCommand implements Serializable {
                 .map(UserRegOrLoginReq::getChlAppType)
                 .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::bizException);
     }
+
+    public UserAggRoot getUserAgg() {
+        if (Objects.nonNull(userAgg))
+            return userAgg;
+        App.beanAndThen(UserAggRoot.class, this::setUserAgg);
+        return userAgg;
+    }
+
+    public UserAggRoot getUserAggWithUserid(String userid) {
+        if (Objects.isNull(userAgg)){
+            App.beanAndThen(UserAggRoot.class, this::setUserAgg);
+        }
+
+        SessionUser sessionUser = userAgg.getSessionUser();
+        sessionUser.setUserid(userid);
+        return userAgg;
+    }
+
 
     public static UserLoginCommand commandOf(UserRegOrLoginReq req) {
         return new UserLoginCommand().setReq(req);

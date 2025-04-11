@@ -14,33 +14,22 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.role;
+package com.asialjim.microapplet.mams.user.infrastructure.adapter;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
- * 角色
+ * 文件上传
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface Role {
-    /**
-     * 角色类型
-     */
-    RoleType getRoleType();
-
-    /**
-     * 角色编号
-     */
-    long getCode();
-
-    /**
-     * 角色名称
-     */
-    String getName();
-
-    /**
-     * 角色描述
-     */
-    String getDesc();
+@Component
+public class FileUploadAdapterImpl implements FileUploadAdapter {
+    @Override
+    public String upload(MultipartFile file) {
+        return "https://www.baidu.com";
+    }
 }

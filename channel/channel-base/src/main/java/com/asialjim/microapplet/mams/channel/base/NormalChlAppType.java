@@ -19,6 +19,8 @@ package com.asialjim.microapplet.mams.channel.base;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 /**
  * 通用渠道应用类型
  *
@@ -31,6 +33,10 @@ import lombok.Getter;
 public enum NormalChlAppType implements ChlAppType {
     H5("H5", "H5平台、包括PC端", NormalChlType.H5),
     Phone("Phone", "移动电话渠道", NormalChlType.Phone);
+
+    static {
+        ChlAppType.all.addAll(Arrays.asList(values()));
+    }
 
     public final String code;
     public final String desc;

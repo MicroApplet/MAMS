@@ -149,7 +149,7 @@ public class SessionUser implements Serializable {
         if (StringUtils.isBlank(userid))
             throw UserResCode.UserNotLogin.bizException();
 
-        UserAggRoot userAgg = App.beanAndThen(UserAggRoot.class, userAgg1 -> userAgg1.getSessionUser().setUserid(userid)) ;
+        UserAggRoot userAgg = App.beanAndThen(UserAggRoot.class, userAgg1 -> userAgg1.getSessionUser().setUserid(userid));
         UserMain user = userAgg.userMainOrThrow(null);
         if (Objects.nonNull(consumer) && Objects.nonNull(user))
             consumer.accept(user);
@@ -162,7 +162,7 @@ public class SessionUser implements Serializable {
         this.jwtTokenCache.delete(this.authorization);
     }
 
-    public String authorization(){
+    public String authorization() {
         authorization(null);
         return getAuthorization();
     }
@@ -222,15 +222,30 @@ public class SessionUser implements Serializable {
         }
     }
 
+    public static DecodedJWT verify(HttpServletRequest request, JwtConfProperty jwtConfProperty, JwtTokenRepository jwtTokenRepository) {
+        String authorization = AuthorizationHeader(request);
+        String token = jwtTokenRepository.get(authorization);
+        if (StringUtils.isBlank(token))
+            UserResCode.UserNotLogin.throwBiz();
+        Algorithm algorithm = Algorithm.HMAC256(jwtConfProperty.getSecret());
+        JWTVerifier verifier = JWT.require(algorithm).build();
+        return verifier.verify(token);
+    }
+
     private String currentAuthorization() {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
         HttpServletRequest request = servletRequestAttributes.getRequest();
+        return AuthorizationHeader(request);
+    }
+
+    public static String AuthorizationHeader(HttpServletRequest request) {
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String name = headerNames.nextElement();
             if (StringUtils.equalsIgnoreCase(name, HttpHeaders.AUTHORIZATION)) {
-                return request.getHeader(name);
+                String header = request.getHeader(name);
+                return StringUtils.replace(header, "Bearer ", "");
             }
         }
         return StringUtils.EMPTY;

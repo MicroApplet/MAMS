@@ -14,23 +14,17 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.role;
+package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserChlPo;
+import com.mybatisflex.core.BaseMapper;
 
 /**
- * 角色类型
+ * 渠道用户ORM
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum RoleType {
-    User("User", "用户"),
-    Employee("Employee", "雇员");
-    private final String code;
-    private final String desc;
+public interface UserChlBaseMapper extends BaseMapper<UserChlPo> {
 }

@@ -14,32 +14,24 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.user.infrastructure.adapter;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.util.Arrays;
+import com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter.WeChatUserAdapter;
+import com.asialjim.microapplet.mams.user.chl.wechat.po.WeChatAppChl;
+import com.asialjim.microapplet.mams.user.pojo.UserChl;
+import org.springframework.stereotype.Component;
 
 /**
- * 通用渠道类型
+ * 微信用户适配器
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum NormalChlType implements ChlType {
-    Myself("Myself", "本渠道"),
-    H5("H5", "H5平台、包括PC端"),
-    WeChat("WeChat","微信"),
-    Phone("Phone", "移动电话渠道");
-
-    static {
-        ChlType.all.addAll(Arrays.asList(values()));
+@Component
+public class WeChatUserAdapterImpl implements WeChatUserAdapter {
+    @Override
+    public UserChl login(WeChatAppChl weChatAppChl, String code) {
+        return null;
     }
-
-    private final String code;
-    private final String desc;
 }
