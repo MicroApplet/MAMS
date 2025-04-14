@@ -21,6 +21,7 @@ import com.asialjim.microapplet.common.human.IdCardType;
 import com.asialjim.microapplet.common.human.Nationality;
 import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -127,11 +128,13 @@ public class UserIdCardPo implements Serializable {
     /**
      * 创建日期
      */
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     /**
      * 更新日期
      */
+    @Column(onInsertValue = "now()",onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     public static UserIdCardPo toPo(UserIdCard body){

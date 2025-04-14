@@ -21,6 +21,7 @@ import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -119,7 +120,9 @@ public class UserChlPo implements Serializable {
      */
     private String chlUserToken;
 
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
+    @Column(onInsertValue = "now()",onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     public static UserChl fromPo(UserChlPo po) {

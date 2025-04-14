@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po;
 
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
@@ -70,11 +71,13 @@ public class UserMainPo implements Serializable {
     /**
      * 首次注册时间
      */
+    @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
 
     /**
      * 用户更新时间
      */
+    @Column(onInsertValue = "now()",onUpdateValue = "now()")
     private LocalDateTime updateTime;
 
     public static UserMainPo toPo(UserMain body) {
