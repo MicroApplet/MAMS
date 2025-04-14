@@ -60,7 +60,7 @@ public class JwtConfProperty implements Conf<JwtConfProperty>, Serializable {
     public Conf<JwtConfProperty> deftConf() {
         JwtConfProperty res = new JwtConfProperty();
         res.setSecret("abc");
-        res.setTimeout(5L);
+        res.setTimeout(6L);
         res.setTimeUnit(TimeUnit.HOURS);
         return res;
     }

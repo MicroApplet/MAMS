@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.infrastructure.adapter;
+package com.asialjim.microapplet.mams.user.infrastructure.adapter.impl;
 
 import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
+import com.asialjim.microapplet.mams.user.infrastructure.adapter.CurrentUserAdapter;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
