@@ -14,35 +14,23 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.infrastructure.repository;
+package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.service.impl;
 
-import com.asialjim.microapplet.common.human.IdCardType;
-import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper.UserMainBaseMapper;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserMainPo;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.service.UserMainMapperService;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
 import org.springframework.stereotype.Component;
 
 /**
- * 用户证件存储
+ * 用户主账户存储服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/14, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-public class UserIdCardRepositoryImpl implements UserIdCardRepository{
-    @Override
-    public void mergeAndSave(UserIdCard user) {
-        // todo
-    }
-
-    @Override
-    public UserIdCard queryByIdNoOfTypeForApplet(String idNo, IdCardType idCardType, String appletId) {
-        // todo
-        return null;
-    }
-
-    @Override
-    public UserIdCard queryByUseridOfIdTypeForApplet(String id, IdCardType idCardType, String appletId) {
-        // todo
-        return null;
-    }
+public class UserMainMapperServiceImpl
+        extends ServiceImpl<UserMainBaseMapper, UserMainPo>
+        implements UserMainMapperService {
 }

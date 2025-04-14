@@ -33,15 +33,21 @@ import java.util.List;
  * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Configuration
-public class UserCache extends CacheNameAndTTLConfig {
+public class UserCacheName extends CacheNameAndTTLConfig {
     public interface Name {
-
         String userChl = "tmp:user:chl";
         String userMain = "tmp:user:main";
+        String idCardByIdNo = "tmp:user:id-card";
+        String idCardById = "tmp:user:id";
+        String userIdCardCache = "tmp:id-card:session";
     }
 
     @Getter
     enum Cache implements CacheNameAndTTL {
+        idCardByIdNo(Name.idCardByIdNo),
+        idCardById(Name.idCardById),
+        // 会话-证件信息缓存时间： 5分钟
+        userIdCardCache(Name.userIdCardCache, Duration.ofMinutes(5L)),
         userMain(Name.userMain),
         userChl(Name.userChl);
 

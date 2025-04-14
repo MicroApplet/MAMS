@@ -14,24 +14,32 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.infrastructure.adapter;
+package com.asialjim.microapplet.mams.user.infrastructure.cache;
 
-import com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter.WeChatUserAdapter;
-import com.asialjim.microapplet.mams.user.chl.wechat.po.WeChatAppChl;
-import com.asialjim.microapplet.mams.user.pojo.UserChl;
+import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
+
 /**
- * 微信用户适配器
+ * 用户证件信息暂存区
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/14, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-public class WeChatUserAdapterImpl implements WeChatUserAdapter {
-    @Override
-    public UserChl login(WeChatAppChl weChatAppChl, String code) {
+public class UserIdCardCache {
+
+    @Cacheable(value = UserCacheName.Name.userIdCardCache, key = "#sessionId")
+    public UserIdCard cachedBySessionId(@SuppressWarnings("unused") String sessionId) {
         return null;
+    }
+
+    @SuppressWarnings("unused")
+    @CachePut(value = UserCacheName.Name.userIdCardCache, key = "#sessionId")
+    public UserIdCard cache(String sessionId, UserIdCard exist) {
+        return exist;
     }
 }

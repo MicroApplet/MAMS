@@ -21,10 +21,14 @@ import com.asialjim.microapplet.common.human.IdCardType;
 import com.asialjim.microapplet.common.human.Nationality;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * 用户证件信息
@@ -142,5 +146,41 @@ public class UserIdCard implements Serializable {
         } else {
             setBackFileId(getFileId());
         }
+    }
+
+    private static<T> void populateIfAbsent(Supplier<T> targetCheck, Consumer<T> targetSet,  Supplier<T> source){
+        if (Objects.isNull(targetCheck) || Objects.isNull(targetSet) || Objects.isNull(source))
+            return;
+        if (Objects.isNull(targetCheck.get()))
+            targetSet.accept(source.get());
+    }
+
+    public void merge(UserIdCard user) {
+        //noinspection DuplicatedCode
+        populateIfAbsent(this::getId,this::setId,user::getId);
+        populateIfAbsent(this::getUserid,this::setUserid,user::getUserid);
+        populateIfAbsent(this::getAppletId,this::setAppletId,user::getAppletId);
+        populateIfAbsent(this::getIdNo,this::setIdNo,user::getIdNo);
+        populateIfAbsent(this::getIdType,this::setIdType,user::getIdType);
+        populateIfAbsent(this::getName,this::setName,user::getName);
+        populateIfAbsent(this::getGender,this::setGender,user::getGender);
+        populateIfAbsent(this::getNationality,this::setNationality,user::getNationality);
+        //noinspection DuplicatedCode
+        populateIfAbsent(this::getBirthday,this::setBirthday,user::getBirthday);
+        populateIfAbsent(this::getAddress,this::setAddress,user::getAddress);
+        populateIfAbsent(this::getIssueOrg,this::setIssueOrg,user::getIssueOrg);
+        populateIfAbsent(this::getIssueDate,this::setIssueDate,user::getIssueDate);
+        populateIfAbsent(this::getIssueExpires,this::setIssueExpires,user::getIssueExpires);
+        populateIfAbsent(this::getFrontFileId,this::setFrontFileId,user::getFrontFileId);
+        populateIfAbsent(this::getBackFileId,this::setBackFileId,user::getBackFileId);
+        populateIfAbsent(this::getCreateTime,this::setCreateTime,user::getCreateTime);
+        populateIfAbsent(this::getUpdateTime,this::setUpdateTime,user::getUpdateTime);
+    }
+
+    /**
+     * 判定证件信息是否可存储
+     */
+    public boolean idCardSaveAvailable(){
+        return StringUtils.isNoneBlank(getIdNo(), getName(), getUserid(), getAppletId()) && Objects.nonNull(getIdType());
     }
 }

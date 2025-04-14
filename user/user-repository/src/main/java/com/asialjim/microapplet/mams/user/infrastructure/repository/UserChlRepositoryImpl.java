@@ -18,12 +18,10 @@ package com.asialjim.microapplet.mams.user.infrastructure.repository;
 
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
-import com.asialjim.microapplet.mams.user.infrastructure.cache.UserCache;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper.UserChlBaseMapper;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserChlPo;
+import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.service.UserChlMapperService;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
-import com.mybatisflex.core.query.QueryWrapper;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -41,18 +39,11 @@ import java.util.stream.Collectors;
 @Component
 public class UserChlRepositoryImpl implements UserChlRepository {
     @Resource
-    private UserChlBaseMapper userChlBaseMapper;
-
+    private UserChlMapperService userChlMapperService;
 
     @Override
-    @Cacheable(value = UserCache.Name.userChl, key = "#chlType.code +':'+ #chlAppId + ':' + #chlAppType.code + ':' + #userCode")
     public UserChl queryChlUser(ChlType chlType, String chlAppId, ChlAppType chlAppType, String userCode) {
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.where(UserChlPo::getChlType).eq(chlType.getCode());
-        wrapper.where(UserChlPo::getChlAppId).eq(chlAppId);
-        wrapper.where(UserChlPo::getChlAppType).eq(chlAppType.getCode());
-        wrapper.where(UserChlPo::getChlUserId).eq(userCode);
-        UserChlPo userChlPo = this.userChlBaseMapper.selectOneByQuery(wrapper);
+        UserChlPo userChlPo = this.userChlMapperService.queryChlUserByChlUserIdOfChlAppOnChlType(userCode, chlAppId, chlAppType, chlType);
         return UserChlPo.fromPo(userChlPo);
     }
 
@@ -61,17 +52,13 @@ public class UserChlRepositoryImpl implements UserChlRepository {
         UserChlPo po = UserChlPo.toPo(target);
         if (Objects.isNull(po))
             return "";
-        this.userChlBaseMapper.insert(po);
+        this.userChlMapperService.save(po);
         return po.getId();
     }
 
     @Override
-    @Cacheable(value = UserCache.Name.userChl, key = "#userid +':'+ #appletId")
     public List<UserChl> queryByUseridOfApplet(String userid, String appletId) {
-        QueryWrapper wrapper = new QueryWrapper();
-        wrapper.where(UserChlPo::getUserid).eq(userid);
-        wrapper.where(UserChlPo::getAppletId).eq(appletId);
-        List<UserChlPo> list = this.userChlBaseMapper.selectListByQuery(wrapper);
+        List<UserChlPo> list = this.userChlMapperService.listByUseridOfApplet(userid,appletId);
         return list.stream().map(UserChlPo::fromPo).collect(Collectors.toList());
     }
 }

@@ -33,6 +33,7 @@
         <module>user-domain</module>
         <module>user-chl</module>
         <module>user-web-demo</module>
+        <module>user-repository</module>
     </modules>
 
     <properties>

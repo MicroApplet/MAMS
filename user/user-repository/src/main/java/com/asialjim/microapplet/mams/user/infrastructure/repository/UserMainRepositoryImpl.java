@@ -17,7 +17,7 @@
 package com.asialjim.microapplet.mams.user.infrastructure.repository;
 
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
-import com.asialjim.microapplet.mams.user.infrastructure.cache.UserCache;
+import com.asialjim.microapplet.mams.user.infrastructure.cache.UserCacheName;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper.UserMainBaseMapper;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserMainPo;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
@@ -41,7 +41,7 @@ public class UserMainRepositoryImpl implements UserMainRepository {
     private UserMainBaseMapper userMainBaseMapper;
 
     @Override
-    @Cacheable(value = UserCache.Name.userMain, key = "#id")
+    @Cacheable(value = UserCacheName.Name.userMain, key = "#id")
     public UserMain queryById(String id) {
         if (StringUtils.isBlank(id))
             return null;
@@ -50,7 +50,7 @@ public class UserMainRepositoryImpl implements UserMainRepository {
     }
 
     @Override
-    @Cacheable(value = UserCache.Name.userMain, key = "#sessionUser.userid")
+    @Cacheable(value = UserCacheName.Name.userMain, key = "#sessionUser.userid")
     public UserMain queryBySession(SessionUser sessionUser) {
         String userid = sessionUser.getUserid();
         return queryById(userid);

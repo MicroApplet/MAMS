@@ -77,7 +77,6 @@
         <module>applet</module>
         <module>user</module>
         <module>channel</module>
-        <module>role</module>
     </modules>
 
     <properties>

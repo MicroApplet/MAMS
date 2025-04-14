@@ -140,8 +140,14 @@ public class SessionUser implements Serializable {
      * @since 2025/4/10
      */
     public void loginCheck() {
-        if (StringUtils.isBlank(getId()))
+        try {
+            RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+            ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
+            HttpServletRequest request = servletRequestAttributes.getRequest();
+            verify(request,this.jwtConfProperty,this.jwtTokenCache);
+        } catch (Throwable t){
             UserResCode.UserNotLogin.throwBiz();
+        }
     }
 
     public UserMain user(Consumer<UserMain> consumer) {
@@ -198,7 +204,8 @@ public class SessionUser implements Serializable {
         jwtTokenCache.set(authorization, jwtToken, timeout);
     }
 
-    private void fromToken(String authorization, Supplier<RuntimeException> runtimeExceptionSupplier) {
+    private void fromToken(String authorization,
+                           @SuppressWarnings("SameParameterValue") Supplier<RuntimeException> runtimeExceptionSupplier) {
         try {
             String token = jwtTokenCache.get(authorization);
             Algorithm algorithm = Algorithm.HMAC256(jwtConfProperty.getSecret());
@@ -222,6 +229,7 @@ public class SessionUser implements Serializable {
         }
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     public static DecodedJWT verify(HttpServletRequest request, JwtConfProperty jwtConfProperty, JwtTokenRepository jwtTokenRepository) {
         String authorization = AuthorizationHeader(request);
         String token = jwtTokenRepository.get(authorization);

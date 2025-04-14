@@ -23,8 +23,9 @@ import com.asialjim.microapplet.mams.user.chl.wechat.strategy.WeChatChlAppType;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * 微信公众号用户适配器
@@ -34,9 +35,9 @@ import org.springframework.stereotype.Component;
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-@AllArgsConstructor
 public class WeChatAppletUserAdapter implements WeChatUserAdapter {
-    private final WeChatAppletUserRemoting weChatAppletUserRemoting;
+    @Resource
+    private WeChatAppletUserRemoting weChatAppletUserRemoting;
 
     public UserChl login(WeChatAppChl weChatAppChl, String code) {
         WeChatAppletUserLoginRes res = this.weChatAppletUserRemoting.login(weChatAppChl.getAppid(), weChatAppChl.getSecret(), code);

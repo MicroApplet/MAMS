@@ -18,7 +18,6 @@ package com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.
 
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
-import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
 import com.mybatisflex.annotation.Column;
