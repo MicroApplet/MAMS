@@ -1,3 +1,6 @@
+server:
+  port: 10001
+
 knife4j:
   basic:
     enable: true
@@ -20,21 +23,30 @@ springdoc:
       packages-to-scan: com.asialjim.microapplet
 
 
-
-
 spring:
   application:
     name: User
   datasource:
-    driver-class-name: ${DB_DRIVER}
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: ${DB_URL:jdbc:mysql://192.168.101.200:3306/mams}
+    username: ${DB_USERNAME:mams}
+    password: ${DB_PASSWORD:mams}
   redis:
-    host: ${REDIS_HOST}
-    port: ${REDIS_PORT}
+    host: ${REDIS_HOST:192.168.101.200}
+    port: ${REDIS_PORT:6379}
     password: ${REDIS_PASSWORD}
-    database: ${REDIS_DB}
+    database: ${REDIS_DB:3}
+  cloud:
+    nacos:
+      discovery:
+        server-addr: ${nacos_server:192.168.101.200:8848}
+        namespace: ${nacos_namespace:public}
+        username: ${nacos_username:nacos}
+        password: ${nacos_password:nacos}
+    loadbalancer:
+      retry:
+        backoff:
+          enabled: true
 
 logging:
   level:
