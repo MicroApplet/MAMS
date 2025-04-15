@@ -35,12 +35,15 @@ import java.util.List;
 @Configuration
 public class AppletCacheName extends CacheNameAndTTLConfig {
     public interface Name {
-        String appletById ="tmp:applet:by-id";
+        String appletById = "tmp:applet:by-id";
+        String chlAppletsById = "tmp:chl:apps:by-id";
     }
 
     @Getter
     enum Cache implements CacheNameAndTTL {
-        appletById(Name.appletById,Duration.ofDays(1L));
+        placeholder("placeholder"),
+        chlAppletsById(Name.chlAppletsById, Duration.ofDays(1L)),
+        appletById(Name.appletById, Duration.ofDays(1L));
 
 
         Cache(String name) {

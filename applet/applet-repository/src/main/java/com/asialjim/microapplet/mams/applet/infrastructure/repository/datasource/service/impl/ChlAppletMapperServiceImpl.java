@@ -14,39 +14,34 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.applet.infrastructure.repository;
+package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.impl;
 
-import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.mams.applet.infrastructure.cache.AppletCacheName;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.mapper.ChlAppletBaseMapper;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.ChlAppletPo;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.ChlAppletMapperService;
-import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mybatisflex.spring.service.impl.ServiceImpl;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * 渠道应用数据存储
+ * 渠道应用存储服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/15, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
-public class ChlAppletRepositoryImpl implements ChlAppletRepository {
-    @Resource private ChlAppletMapperService chlAppletMapperService;
+public class ChlAppletMapperServiceImpl
+        extends ServiceImpl<ChlAppletBaseMapper, ChlAppletPo>
+        implements ChlAppletMapperService {
 
-    /**
-     * 获取指定应用编号的渠道应用列表信息,即： queryBy {@link ChlApplet#getAppletId()}
-     *
-     * @param appletId {@link String appletId}
-     * @return {@link List<ChlApplet> }
-     * @since 2025/4/10
-     */
-    public List<ChlApplet> listByAppletId(String appletId){
-        List<ChlAppletPo> list = this.chlAppletMapperService.listByAppletId(appletId);
-        return list.stream().map(ChlAppletPo::fromPo).collect(Collectors.toList());
+
+    @Override
+    @Cacheable(value = AppletCacheName.Name.chlAppletsById, key = "#appletId")
+    public List<ChlAppletPo> listByAppletId(String appletId) {
+        return queryChain().where(ChlAppletPo::getAppletId).eq(appletId).list();
     }
 }
