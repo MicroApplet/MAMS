@@ -14,21 +14,4 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user;
-
-import com.asialjim.microapplet.common.application.App;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- * 启动器
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
- */
-@SpringBootApplication
-public class UserWebDemoApp {
-    public static void main(String[] args) {
-        App.voidStart(UserWebDemoApp.class,args);
-    }
-}
+package com.asialjim.microapplet.mams.applet;

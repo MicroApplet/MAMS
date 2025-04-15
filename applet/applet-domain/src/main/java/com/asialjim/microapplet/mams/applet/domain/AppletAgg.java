@@ -44,7 +44,8 @@ public class AppletAgg {
     private Applet applet;
     private List<ChlApplet> chlAppletList;
 
-    public AppletAgg(AppletRepository appletRepository, ChlAppletRepository chlAppletRepository) {
+    public AppletAgg(AppletRepository appletRepository,
+                     ChlAppletRepository chlAppletRepository) {
         this.appletRepository = appletRepository;
         this.chlAppletRepository = chlAppletRepository;
     }

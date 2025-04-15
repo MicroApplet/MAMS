@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.channel.base;
 
+import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
@@ -47,9 +48,10 @@ public interface ChlAppType {
     ChlType getChlType();
 
     static ChlAppType codeOf(String code){
-        return all.stream().filter(item -> StringUtils.equals(code, item.getCode())).findFirst().orElse(null);
-    }
-    static void support(ChlAppType chl){
-        // do nothing here
+        CommonsClassLoader.init();
+        return all.stream()
+                .filter(item -> StringUtils.equals(code, item.getCode()))
+                .findFirst()
+                .orElseThrow(ChlAppTypeResCode.ChlAppTpUnknownEnum::sysException);
     }
 }

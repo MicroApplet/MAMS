@@ -32,7 +32,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum NormalChlType implements ChlType {
     Myself("Myself", "本渠道"),
-    H5("H5", "H5平台、包括PC端"),
+    H5("H5", "H5/PC"),
     WeChat("WeChat","微信"),
     Phone("Phone", "移动电话渠道");
 

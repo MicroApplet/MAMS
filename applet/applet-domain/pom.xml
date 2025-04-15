@@ -26,7 +26,7 @@
     </parent>
 
     <artifactId>applet-domain</artifactId>
-    <name>Domain</name>
+    <name>Applet Domain</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

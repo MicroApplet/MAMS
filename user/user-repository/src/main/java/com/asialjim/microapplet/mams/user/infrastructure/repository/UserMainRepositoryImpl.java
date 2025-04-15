@@ -57,6 +57,7 @@ public class UserMainRepositoryImpl implements UserMainRepository {
     }
 
     @Override
+    @Cacheable(value = UserCacheName.Name.userMain, key = "#userMain.id")
     public String saveAndGetId(UserMain userMain) {
         UserMainPo po = UserMainPo.toPo(userMain);
         if (Objects.isNull(po))

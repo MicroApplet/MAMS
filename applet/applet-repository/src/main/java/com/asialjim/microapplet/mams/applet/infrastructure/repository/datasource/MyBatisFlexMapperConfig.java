@@ -14,32 +14,20 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.applet.domain;
+package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.mapper.AppletBaseMapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.context.annotation.Configuration;
 
 /**
- * 应用状态
+ * Mapper 扫描
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum AppletStatus {
-    ON("ON","上架"),
-    OFF("OFF","下架");
-
-    private final String code;
-    private final String desc;
-
-    public static AppletStatus codeOf(String status) {
-        if (StringUtils.equals(status,"OFF")) {
-            return OFF;
-        }
-        return ON;
-    }
+@Configuration
+@MapperScan(basePackageClasses = AppletBaseMapper.class)
+public class MyBatisFlexMapperConfig {
 }

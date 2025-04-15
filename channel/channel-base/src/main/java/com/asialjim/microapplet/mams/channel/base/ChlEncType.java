@@ -16,6 +16,12 @@
 
 package com.asialjim.microapplet.mams.channel.base;
 
+import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * 渠道加密方式
  *
@@ -24,6 +30,16 @@ package com.asialjim.microapplet.mams.channel.base;
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface ChlEncType {
+    List<ChlEncType> all = new ArrayList<>();
+
+    static ChlEncType codeOf(String code) {
+        CommonsClassLoader.init();
+        return all.stream()
+                .filter(item -> StringUtils.equals(code, item.getCode()))
+                .findFirst()
+                .orElseThrow(ChlEncTypeResCode.ChlEncTpUnknownEnum::sysException);
+    }
+
     /**
      * 所属渠道类型
      */

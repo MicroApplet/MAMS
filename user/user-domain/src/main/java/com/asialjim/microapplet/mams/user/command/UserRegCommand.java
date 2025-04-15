@@ -65,6 +65,4 @@ public class UserRegCommand implements Serializable {
     public static UserRegCommand commandOf(UserRegOrLoginReq req) {
         return new UserRegCommand().setReq(req);
     }
-
-
 }

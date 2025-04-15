@@ -14,21 +14,11 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user;
+package com.asialjim.microapplet.mams.applet.infrastructure;
 
-import com.asialjim.microapplet.common.application.App;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-
-/**
- * 启动器
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/4/11, &nbsp;&nbsp; <em>version:1.0</em>
+/*
+└── 基础设施层（infrastructure）
+    ├── WechatConfigAdapter     # 微信平台配置实现
+    ├── AppRepository           # 应用存储接口（JPA实现）
+    └── AuditLogService         # 应用操作审计日志
  */
-@SpringBootApplication
-public class UserWebDemoApp {
-    public static void main(String[] args) {
-        App.voidStart(UserWebDemoApp.class,args);
-    }
-}

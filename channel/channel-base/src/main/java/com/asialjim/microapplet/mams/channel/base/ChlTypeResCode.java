@@ -31,6 +31,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ChlTypeResCode implements ResCode {
 
+    ChlTypeUnknown("CHL:TP:UNKNOWN","未知渠道类型"),
+    ChlTypeUnknownEnum("CHL:TP:UNKNOWN:ENUM","渠道类型枚举未知"),
+
     ChlTypeMismatch("CHL:TP:NOT:MISMATCH", "渠道类型不匹配"),
     ChlTypeNotSupport("CHL:TP:NOT:SUPPORT", "不支持的渠道类型"),
     ChlTypeNotProvide("CHL:TP:NOT:PROVIDE", "未提供渠道类型标识");

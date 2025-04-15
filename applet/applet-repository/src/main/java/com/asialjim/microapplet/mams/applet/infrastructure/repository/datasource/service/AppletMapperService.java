@@ -14,32 +14,18 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.applet.domain;
+package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.AppletPo;
+import com.mybatisflex.core.service.IService;
 
 /**
- * 应用状态
+ * 应用信息存储
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/15, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum AppletStatus {
-    ON("ON","上架"),
-    OFF("OFF","下架");
-
-    private final String code;
-    private final String desc;
-
-    public static AppletStatus codeOf(String status) {
-        if (StringUtils.equals(status,"OFF")) {
-            return OFF;
-        }
-        return ON;
-    }
+public interface AppletMapperService extends IService<AppletPo> {
+    AppletPo queryById(String appletId);
 }

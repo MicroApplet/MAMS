@@ -14,40 +14,30 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.applet.infrastructure.repository;
 
+import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
 
-import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 渠道类型
+ * 渠道应用数据存储
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface ChlType {
-    List<ChlType> all = new ArrayList<>();
+public class ChlAppletRepositoryImpl implements ChlAppletRepository {
 
     /**
-     * 渠道类型编号
+     * 获取指定应用编号的渠道应用列表信息,即： queryBy {@link ChlApplet#getAppId()}
+     *
+     * @param appletId {@link String appletId}
+     * @return {@link List<ChlApplet> }
+     * @since 2025/4/10
      */
-    String getCode();
-
-    /**
-     * 渠道类型描述
-     */
-    String getDesc();
-
-    static ChlType codeOf(String code) {
-        CommonsClassLoader.init();
-        return all.stream()
-                .filter(item -> StringUtils.equals(code, item.getCode()))
-                .findFirst()
-                .orElseThrow(ChlTypeResCode.ChlTypeUnknownEnum::sysException);
+    public List<ChlApplet> listByAppletId(String appletId){
+        // TODO
+        return null;
     }
 }

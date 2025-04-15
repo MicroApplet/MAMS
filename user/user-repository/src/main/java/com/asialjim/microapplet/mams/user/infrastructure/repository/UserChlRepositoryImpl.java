@@ -18,7 +18,6 @@ package com.asialjim.microapplet.mams.user.infrastructure.repository;
 
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
-import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.mapper.UserChlBaseMapper;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.po.UserChlPo;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.service.UserChlMapperService;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;

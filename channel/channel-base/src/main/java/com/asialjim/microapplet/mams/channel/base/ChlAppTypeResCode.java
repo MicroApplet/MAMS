@@ -16,38 +16,29 @@
 
 package com.asialjim.microapplet.mams.channel.base;
 
-
-import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.asialjim.microapplet.common.context.ResCode;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 /**
- * 渠道类型
+ * 渠道类型相关响应代码
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/10, &nbsp;&nbsp; <em>version:</em>
  */
-public interface ChlType {
-    List<ChlType> all = new ArrayList<>();
+@Getter
+@AllArgsConstructor
+public enum ChlAppTypeResCode implements ResCode {
+    ChlAppTpUnknown("CHL:APP:TP:UNKNOWN","未知渠道应用类型"),
+    ChlAppTpUnknownEnum("CHL:APP:TP:UNKNOWN:ENUM","渠道应用类型枚举未知");
 
-    /**
-     * 渠道类型编号
-     */
-    String getCode();
+    private final String code;
+    private final String msg;
 
-    /**
-     * 渠道类型描述
-     */
-    String getDesc();
 
-    static ChlType codeOf(String code) {
-        CommonsClassLoader.init();
-        return all.stream()
-                .filter(item -> StringUtils.equals(code, item.getCode()))
-                .findFirst()
-                .orElseThrow(ChlTypeResCode.ChlTypeUnknownEnum::sysException);
+    @Override
+    public boolean isSuccess() {
+        return false;
     }
 }
