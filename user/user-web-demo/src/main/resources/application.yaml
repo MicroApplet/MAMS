@@ -25,10 +25,10 @@ springdoc:
 
 spring:
   application:
-    name: User
+    name: UserWebDemo
   datasource:
     driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
-    url: ${DB_URL:jdbc:mysql://192.168.101.200:3306/mams}
+    url: ${DB_URL:jdbc:mysql://192.168.101.200:3306/mams?useSSL=false&allowPublicKeyRetrieval=true}
     username: ${DB_USERNAME:mams}
     password: ${DB_PASSWORD:mams}
   redis:
