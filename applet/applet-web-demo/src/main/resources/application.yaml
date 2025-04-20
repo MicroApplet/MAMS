@@ -1,7 +1,7 @@
 server:
-  port: 10001
+  port: 10002
   servlet:
-    context-path: /user
+    context-path: /applet
 
 knife4j:
   basic:
@@ -20,9 +20,9 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   group-configs:
-    - group: 'user'
+    - group: 'applet'
       paths-to-match: '/**'
-      packages-to-scan: com.asialjim.microapplet
+      packages-to-scan: com.asialjim.microapplet.mams.applet
 
 
 spring:
