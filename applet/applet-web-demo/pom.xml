@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.applet</groupId>
         <artifactId>applet</artifactId>
-        <version>1.1.1-SNAPSHOT</version>
+        <version>1.1.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>applet-web-demo</artifactId>
@@ -85,7 +85,6 @@
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-config-mybatis-flex</artifactId>
-            <version>${project.version}</version>
         </dependency>
 
     </dependencies>
