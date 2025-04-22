@@ -37,14 +37,15 @@ public class AppletCacheName extends CacheNameAndTTLConfig {
     public interface Name {
         String appletById = "tmp:applet:by-id";
         String chlAppletsById = "tmp:chl:apps:by-id";
+        String chlAppletByChlAppId = "tmp:chl:app:by-chl-app-id";
     }
 
     @Getter
     enum Cache implements CacheNameAndTTL {
         placeholder("placeholder"),
         chlAppletsById(Name.chlAppletsById, Duration.ofDays(1L)),
+        chlAppletByChlAppId(Name.chlAppletByChlAppId, Duration.ofDays(1L)),
         appletById(Name.appletById, Duration.ofDays(1L));
-
 
         Cache(String name) {
             this(name, Duration.ofHours(1));
@@ -64,7 +65,6 @@ public class AppletCacheName extends CacheNameAndTTLConfig {
         private final Duration nonNullTTL;
         private final Duration nullTTL;
     }
-
 
     @Override
     protected List<CacheNameAndTTL> list() {

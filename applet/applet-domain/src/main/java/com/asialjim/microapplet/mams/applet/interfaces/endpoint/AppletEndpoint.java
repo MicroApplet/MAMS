@@ -17,7 +17,12 @@
 package com.asialjim.microapplet.mams.applet.interfaces.endpoint;
 
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.asialjim.microapplet.mams.applet.application.AppletAppService;
+import com.asialjim.microapplet.mams.applet.pojo.Applet;
 
 /**
  * 小程序应用接口·
@@ -26,7 +31,14 @@ import org.springframework.stereotype.Component;
  * @version 1.0
  * @since 2025 04 20, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Component
+@RestController
+@RequestMapping("/applet")
 @AllArgsConstructor
 public class AppletEndpoint {
+    private final AppletAppService appletAppService;
+
+    @GetMapping("/{id}")
+    public Applet getAppletById(@PathVariable("id") String id) {
+        return appletAppService.getAppletById(id);
+    }
 }

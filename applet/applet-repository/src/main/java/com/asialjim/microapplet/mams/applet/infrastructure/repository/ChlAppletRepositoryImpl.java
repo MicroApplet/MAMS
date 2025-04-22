@@ -16,11 +16,9 @@
 
 package com.asialjim.microapplet.mams.applet.infrastructure.repository;
 
-import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.ChlAppletPo;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.ChlAppletMapperService;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -36,7 +34,8 @@ import java.util.stream.Collectors;
  */
 @Component
 public class ChlAppletRepositoryImpl implements ChlAppletRepository {
-    @Resource private ChlAppletMapperService chlAppletMapperService;
+    @Resource
+    private ChlAppletMapperService chlAppletMapperService;
 
     /**
      * 获取指定应用编号的渠道应用列表信息,即： queryBy {@link ChlApplet#getAppletId()}
@@ -45,8 +44,14 @@ public class ChlAppletRepositoryImpl implements ChlAppletRepository {
      * @return {@link List<ChlApplet> }
      * @since 2025/4/10
      */
-    public List<ChlApplet> listByAppletId(String appletId){
+    public List<ChlApplet> listByAppletId(String appletId) {
         List<ChlAppletPo> list = this.chlAppletMapperService.listByAppletId(appletId);
         return list.stream().map(ChlAppletPo::fromPo).collect(Collectors.toList());
+    }
+
+    @Override
+    public ChlApplet queryByChlAppId(String chlAppId) {
+        ChlAppletPo po = this.chlAppletMapperService.queryByChlAppId(chlAppId);
+        return ChlAppletPo.fromPo(po);
     }
 }

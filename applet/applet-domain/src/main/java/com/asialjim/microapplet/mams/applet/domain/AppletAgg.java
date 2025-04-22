@@ -20,6 +20,7 @@ import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepo
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.ChlAppletRepository;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -41,11 +42,16 @@ public class AppletAgg {
     private final ChlAppletRepository chlAppletRepository;
 
     private String appletId;
+    /**
+     * -- GETTER --
+     *  获取当前聚合上下文中的 Applet 实体
+     */
+    @Getter
     private Applet applet;
     private List<ChlApplet> chlAppletList;
 
     public AppletAgg(AppletRepository appletRepository,
-                     ChlAppletRepository chlAppletRepository) {
+            ChlAppletRepository chlAppletRepository) {
         this.appletRepository = appletRepository;
         this.chlAppletRepository = chlAppletRepository;
     }
@@ -92,5 +98,16 @@ public class AppletAgg {
         this.applet = applet;
         this.appletId = this.applet.getId();
         return this;
+    }
+
+    /**
+     * 根据渠道应用编号查询渠道应用
+     *
+     * @param chlAppId 渠道应用编号
+     * @return {@link ChlApplet}
+     * @since 2025/4/15
+     */
+    public ChlApplet getChlAppletByChlAppId(String chlAppId) {
+        return this.chlAppletRepository.queryByChlAppId(chlAppId);
     }
 }

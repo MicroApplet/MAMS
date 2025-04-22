@@ -38,10 +38,17 @@ public class ChlAppletMapperServiceImpl
         extends ServiceImpl<ChlAppletBaseMapper, ChlAppletPo>
         implements ChlAppletMapperService {
 
-
     @Override
     @Cacheable(value = AppletCacheName.Name.chlAppletsById, key = "#appletId")
     public List<ChlAppletPo> listByAppletId(String appletId) {
         return queryChain().where(ChlAppletPo::getAppletId).eq(appletId).list();
+    }
+
+    @Override
+    @Cacheable(value = AppletCacheName.Name.chlAppletByChlAppId, key = "#chlAppId")
+    public ChlAppletPo queryByChlAppId(String chlAppId) {
+        return queryChain()
+                .where(ChlAppletPo::getChlAppId).eq(chlAppId)
+                .one();
     }
 }

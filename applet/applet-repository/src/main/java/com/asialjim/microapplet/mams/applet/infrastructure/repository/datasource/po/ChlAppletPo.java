@@ -22,7 +22,6 @@ import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlEncType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.mybatisflex.annotation.Table;
-import jdk.internal.util.xml.impl.ReaderUTF8;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -90,7 +89,7 @@ public class ChlAppletPo implements Serializable {
      */
     private String chlSubjectId;
     /**
-     * 同企业微信:   agentId
+     * 同企业微信: agentId
      */
     private String chlAgentId;
 

@@ -30,4 +30,13 @@ import java.util.List;
  */
 public interface ChlAppletMapperService extends IService<ChlAppletPo> {
     List<ChlAppletPo> listByAppletId(String appletId);
+
+    /**
+     * 根据渠道应用编号查询渠道应用PO
+     *
+     * @param chlAppId 渠道应用编号
+     * @return {@link com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.ChlAppletPo}
+     * @since 2025/4/15
+     */
+    ChlAppletPo queryByChlAppId(String chlAppId);
 }

@@ -37,4 +37,13 @@ public interface ChlAppletRepository {
      * @since 2025/4/10
      */
     List<ChlApplet> listByAppletId(String appletId);
+
+    /**
+     * 根据渠道应用编号查询渠道应用
+     *
+     * @param chlAppId 渠道应用编号
+     * @return {@link ChlApplet}
+     * @since 2025/4/15
+     */
+    ChlApplet queryByChlAppId(String chlAppId);
 }
