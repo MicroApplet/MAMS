@@ -16,17 +16,19 @@
 
 package com.asialjim.microapplet.mams.applet.domain;
 
-import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepository;
-import com.asialjim.microapplet.mams.applet.infrastructure.repository.ChlAppletRepository;
-import com.asialjim.microapplet.mams.applet.pojo.Applet;
-import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-import lombok.Getter;
+import java.util.List;
+import java.util.Objects;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Objects;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepository;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.ChlAppletRepository;
+import com.asialjim.microapplet.mams.applet.pojo.Applet;
+import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+
+import lombok.*;
 
 /**
  * 应用聚合根
@@ -35,6 +37,7 @@ import java.util.Objects;
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Getter
 @Component
 @Scope("request")
 public class AppletAgg {
@@ -46,7 +49,6 @@ public class AppletAgg {
      * -- GETTER --
      *  获取当前聚合上下文中的 Applet 实体
      */
-    @Getter
     private Applet applet;
     private List<ChlApplet> chlAppletList;
 
