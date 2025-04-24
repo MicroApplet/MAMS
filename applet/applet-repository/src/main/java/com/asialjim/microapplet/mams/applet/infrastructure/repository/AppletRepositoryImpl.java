@@ -16,13 +16,19 @@
 
 package com.asialjim.microapplet.mams.applet.infrastructure.repository;
 
-
+import com.asialjim.microapplet.common.page.PageData;
+import com.asialjim.microapplet.common.page.PageParameter;
+import com.asialjim.microapplet.common.page.Pageable;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.AppletPo;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.AppletMapperService;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
+import com.mybatisflex.core.paginate.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 应用数据存储
@@ -31,6 +37,7 @@ import javax.annotation.Resource;
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 public class AppletRepositoryImpl implements AppletRepository {
     @Resource
@@ -43,8 +50,40 @@ public class AppletRepositoryImpl implements AppletRepository {
      * @return {@link Applet }
      * @since 2025/4/10
      */
+    @Override
     public Applet queryById(String appletId) {
         AppletPo po = this.appletMapperService.queryById(appletId);
         return AppletPo.fromPo(po);
+    }
+
+    /**
+     * 保存应用
+     *
+     * @param applet {@link Applet applet}
+     * @return {@link Applet }
+     * @since 2025/4/24
+     */
+    @Override
+    public Applet save(Applet applet) {
+        AppletPo po = AppletPo.toPo(applet);
+        boolean save = this.appletMapperService.save(po);
+        if (log.isDebugEnabled())
+            log.debug("保存应用：{} 结果：{}", applet, save);
+        return AppletPo.fromPo(po);
+    }
+
+    @Override
+    public PageData<Applet> query(PageParameter page, Applet condition) {
+        AppletPo po = AppletPo.toPo(condition);
+        Page<AppletPo> appletPage = Pageable.ofPage(page, item -> Page.of(item.getPage(), item.getSize()));
+        Page<AppletPo> res = this.appletMapperService.pageOf(appletPage,po);
+        PageData<Applet> targetRes = new PageData<>();
+        targetRes.setPage(res.getPageNumber());
+        targetRes.setSize(res.getPageSize());
+        targetRes.setPages(res.getTotalPage());
+        targetRes.setTotal(res.getTotalRow());
+        List<AppletPo> records = res.getRecords();
+        List<Applet> list = records.stream().map(AppletPo::fromPo).collect(Collectors.toList());
+        return targetRes.setRecords(list);
     }
 }

@@ -16,8 +16,17 @@
 
 package com.asialjim.microapplet.mams.applet.application;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
+import com.asialjim.microapplet.common.page.PageData;
+import com.asialjim.microapplet.common.page.PageParameter;
+import com.asialjim.microapplet.common.page.Pageable;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.applet.domain.AppletAgg;
@@ -32,7 +41,9 @@ import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
  * @since 2025 04 20, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Component
+@AllArgsConstructor
 public class AppletAppService {
+    private final AppletRepository appletRepository;
 
     /**
      * 根据编号查询应用
@@ -47,6 +58,20 @@ public class AppletAppService {
     }
 
     /**
+     * 根据编号查询应用的渠道应用列表
+     *
+     * @param appletId {@link String appletId}
+     * @return {@link List<ChlApplet> }
+     * @since 2025/4/24
+     */
+    public List<ChlApplet> getChlAppletListByAppletId(String appletId) {
+        return App.beanOpt(AppletAgg.class)
+                .map(item -> item.withId(appletId))
+                .map(AppletAgg::chlAppletList)
+                .orElseGet(ArrayList::new);
+    }
+
+    /**
      * 根据渠道应用编号查询渠道应用
      *
      * @param chlAppId 渠道应用编号
@@ -55,5 +80,25 @@ public class AppletAppService {
     public ChlApplet getChlAppletByChlAppId(String chlAppId) {
         Optional<AppletAgg> appletAggOpt = App.beanOpt(AppletAgg.class);
         return appletAggOpt.map(agg -> agg.getChlAppletByChlAppId(chlAppId)).orElse(null);
+    }
+
+    /**
+     * 保存应用
+     *
+     * @param applet {@link Applet applet}
+     * @return {@link Applet }
+     * @since 2025/4/24
+     */
+    public Applet save(Applet applet) {
+        Optional<AppletAgg> appletAggOpt = App.beanOpt(AppletAgg.class);
+        return appletAggOpt.map(item -> item.save(applet)).orElse(applet);
+    }
+
+    public PageData<Applet> query(Applet condition,
+                                         Supplier<PageParameter> pageParameter,
+                                         PageParameter defaultPageParameter) {
+
+        PageParameter parameter = Optional.ofNullable(pageParameter).map(Supplier::get).orElse(defaultPageParameter);
+        return this.appletRepository.query(parameter,condition);
     }
 }

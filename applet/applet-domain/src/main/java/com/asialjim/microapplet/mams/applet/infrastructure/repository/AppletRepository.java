@@ -17,6 +17,8 @@
 package com.asialjim.microapplet.mams.applet.infrastructure.repository;
 
 
+import com.asialjim.microapplet.common.page.PageData;
+import com.asialjim.microapplet.common.page.PageParameter;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 
 /**
@@ -36,4 +38,14 @@ public interface AppletRepository {
      * @since 2025/4/10
      */
     Applet queryById(String appletId);
+
+    /**
+     * 保存应用
+	 * @param applet {@link Applet applet}
+     * @return {@link Applet }
+     * @since 2025/4/24
+     */
+    Applet save(Applet applet);
+
+    PageData<Applet> query( PageParameter page, Applet condition);
 }

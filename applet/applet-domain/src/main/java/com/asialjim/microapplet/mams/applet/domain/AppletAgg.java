@@ -47,13 +47,13 @@ public class AppletAgg {
     private String appletId;
     /**
      * -- GETTER --
-     *  获取当前聚合上下文中的 Applet 实体
+     * 获取当前聚合上下文中的 Applet 实体
      */
     private Applet applet;
     private List<ChlApplet> chlAppletList;
 
     public AppletAgg(AppletRepository appletRepository,
-            ChlAppletRepository chlAppletRepository) {
+                     ChlAppletRepository chlAppletRepository) {
         this.appletRepository = appletRepository;
         this.chlAppletRepository = chlAppletRepository;
     }
@@ -111,5 +111,15 @@ public class AppletAgg {
      */
     public ChlApplet getChlAppletByChlAppId(String chlAppId) {
         return this.chlAppletRepository.queryByChlAppId(chlAppId);
+    }
+
+    /**
+     * 保存应用
+	 * @param applet {@link Applet applet}
+     * @return {@link Applet }
+     * @since 2025/4/24
+     */
+    public Applet save(Applet applet) {
+        return this.appletRepository.save(applet);
     }
 }

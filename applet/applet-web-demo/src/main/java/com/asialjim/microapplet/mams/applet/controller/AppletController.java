@@ -16,14 +16,15 @@
 
 package com.asialjim.microapplet.mams.applet.controller;
 
-import com.asialjim.microapplet.mams.applet.application.AppletAppService;
+import com.asialjim.microapplet.common.page.PageData;
+import com.asialjim.microapplet.mams.applet.interfaces.endpoint.AppletEndpoint;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.asialjim.microapplet.web.mvc.page.MVCPageParameterFun;
+import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
+
+import java.util.List;
 
 /**
  * REST controller for Applet operations.
@@ -32,8 +33,31 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/applet")
 public class AppletController {
+    private final AppletEndpoint appletEndpoint;
 
-    private final AppletAppService appletAppService;
+    /**
+     * 保存应用
+     *
+     * @param applet {@link Applet applet}
+     * @return {@link Applet }
+     * @since 2025/4/24
+     */
+    @PostMapping
+    public Applet save(@RequestBody Applet applet) {
+        return this.appletEndpoint.save(applet);
+    }
+
+    /**
+     * 分页查询
+     *
+     * @param condition {@link Applet condition}
+     * @return {@link PageData <Applet> }
+     * @since 2025/4/24
+     */
+    @PostMapping("/query")
+    public PageData<Applet> query(@RequestBody Applet condition) {
+        return this.appletEndpoint.query(condition, MVCPageParameterFun.INSTANCE);
+    }
 
     /**
      * Fetches an Applet by its ID.
@@ -43,7 +67,12 @@ public class AppletController {
      */
     @GetMapping("/{id}")
     public Applet getAppletById(@PathVariable("id") String id) {
-        return appletAppService.getAppletById(id);
+        return appletEndpoint.getAppletById(id);
+    }
+
+    @GetMapping("/{id}/chl/applet/list")
+    public List<ChlApplet> getChlAppletListByAppletId(@PathVariable("id") String appletId) {
+        return appletEndpoint.getChlAppletListByAppletId(appletId);
     }
 
     /**
@@ -54,6 +83,6 @@ public class AppletController {
      */
     @GetMapping("/chl/{chlAppId}")
     public ChlApplet getChlAppletByChlAppId(@PathVariable("chlAppId") String chlAppId) {
-        return appletAppService.getChlAppletByChlAppId(chlAppId);
+        return appletEndpoint.getChlAppletByChlAppId(chlAppId);
     }
 }

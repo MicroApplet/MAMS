@@ -51,6 +51,10 @@ public class Applet implements Serializable {
      * 应用状态
      */
     private AppletStatus status;
+
+    /**
+     * 删除标识
+     */
     private Boolean deleted;
 
     /**

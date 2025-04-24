@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service;
 
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.AppletPo;
+import com.mybatisflex.core.paginate.Page;
 import com.mybatisflex.core.service.IService;
 
 /**
@@ -28,4 +29,8 @@ import com.mybatisflex.core.service.IService;
  */
 public interface AppletMapperService extends IService<AppletPo> {
     AppletPo queryById(String appletId);
+
+    boolean save(AppletPo appletPo);
+
+    Page<AppletPo> pageOf(Page<AppletPo> appletPage, AppletPo po);
 }
