@@ -27,6 +27,10 @@
 
     <artifactId>channel-wechat</artifactId>
     <name>Channel WeChat</name>
+    <modules>
+        <module>channel-wechat-official</module>
+        <module>channel-wechat-base</module>
+    </modules>
     <packaging>pom</packaging>
 
     <properties>

@@ -1,0 +1,1 @@
+package com.asialjim.microapplet.mams.channel.wechat;
