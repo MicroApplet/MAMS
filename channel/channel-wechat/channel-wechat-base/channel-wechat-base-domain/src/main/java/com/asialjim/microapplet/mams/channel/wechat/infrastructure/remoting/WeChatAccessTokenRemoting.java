@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.asialjim.microapplet.mams.channel.wechat.infrastructure.adaptor;
+package com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting;
 
 
+import com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.meta.accesstoken.*;
 import com.asialjim.microapplet.remote.http.annotation.HttpMapping;
 import com.asialjim.microapplet.remote.http.annotation.HttpMethod;
 import com.asialjim.microapplet.remote.http.annotation.HttpQuery;
 import com.asialjim.microapplet.remote.http.annotation.body.JsonBody;
 import com.asialjim.microapplet.remote.net.annotation.Server;
 import com.asialjim.microapplet.mams.channel.wechat.constant.WeChatCons;
-import lombok.*;
-
-import java.io.Serializable;
 
 /**
  * 微信公众平台API令牌相关网络客户端
@@ -90,61 +88,4 @@ public interface WeChatAccessTokenRemoting {
      */
     @HttpMapping(method = HttpMethod.POST, uri = "/cgi-bin/component/api_authorizer_token")
     AuthorizerAccessTokenRes authorizerAccessToken(@HttpQuery(name = "component_access_token") String token, @JsonBody AuthorizerAccessTokenReq req);
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    class AuthorizerAccessTokenReq implements Serializable {
-        
-        private static final long serialVersionUID = -7639034745138301631L;
-
-        private String component_appid;
-        private String authorizer_appid;
-        private String authorizer_refresh_token;
-    }
-
-    @Data
-    @ToString(callSuper = true)
-    @EqualsAndHashCode(callSuper = true)
-    class AuthorizerAccessTokenRes extends BaseWeChatApiRes {
-        
-        private static final long serialVersionUID = -5469586211975433410L;
-
-        private String authorizer_access_token;
-        private Integer expires_in;
-        private String authorizer_refresh_token;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    class ComponentAccessTokenReq implements Serializable {
-        
-        private static final long serialVersionUID = -7682607854977975316L;
-        private String component_appid;
-        private String component_appsecret;
-        private String component_verify_ticket;
-    }
-
-
-    @Data
-    @ToString(callSuper = true)
-    @EqualsAndHashCode(callSuper = true)
-    class ComponentAccessTokenRes extends BaseWeChatApiRes {
-        
-        private static final long serialVersionUID = -303390441876000714L;
-
-        private String component_access_token;
-        private Integer expires_in;
-    }
-
-    @Data
-    class StableTokenReq implements Serializable {
-        private String grant_type;
-        private String appid;
-        private String secret;
-        private Boolean force_refresh;
-    }
 }
