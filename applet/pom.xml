@@ -30,9 +30,11 @@
     <packaging>pom</packaging>
     <name>Applet</name>
     <modules>
+        <module>applet-interface</module>
         <module>applet-domain</module>
         <module>applet-repository</module>
-        <module>applet-web-demo</module>
+        <module>applet-web</module>
+        <module>applet-cloud</module>
     </modules>
 
     <properties>

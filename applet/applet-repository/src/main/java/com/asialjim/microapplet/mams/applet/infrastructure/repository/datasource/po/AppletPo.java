@@ -16,7 +16,7 @@
 
 package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po;
 
-import com.asialjim.microapplet.mams.applet.domain.AppletStatus;
+import com.asialjim.microapplet.mams.applet.pojo.AppletStatus;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;

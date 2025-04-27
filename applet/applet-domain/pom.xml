@@ -39,6 +39,11 @@
             <artifactId>channel-base</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams.applet</groupId>
+            <artifactId>applet-interface</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>org.springframework</groupId>

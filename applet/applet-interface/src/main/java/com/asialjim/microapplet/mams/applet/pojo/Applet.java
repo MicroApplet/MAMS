@@ -14,33 +14,55 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.applet.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 
-import java.util.Arrays;
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
- * 通用渠道应用类型
+ * 微应用
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum NormalChlAppType implements ChlAppType {
-    H5("H5", "H5平台、包括PC端", NormalChlType.H5),
-    Phone("Phone", "移动电话渠道", NormalChlType.Phone),
-    WeChatOfficial("wx:official", "微信公众号", NormalChlType.WeChat),
-    WeChatApplet("wx:applet", "微信小程序", NormalChlType.WeChat);
+@Data
+public class Applet implements Serializable {
 
-    static {
-        ChlAppType.all.addAll(Arrays.asList(values()));
-    }
+    /**
+     * 应用编号
+     */
+    private String id;
 
-    public final String code;
-    public final String desc;
-    public final ChlType chlType;
+    /**
+     * 应用名称
+     */
+    private String name;
+
+    /**
+     * 所属组织机构编号
+     */
+    private String orgId;
+
+    /**
+     * 应用状态
+     */
+    private AppletStatus status;
+
+    /**
+     * 删除标识
+     */
+    private Boolean deleted;
+
+    /**
+     * 应用创建时间
+     */
+    private LocalDateTime createTime;
+
+    /**
+     * 应用更新时间
+     */
+    private LocalDateTime updateTime;
 }

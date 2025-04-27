@@ -1,5 +1,6 @@
 package com.asialjim.microapplet.mams.channel.wechat.infrastructure.adaptor;
 
+import com.asialjim.microapplet.common.context.ResCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,9 +16,14 @@ import java.util.Objects;
  */
 @Getter
 @AllArgsConstructor
-public enum WeChatApiResultEnumeration {
+public enum WeChatApiResultEnumeration implements ResCode {
     CODE__1(-1, "System is Busy", "系统繁忙，此时请开发者稍候再试"),
-    CODE_0(0, "Request Success", "请求成功"),
+    CODE_0(0, "Request Success", "请求成功"){
+        @Override
+        public boolean isSuccess() {
+            return true;
+        }
+    },
 
     CODE_20001(20001, "System Error", "系统错误"),
 
@@ -272,5 +278,20 @@ public enum WeChatApiResultEnumeration {
 
     public static WeChatApiResultEnumeration codeOf(int code) {
         return Arrays.stream(values()).filter(item -> Objects.equals(code, item.getErrcode())).findFirst().orElse(UNKNOWN);
+    }
+
+    @Override
+    public boolean isSuccess() {
+        return false;
+    }
+
+    @Override
+    public String getCode() {
+        return getErrcode() + "";
+    }
+
+    @Override
+    public String getMsg() {
+        return getCnMsg();
     }
 }

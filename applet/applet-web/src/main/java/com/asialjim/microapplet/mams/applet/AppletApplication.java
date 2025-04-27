@@ -14,33 +14,26 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.applet;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-import java.util.Arrays;
+import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.mams.applet.cons.AppletConstant;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
- * 通用渠道应用类型
+ * 小程序网络应用APP
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025 04 20, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum NormalChlAppType implements ChlAppType {
-    H5("H5", "H5平台、包括PC端", NormalChlType.H5),
-    Phone("Phone", "移动电话渠道", NormalChlType.Phone),
-    WeChatOfficial("wx:official", "微信公众号", NormalChlType.WeChat),
-    WeChatApplet("wx:applet", "微信小程序", NormalChlType.WeChat);
-
-    static {
-        ChlAppType.all.addAll(Arrays.asList(values()));
+@EnableFeignClients
+@EnableDiscoveryClient
+@SpringBootApplication
+public class AppletApplication {
+    public static void main(String[] args) {
+        App.voidStart(AppletConstant.appName, AppletConstant.contextPath, AppletApplication.class, args);
     }
-
-    public final String code;
-    public final String desc;
-    public final ChlType chlType;
 }

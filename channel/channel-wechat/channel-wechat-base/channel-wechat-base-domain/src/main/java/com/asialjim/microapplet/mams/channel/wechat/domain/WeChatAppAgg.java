@@ -23,6 +23,10 @@ public class WeChatAppAgg {
     @Resource
     private WeChatAppRepository weChatAppRepository;
 
+    public WeChatApp weChatApp(){
+        return this.weChatApp;
+    }
+
     public WeChatAppAgg withId(String id) {
         this.weChatApp = this.weChatAppRepository.queryById(id);
         return this;

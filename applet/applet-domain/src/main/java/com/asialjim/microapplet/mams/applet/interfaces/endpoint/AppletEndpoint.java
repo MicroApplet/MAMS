@@ -25,7 +25,6 @@ import com.asialjim.microapplet.mams.applet.application.AppletAppService;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 /**

@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.applet.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import java.util.Arrays;
+import org.apache.commons.lang3.StringUtils;
 
 /**
- * 通用渠道应用类型
+ * 应用状态
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
@@ -30,17 +29,17 @@ import java.util.Arrays;
  */
 @Getter
 @AllArgsConstructor
-public enum NormalChlAppType implements ChlAppType {
-    H5("H5", "H5平台、包括PC端", NormalChlType.H5),
-    Phone("Phone", "移动电话渠道", NormalChlType.Phone),
-    WeChatOfficial("wx:official", "微信公众号", NormalChlType.WeChat),
-    WeChatApplet("wx:applet", "微信小程序", NormalChlType.WeChat);
+public enum AppletStatus {
+    ON("ON","上架"),
+    OFF("OFF","下架");
 
-    static {
-        ChlAppType.all.addAll(Arrays.asList(values()));
+    private final String code;
+    private final String desc;
+
+    public static AppletStatus codeOf(String status) {
+        if (StringUtils.equals(status,"OFF")) {
+            return OFF;
+        }
+        return ON;
     }
-
-    public final String code;
-    public final String desc;
-    public final ChlType chlType;
 }
