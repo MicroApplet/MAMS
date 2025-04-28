@@ -3,24 +3,21 @@
 group_name='asialjim'
 # 定义应用名称 ,这里的name是获取你仓库的名称，也可以自己写
 app_name='mams-chl-wx-official'
-docker_name='aj_mams_chl_wx_official'
+docker_name='aj/mams:chl-wx-official'
 # 定义应用版本
 app_version='latest'
 # 定义应用环境
 profile_active='prod'
-echo '----停止原容器----'
+
+echo '发布微信公众号开始...'
 docker stop ${docker_name}
 
-echo '----删除原容器----'
 docker rm ${docker_name}
 
-echo '----删除原镜像----'
 docker rmi ${group_name}/${app_name}:${app_version}
 
-echo '----构建新镜像----'
 docker build -t ${group_name}/${app_name}:${app_version} .
 
-echo '----启动新镜像----'
 docker run --name ${docker_name} \
 --network api_development-net \
 --cpus="4" --memory="1024m" \
@@ -32,4 +29,4 @@ docker run --name ${docker_name} \
 -d ${group_name}/${app_name}:${app_version}
 
 
-echo '----镜像启动完毕----'
+echo '发布微信公众号结束...'
