@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user;
 
 import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.mams.user.cons.UserConstant;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
@@ -31,8 +32,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class UserWebDemoApp {
+public class UserApplication {
     public static void main(String[] args) {
-        App.voidStart(UserWebDemoApp.class,args);
+        App.voidStart(UserConstant.appName,UserConstant.contextPath,UserApplication.class,args);
     }
 }

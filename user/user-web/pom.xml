@@ -25,7 +25,7 @@
         <version>1.1.2-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-web-demo</artifactId>
+    <artifactId>user-web</artifactId>
     <name>User WEB</name>
 
     <properties>
@@ -131,7 +131,35 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-config-mybatis-flex</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams.user</groupId>
+            <artifactId>user-interface</artifactId>
+            <version>1.1.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
+
+
+
+    <build>
+        <!--发布到maven 中央仓库-->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.asialjim.microapplet.mams.user.UserApplication</mainClass>
+                    <finalName>WeChatOfficialChlApplication</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

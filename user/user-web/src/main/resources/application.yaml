@@ -21,6 +21,8 @@ springdoc:
     - group: 'user'
       paths-to-match: '/user/**'
       packages-to-scan: com.asialjim.microapplet.mams.user
+    - group: 'user:id-card'
+      paths-to-match: '/user/id-card/**'
 
 
 spring:

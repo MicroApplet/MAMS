@@ -44,6 +44,11 @@
             <artifactId>applet-interface</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams.user</groupId>
+            <artifactId>user-interface</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>org.springframework</groupId>
