@@ -1,9 +1,9 @@
 #指定基础镜像
 FROM openjdk:8u121-jre-alpine
 EXPOSE 80
-COPY ./WeChatOfficialChlApplication.jar /
+COPY ./UserApplication.jar /
 # 赋予执行权限
-RUN chmod 755 -R /WeChatOfficialChlApplication.jar
+RUN chmod 755 -R /UserApplication.jar
 # 设置
-ENTRYPOINT ["java", "-jar","/WeChatOfficialChlApplication.jar"]
+ENTRYPOINT ["java", "-jar","/UserApplication.jar"]
 MAINTAINER AsialJim
