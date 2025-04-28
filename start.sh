@@ -1,5 +1,5 @@
 #!/bin/sh
-pwd
-ls -la
+# applet
 cd ./applet || exit
 sh start.sh
+cd ../

@@ -1,2 +1,5 @@
 #!/bin/sh
-sh ./applet/docker.sh
+# applet
+cd ./applet || exit
+sh docker.sh
+cd ../
