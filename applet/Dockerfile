@@ -3,7 +3,7 @@ FROM openjdk:8u121-jre-alpine
 EXPOSE 80
 RUN pwd
 RUN ls -la
-COPY ./applet/AppletApplication.jar /
+COPY ./AppletApplication.jar /
 # 赋予执行权限
 RUN chmod 755 -R /AppletApplication.jar
 # 设置
