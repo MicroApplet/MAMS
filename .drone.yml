@@ -16,6 +16,7 @@ steps: # 定义流水线执行步骤，这些步骤将顺序执行
     commands: # 定义在Docker容器中执行的shell命令
       # 开始打包maven工程
       - mvn clean package -Dmaven.test.skip=true
+      - cp *.sh /app/build
       - sh start.sh
 
   - name: restart
@@ -28,8 +29,6 @@ steps: # 定义流水线执行步骤，这些步骤将顺序执行
         path: /var/run/docker.sock # 挂载宿主机的docker
       - name: env
         path: /root/.env
-    settings:
-      dockerfile: /app/build/Dockerfile
     commands:
       # 定义在Docker容器中执行的shell命令
       - cd /app/build
