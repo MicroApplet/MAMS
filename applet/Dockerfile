@@ -1,6 +1,8 @@
 #指定基础镜像
 FROM openjdk:8u121-jre-alpine
 EXPOSE 80
+RUN pwd
+RUN ls -la
 COPY ./applet/AppletApplication.jar /
 # 赋予执行权限
 RUN chmod 755 -R /AppletApplication.jar
