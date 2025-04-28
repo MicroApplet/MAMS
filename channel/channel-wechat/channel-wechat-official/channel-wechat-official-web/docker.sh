@@ -3,7 +3,7 @@
 group_name='asialjim'
 # 定义应用名称 ,这里的name是获取你仓库的名称，也可以自己写
 app_name='mams-chl-wx-official'
-docker_name='aj/mams:chl-wx-official'
+docker_name='aj-mams-chl-wx-official'
 # 定义应用版本
 app_version='latest'
 # 定义应用环境
