@@ -1,4 +1,5 @@
 #!/bin/sh
 pwd
 ls -la
-sh ./applet/start.sh
+cd ./applet || exit
+sh start.sh
