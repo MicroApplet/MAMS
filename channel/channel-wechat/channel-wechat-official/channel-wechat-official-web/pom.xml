@@ -65,9 +65,31 @@
         <dependency>
             <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
             <artifactId>channel-wechat-official-domain</artifactId>
-            <version>1.1.2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
+
+
+
+    <build>
+        <!--发布到maven 中央仓库-->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.asialjim.microapplet.mams.channel.wechat.official.WeChatOfficialChannelApplication</mainClass>
+                    <finalName>WeChatOfficialChlApplication</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

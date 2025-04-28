@@ -1,10 +1,9 @@
 #!/bin/sh
-pwd
 
 # applet
-mkdir /app/build/applet
+mkdir /app/build/applet/web
 # shellcheck disable=SC2164
-cd ./applet
+cd ./applet/applet-web
 sh start.sh
-cd ../
+rm -rf /app/build/applet/web
 

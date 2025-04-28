@@ -26,10 +26,7 @@ springdoc:
       paths-to-match: '/chl-wx-official/**'
       packages-to-scan: com.asialjim.microapplet.mams.channel.wechat.official.controller
 
-
 spring:
-#  application:
-#    name: WeChatOfficialChl
   datasource:
     driver-class-name: ${mams_db_driver:com.mysql.cj.jdbc.Driver}
     url: ${mams_db_url:jdbc:mysql://192.168.101.200:3306/mams?useSSL=false&allowPublicKeyRetrieval=true}
