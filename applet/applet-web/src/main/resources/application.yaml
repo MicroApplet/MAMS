@@ -17,11 +17,11 @@ springdoc:
     operations-sorter: alpha
   api-docs:
     path: /v3/api-docs
+    version: openapi_3_1
   group-configs:
     - group: 'applet'
       paths-to-match: '/applet/**'
       packages-to-scan: com.asialjim.microapplet.mams.applet
-
 
 spring:
   application:

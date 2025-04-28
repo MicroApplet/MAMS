@@ -1,8 +1,10 @@
 #!/bin/sh
+pwd
 
 # applet
 mkdir /app/build/applet
-cd ./applet || exit
+# shellcheck disable=SC2164
+cd ./applet
 sh start.sh
 cd ../
 
