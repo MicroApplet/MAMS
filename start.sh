@@ -7,7 +7,6 @@ cd ./applet/applet-web
 sh start.sh
 # shellcheck disable=SC2164
 cd ~
-rm -rf /app/build/applet/web
 
 # channel/channel-wechat/channel-wechat-official/channel-wechat-official-web
 mkdir -p /app/build/channel/wechat/official/web
@@ -16,7 +15,6 @@ cd ./channel/channel-wechat/channel-wechat-official/channel-wechat-official-web
 sh start.sh
 # shellcheck disable=SC2164
 cd ~
-rm -rf /app/build/channel/wechat/official/web
 
 
 # user/user-web
@@ -26,4 +24,3 @@ cd ./user/user-web
 sh start.sh
 # shellcheck disable=SC2164
 cd ~
-rm -rf /app/build/user/web
