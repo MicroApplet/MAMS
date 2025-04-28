@@ -1,7 +1,7 @@
 #!/bin/sh
-pwd
-ls -la
 # applet
 cd ./applet || exit
+pwd
+ls -la
 sh docker.sh
 cd ../
