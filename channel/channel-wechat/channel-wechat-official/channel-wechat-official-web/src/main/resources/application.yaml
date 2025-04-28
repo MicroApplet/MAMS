@@ -1,5 +1,5 @@
 server:
-  port: ${applet_port:80}
+  port: ${channel_wx_official_port:80}
 
 knife4j:
   basic:
@@ -9,6 +9,7 @@ knife4j:
     enable-after-script: false
     enable-open-api: false
     enable-footer: false
+    enable-group: true
 
 springdoc:
   swagger-ui:
@@ -17,15 +18,18 @@ springdoc:
     operations-sorter: alpha
   api-docs:
     path: /v3/api-docs
+    groups:
+      enabled: true
   group-configs:
-    - group: 'applet'
-      paths-to-match: '/applet/**'
-      packages-to-scan: com.asialjim.microapplet.mams.applet
+    - group: 'WeChatOfficialChl'
+      display-name: 微信公众号渠道
+      paths-to-match: '/chl-wx-official/**'
+      packages-to-scan: com.asialjim.microapplet.mams.channel.wechat.official.controller
 
 
 spring:
-  application:
-    name: Applet
+#  application:
+#    name: WeChatOfficialChl
   datasource:
     driver-class-name: ${mams_db_driver:com.mysql.cj.jdbc.Driver}
     url: ${mams_db_url:jdbc:mysql://192.168.101.200:3306/mams?useSSL=false&allowPublicKeyRetrieval=true}

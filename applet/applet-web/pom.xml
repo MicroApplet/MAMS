@@ -91,7 +91,28 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-config-mybatis-flex</artifactId>
         </dependency>
-
     </dependencies>
+
+
+
+    <build>
+        <!--发布到maven 中央仓库-->
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.7.18</version>
+                <configuration>
+                    <mainClass>com.asialjim.microapplet.mams.applet.AppletApplication</mainClass>
+                    <finalName>AppletApplication</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

@@ -1,14 +1,10 @@
 package com.asialjim.microapplet.mams.channel.wechat.official.controller;
 
 import com.asialjim.microapplet.mams.channel.wechat.official.service.WeChatOfficialCallbackService;
-import com.fasterxml.jackson.databind.JsonNode;
-import lombok.SneakyThrows;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * 微信公众号消息/事件回调服务器
@@ -61,7 +57,6 @@ public class WeChatOfficialCallBackController {
                      @RequestParam String code,
                      @RequestParam String state,
                      HttpServletRequest request) {
-
 
     }
 }

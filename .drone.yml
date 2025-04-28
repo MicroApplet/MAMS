@@ -1,50 +1,54 @@
-kind: pipeline # 定义对象类型，还有secret和signature两种类型
-type: docker # 定义流水线类型，还有kubernetes、exec、ssh等类型
-name: micro-applet-management-service # 用户认证服务
+kind: pipeline
+type: docker
+name: gateway
 
 steps: # 定义流水线执行步骤，这些步骤将顺序执行
   - name: package # 流水线名称
-    image: maven:3.8.6-openjdk-8
-    pull: never
+    image: maven:3.8.6-openjdk-8 # 定义创建容器的Docker镜像
+    pull: if-not-exists
     volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
+      - name: maven-build
+        path: /app/build # 将应用打包好的Jar和执行脚本挂载出来
       - name: maven-cache
-        path: /root/.m2 # 将maven下载依赖的目录挂载出来，防止重复下载
-      - name: env
-        path: /home/mams/.env
-      - name: maven-build
-        path: /app/docker/mams # 将应用打包好的Jar和执行脚本挂载出来
-    commands:
-      - $MAVEN_HOME/bin/mvn clean package -DskipTests=true -Dmaven.javadoc.skip=true
-      - cp -r ./* /app/docker/mams
-      - cd /app/docker/mams
-      - chmod +x package.sh
-      - sh package.sh
+        path: /root/.m2
+      - name: ssh-cache
+        path: /root/.ssh
+    commands: # 定义在Docker容器中执行的shell命令
+      # 开始打包maven工程
+      - mvn clean package -Dmaven.test.skip=true
+      - sh start.sh
 
-  - name: run # 流水线名称
+  - name: restart
     image: plugins/docker
-    pull: never
-    volumes: # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
+    volumes:
+      # 将容器内目录挂载到宿主机，仓库需要开启Trusted设置
       - name: maven-build
-        path: /app/docker/mams # 将应用打包好的Jar和执行脚本挂载出来
-      - name: env
-        path: /home/mams/.env
+        path: /app/build # 将应用打包好的Jar和执行脚本挂载出来
       - name: docker
         path: /var/run/docker.sock # 挂载宿主机的docker
+      - name: env
+        path: /root/.env
+    settings:
+      dockerfile: /app/build/Dockerfile
     commands:
-      - cd /app/docker/mams
-      - chmod +x run.sh
-      - sh run.sh
+      # 定义在Docker容器中执行的shell命令
+      - cd /app/build
+      - chmod +x *.sh
+      - sh docker.sh
 
 volumes: # 定义流水线挂载目录，用于共享数据
-  - name: env
-    host:
-      path: /home/mams/.env
-  - name: maven-build
-    host:
-      path: /app/docker/mams   #jar包目录可以修改从宿主机中挂载的目录
   - name: maven-cache
     host:
       path: /home/asialjim/.m2
+  - name: ssh-cache
+    host:
+      path: /home/asialjim/.ssh
   - name: docker
     host:
       path: /var/run/docker.sock
+  - name: maven-build
+    host:
+      path: /home/asialjim/.app/docker/gitee/mams
+  - name: env
+    host:
+      path: /home/asialjim/.env

@@ -1,5 +1,7 @@
 package com.asialjim.microapplet.mams.channel.wechat;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * 微信公众号常量池
  *
@@ -9,6 +11,7 @@ package com.asialjim.microapplet.mams.channel.wechat;
  */
 public interface WeChatOfficialChlCons {
 
-    String appName = "WeChatOfficialChl";
-    String contextPath = "/wechat/official";
+    //String appName = "WeChatOfficialChl";
+    String appName = "chl-wx-official";
+    String contextPath = StringUtils.EMPTY;
 }
