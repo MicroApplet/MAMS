@@ -1,6 +1,4 @@
 #!/bin/sh
-pwd
-ls -la
 # 定义应用组名
 group_name='asialjim'
 # 定义应用名称 ,这里的name是获取你仓库的名称，也可以自己写
