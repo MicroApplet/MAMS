@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.controller;
+package com.asialjim.microapplet.mams.user.controller.idcard;
 
-import com.asialjim.microapplet.mams.user.application.UserIdCardService;
 import com.asialjim.microapplet.mams.user.interfaces.endpoint.UserIdCardEndpoint;
 import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

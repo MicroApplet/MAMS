@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.controller;
+package com.asialjim.microapplet.mams.user.controller.authenticate;
 
 import com.asialjim.microapplet.commons.security.HasRole;
 import com.asialjim.microapplet.commons.security.Tourist;
@@ -23,8 +23,6 @@ import com.asialjim.microapplet.mams.user.interfaces.endpoint.UserAuthenticateEn
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
 import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.web.mvc.annotation.ResultWrap;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import io.swagger.v3.oas.annotations.security.SecurityRequirements;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
