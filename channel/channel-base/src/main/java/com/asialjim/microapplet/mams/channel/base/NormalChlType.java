@@ -19,7 +19,6 @@ package com.asialjim.microapplet.mams.channel.base;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Arrays;
 
 /**
  * 通用渠道类型
@@ -35,10 +34,6 @@ public enum NormalChlType implements ChlType {
     H5("H5", "H5/PC"),
     WeChat("WeChat","微信"),
     Phone("Phone", "移动电话渠道");
-
-    static {
-        ChlType.all.addAll(Arrays.asList(values()));
-    }
 
     private final String code;
     private final String desc;
