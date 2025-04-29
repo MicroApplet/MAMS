@@ -1,4 +1,4 @@
-package com.asialjim.microapplet.mams.channel.wechat.official.cors;
+package com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd;
 
 import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.common.cors.Cmd;

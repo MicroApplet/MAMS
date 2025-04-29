@@ -13,45 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.qrcode.meta;
 
-package com.asialjim.microapplet.mams.channel.base;
-
-
-import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
+import com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.meta.BaseWeChatApiRes;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
-import org.apache.commons.lang3.StringUtils;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
- * 渠道类型
+ * 二维码创建结果
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/4/29, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface ChlType {
+@Data
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+public class CreateQrCodeResponse extends BaseWeChatApiRes {
+    
+    private static final long serialVersionUID = 6818875578723840455L;
 
-    /**
-     * 渠道类型编号
-     */
-    String getCode();
+    private String ticket;
 
-    /**
-     * 渠道类型描述
-     */
-    String getDesc();
+    @JsonProperty("expire_seconds")
+    private Integer expireSeconds;
 
-    static ChlType codeOf(String code) {
-        return new Meta().setCode(code);
-    }
-
-    @Data
-    @Accessors(chain = true)
-    class Meta implements ChlType {
-        private String code;
-        private String desc;
-    }
+    private String url;
 }

@@ -22,6 +22,14 @@ public interface WeChatAppRepository {
     WeChatApp queryById(String id);
 
     /**
+     * 索引查询
+	 * @param index {@link String index}
+     * @return {@link WeChatApp }
+     * @since 2025/4/29
+     */
+    WeChatApp queryByIndex(String index);
+
+    /**
      * 微信应用编号与类型查询
      *
      * @param appid   {@link String appid}
@@ -40,4 +48,5 @@ public interface WeChatAppRepository {
      * @since 2025/4/25
      */
     WeChatApp queryBySubjectIdAndType(String subjectId, ChlAppType appType);
+
 }

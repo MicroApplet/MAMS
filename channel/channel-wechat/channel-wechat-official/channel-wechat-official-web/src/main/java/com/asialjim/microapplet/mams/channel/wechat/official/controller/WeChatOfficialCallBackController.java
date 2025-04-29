@@ -1,9 +1,10 @@
 package com.asialjim.microapplet.mams.channel.wechat.official.controller;
 
-import com.asialjim.microapplet.mams.channel.wechat.official.service.WeChatOfficialCallbackService;
+import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialCallbackMsgOptCmd;
+import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialCallbackUrlCheckCmd;
+import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialPageUrlQryCmd;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -16,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 @RequestMapping
 public class WeChatOfficialCallBackController {
-    @Resource private WeChatOfficialCallbackService weChatOfficialCallbackService;
 
     /**
      * 开发者服务器验证
@@ -35,9 +35,24 @@ public class WeChatOfficialCallBackController {
                       @RequestParam String nonce,
                       @RequestParam String echostr) {
 
-        return this.weChatOfficialCallbackService.get(appid,signature,timestamp,nonce,echostr);
+        WeChatOfficialCallbackUrlCheckCmd cmd = WeChatOfficialCallbackUrlCheckCmd.cmd(appid, signature, timestamp, nonce, echostr);
+        return cmd.execute();
     }
 
+    /**
+     * 公众号消息/事件回调
+     *
+     * @param appid         {@link String appid}
+     * @param signature     {@link String signature}
+     * @param timestamp     {@link String timestamp}
+     * @param nonce         {@link String nonce}
+     * @param openid        {@link String openid}
+     * @param encrypt_type  {@link String encrypt_type}
+     * @param msg_signature {@link String msg_signature}
+     * @param request       {@link HttpServletRequest request}
+     * @return {@link String }
+     * @since 2025/4/29
+     */
     @PostMapping("/{appid}/callback")
     public String post(@PathVariable("appid") String appid,
                        @RequestParam String signature,
@@ -47,16 +62,26 @@ public class WeChatOfficialCallBackController {
                        @RequestParam String encrypt_type,
                        @RequestParam String msg_signature,
                        HttpServletRequest request) {
-
-        return "success";
+        WeChatOfficialCallbackMsgOptCmd cmd = WeChatOfficialCallbackMsgOptCmd.cmd(appid, signature, timestamp, nonce, openid, encrypt_type, msg_signature, request);
+        return cmd.execute();
     }
 
+    /**
+     * 授权网页链接处理
+     *
+     * @param appid {@link String appid}
+     * @param scene {@link String scene}
+     * @param code  {@link String code}
+     * @param state {@link String state}
+     * @return {@link String }
+     * @since 2025/4/29
+     */
     @GetMapping("/{appid}/page/{scene}")
-    public void page(@PathVariable("appid") String appid,
-                     @PathVariable("scene") String scene,
-                     @RequestParam String code,
-                     @RequestParam String state,
-                     HttpServletRequest request) {
+    public String page(@PathVariable("appid") String appid,
+                       @PathVariable("scene") String scene,
+                       @RequestParam String code,
+                       @RequestParam String state) {
 
+        return WeChatOfficialPageUrlQryCmd.cmd(appid, scene, code, state).execute();
     }
 }

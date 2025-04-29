@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting;
+package com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.accesstokken;
 
 
 import com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.meta.accesstoken.*;
@@ -31,7 +31,6 @@ import com.asialjim.microapplet.mams.channel.wechat.constant.WeChatCons;
  * @version 1.0
  * @since 2025/4/25, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@SuppressWarnings("unused")
 @Server(
         supplier = WeChatCons.Supplier.Tencent,
         namespace = WeChatCons.Namespace.WeChat,

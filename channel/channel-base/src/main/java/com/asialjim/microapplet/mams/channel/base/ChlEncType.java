@@ -16,11 +16,9 @@
 
 package com.asialjim.microapplet.mams.channel.base;
 
-import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.ArrayList;
-import java.util.List;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 /**
  * 渠道加密方式
@@ -30,15 +28,6 @@ import java.util.List;
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface ChlEncType {
-    List<ChlEncType> all = new ArrayList<>();
-
-    static ChlEncType codeOf(String code) {
-        CommonsClassLoader.init();
-        return all.stream()
-                .filter(item -> StringUtils.equals(code, item.getCode()))
-                .findFirst()
-                .orElseThrow(ChlEncTypeResCode.ChlEncTpUnknownEnum::sysException);
-    }
 
     /**
      * 所属渠道类型
@@ -54,4 +43,30 @@ public interface ChlEncType {
      * 加密类型描述
      */
     String getDesc();
+
+    @Data
+    @NoArgsConstructor
+    @Accessors(chain = true)
+    class Meta implements ChlEncType{
+        private String code;
+        private String desc;
+        private String chlTypeCode;
+        private String chlTypeDesc;
+
+        public Meta(String code, String desc, ChlType chlType) {
+            this.code = code;
+            this.desc = desc;
+            this.chlTypeCode = chlType.getCode();
+            this.chlTypeDesc = chlType.getDesc();
+        }
+
+        @Override
+        public ChlType getChlType() {
+            return new ChlType.Meta().setCode(getChlTypeCode()).setDesc(getChlTypeDesc());
+        }
+    }
+
+    static ChlEncType codeOf(String code) {
+        return new Meta().setCode(code);
+    }
 }

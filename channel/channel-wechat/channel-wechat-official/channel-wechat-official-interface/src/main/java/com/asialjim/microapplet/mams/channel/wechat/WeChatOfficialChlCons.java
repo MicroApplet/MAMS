@@ -11,7 +11,6 @@ import org.apache.commons.lang3.StringUtils;
  */
 public interface WeChatOfficialChlCons {
 
-    //String appName = "WeChatOfficialChl";
     String appName = "chl-wx-official";
     String contextPath = StringUtils.EMPTY;
 }
