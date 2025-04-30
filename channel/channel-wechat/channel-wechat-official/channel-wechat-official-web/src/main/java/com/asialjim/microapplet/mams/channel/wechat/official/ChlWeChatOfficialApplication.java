@@ -16,8 +16,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class WeChatOfficialChannelApplication {
+public class ChlWeChatOfficialApplication {
     public static void main(String[] args) {
-        App.voidStart(WeChatOfficialChlCons.appName, WeChatOfficialChlCons.contextPath, WeChatOfficialChannelApplication.class, args);
+        App.voidStart(WeChatOfficialChlCons.appName, WeChatOfficialChlCons.contextPath, ChlWeChatOfficialApplication.class, args);
     }
 }

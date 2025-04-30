@@ -79,7 +79,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.asialjim.microapplet.mams.channel.wechat.official.WeChatOfficialChannelApplication</mainClass>
+                    <mainClass>com.asialjim.microapplet.mams.channel.wechat.official.ChlWeChatOfficialApplication</mainClass>
                     <finalName>WeChatOfficialChlApplication</finalName>
                 </configuration>
                 <executions>

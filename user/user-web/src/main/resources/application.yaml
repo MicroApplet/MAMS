@@ -1,5 +1,5 @@
 server:
-  port: 10001
+  port: ${user_port:80}
 
 knife4j:
   basic:
