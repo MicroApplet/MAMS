@@ -9,6 +9,7 @@ knife4j:
     enable-after-script: false
     enable-open-api: false
     enable-footer: false
+    enable-group: true
 
 springdoc:
   swagger-ui:
