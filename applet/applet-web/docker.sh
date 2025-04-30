@@ -19,7 +19,7 @@ docker build -t ${group_name}/${app_name}:${app_version} .
 
 docker run --name ${docker_name} \
 --network api \
---cpus="4" --memory="2048m" \
+--cpus="2" --memory="1024m" \
 --env-file /root/.env/mams.env \
 -e 'spring.profiles.active'=${profile_active} \
 -e TZ="Asia/Shanghai" \
