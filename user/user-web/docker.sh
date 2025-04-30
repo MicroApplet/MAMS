@@ -8,7 +8,7 @@ docker_name='aj-mams-user'
 app_version='latest'
 # 定义应用环境
 profile_active='prod'
-echo '重启用户服务开始...'
+echo '发布用户服务开始...'
 docker stop ${docker_name}
 
 docker rm ${docker_name}
@@ -18,7 +18,7 @@ docker rmi ${group_name}/${app_name}:${app_version}
 docker build -t ${group_name}/${app_name}:${app_version} .
 
 docker run --name ${docker_name} \
---network api_development-net \
+--network api \
 --cpus="4" --memory="2048m" \
 --env-file /root/.env/mams.env \
 -e 'spring.profiles.active'=${profile_active} \
@@ -27,5 +27,4 @@ docker run --name ${docker_name} \
 -v /home/asialjim/.app/docker/github/MicroBank/${app_name}/logs:/var/logs \
 -d ${group_name}/${app_name}:${app_version}
 
-
-echo '重启用户服务结束...'
+echo '发布用户服务结束...'
