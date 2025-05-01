@@ -14,29 +14,26 @@
  *   limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.channel.base;
+package com.asialjim.microapplet.mams.applet.res;
 
 import com.asialjim.microapplet.common.context.ResCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * 渠道类型相关响应代码
+ * 应用响应代码
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:</em>
+ * @since 2025 05 01, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Getter
 @AllArgsConstructor
-public enum ChlAppTypeResCode implements ResCode {
-    ChlAppTpUnknown("CHL:APP:TP:UNKNOWN","未知渠道应用类型"),
-    ChlAppTpUnknownEnum("CHL:APP:TP:UNKNOWN:ENUM","渠道应用类型枚举未知"),
-    ChlAppTpNotProvide("CHL:APP:TP:NOT:PROVIDE", "未提供渠道应用类型标识");
+public enum AppletRes implements ResCode {
+    NoSuchApplet("APPLET:NOT-EXIST","应用不存在");
 
     private final String code;
     private final String msg;
-
 
     @Override
     public boolean isSuccess() {

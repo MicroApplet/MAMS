@@ -14,38 +14,26 @@
  *   limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.applet.infrastructure.repository;
+package com.asialjim.microapplet.mams.applet.interfaces.endpoint;
 
+import com.asialjim.microapplet.mams.applet.application.ChlAppletAppService;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 /**
- * 渠道应用数据存储
+ * 渠道应用接口
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025 05 01, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface ChlAppletRepository {
+@Component
+@AllArgsConstructor
+public class ChlAppletEndpoint {
+    private final ChlAppletAppService chlAppletAppService;
 
-    /**
-     * 获取指定应用编号的渠道应用列表信息,即： queryBy {@link ChlApplet#getAppId()}
-     *
-     * @param appletId {@link String appletId}
-     * @return {@link List<ChlApplet> }
-     * @since 2025/4/10
-     */
-    List<ChlApplet> listByAppletId(String appletId);
-
-    /**
-     * 根据渠道应用编号查询渠道应用
-     *
-     * @param chlAppId 渠道应用编号
-     * @return {@link ChlApplet}
-     * @since 2025/4/15
-     */
-    ChlApplet queryByChlAppId(String chlAppId);
-
-    ChlApplet save(ChlApplet body);
+    public ChlApplet save(ChlApplet body) {
+        return chlAppletAppService.save(body);
+    }
 }

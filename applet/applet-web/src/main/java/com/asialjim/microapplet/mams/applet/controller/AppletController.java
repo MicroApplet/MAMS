@@ -1,17 +1,17 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.applet.controller;
@@ -19,11 +19,12 @@ package com.asialjim.microapplet.mams.applet.controller;
 import com.asialjim.microapplet.common.page.PageData;
 import com.asialjim.microapplet.mams.applet.interfaces.AppletInterface;
 import com.asialjim.microapplet.mams.applet.interfaces.endpoint.AppletEndpoint;
+import com.asialjim.microapplet.mams.applet.interfaces.endpoint.ChlAppletEndpoint;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
 import com.asialjim.microapplet.web.mvc.page.MVCPageParameterFun;
-import org.springframework.web.bind.annotation.*;
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,6 +35,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping(AppletInterface.PATH)
 public class AppletController implements AppletInterface {
+    private final ChlAppletEndpoint chlAppletEndpoint;
     private final AppletEndpoint appletEndpoint;
 
     /**
@@ -74,6 +76,12 @@ public class AppletController implements AppletInterface {
     @GetMapping("/{id}/chl/applet/list")
     public List<ChlApplet> getChlAppletListByAppletId(@PathVariable("id") String appletId) {
         return appletEndpoint.getChlAppletListByAppletId(appletId);
+    }
+
+    @PostMapping("/{id}/chl/applet/save")
+    public ChlApplet saveChlApplet(@PathVariable("id") String appletId,@RequestBody ChlApplet body){
+        body.setAppletId(appletId);
+        return chlAppletEndpoint.save(body);
     }
 
     /**

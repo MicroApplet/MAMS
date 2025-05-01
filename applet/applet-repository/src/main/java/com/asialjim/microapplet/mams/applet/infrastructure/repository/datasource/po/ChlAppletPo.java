@@ -1,17 +1,17 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po;
@@ -21,7 +21,10 @@ import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlEncType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
+import com.mybatisflex.annotation.Id;
+import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
+import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -44,6 +47,7 @@ public class ChlAppletPo implements Serializable {
     /**
      * 渠道应用编号:主键
      */
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
     /**
      * 应用编号

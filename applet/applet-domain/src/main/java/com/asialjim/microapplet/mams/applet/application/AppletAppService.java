@@ -1,35 +1,35 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.applet.application;
+
+import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.common.page.PageData;
+import com.asialjim.microapplet.common.page.PageParameter;
+import com.asialjim.microapplet.mams.applet.domain.AppletAgg;
+import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepository;
+import com.asialjim.microapplet.mams.applet.pojo.Applet;
+import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Supplier;
-
-import com.asialjim.microapplet.common.page.PageData;
-import com.asialjim.microapplet.common.page.PageParameter;
-import com.asialjim.microapplet.mams.applet.infrastructure.repository.AppletRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-import com.asialjim.microapplet.common.application.App;
-import com.asialjim.microapplet.mams.applet.domain.AppletAgg;
-import com.asialjim.microapplet.mams.applet.pojo.Applet;
-import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
 
 /**
  * 小微应用应用服务
@@ -92,11 +92,20 @@ public class AppletAppService {
         return appletAggOpt.map(item -> item.save(applet)).orElse(applet);
     }
 
+    /**
+     * 分页查询
+     *
+     * @param condition            {@link Applet condition}
+     * @param pageParameter        {@link Supplier pageParameter}
+     * @param defaultPageParameter {@link PageParameter defaultPageParameter}
+     * @return {@link PageData<Applet> }
+     * @since 2025 05 01
+     */
     public PageData<Applet> query(Applet condition,
-                                         Supplier<PageParameter> pageParameter,
-                                         PageParameter defaultPageParameter) {
+                                  Supplier<PageParameter> pageParameter,
+                                  PageParameter defaultPageParameter) {
 
         PageParameter parameter = Optional.ofNullable(pageParameter).map(Supplier::get).orElse(defaultPageParameter);
-        return this.appletRepository.query(parameter,condition);
+        return this.appletRepository.query(parameter, condition);
     }
 }
