@@ -1,26 +1,24 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.user.chl;
 
-import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
+import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
-import com.asialjim.microapplet.mams.channel.base.NormalChlAppType;
-import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
 import com.asialjim.microapplet.mams.user.domain.agg.SessionUser;
@@ -28,10 +26,9 @@ import com.asialjim.microapplet.mams.user.domain.agg.UserAggRoot;
 import com.asialjim.microapplet.mams.user.domain.strategy.BaseUserAuthenticateStrategy;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserChlRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.UserMainRepository;
-import com.asialjim.microapplet.mams.user.pojo.UserMain;
-import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.mams.user.res.UserResCode;
+import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
@@ -54,7 +51,7 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
     @NonNull
     @Override
     public ChlType supportType() {
-        return NormalChlType.H5;
+        return ChlType.H5;
     }
 
     @Override
@@ -67,7 +64,7 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         // 注册参数
         UserRegOrLoginReq req = command.getReq();
         String username = req.getUsername();
-        UserChl exist = this.userChlRepository.queryChlUser(supportType(), NormalChlAppType.H5.getCode(), NormalChlAppType.H5, username);
+        UserChl exist = this.userChlRepository.queryChlUser(supportType(), ChlType.H5.getCode(), ChlAppType.H5, username);
         if (Objects.nonNull(exist))
             UserResCode.UsernameUnavailable.throwBiz();
 
@@ -77,8 +74,8 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         target.setUserid(userid);
         target.setAppletId(req.getAppletId());
         target.setChlType(supportType());
-        target.setChlAppType(NormalChlAppType.H5);
-        target.setChlAppId(NormalChlAppType.H5.getCode());
+        target.setChlAppType(ChlAppType.H5);
+        target.setChlAppId(ChlAppType.H5.getCode());
         target.setChlUserId(username);
         target.setChlUnionId(target.getUserid());
         target.setChlUserCode(PasswordStorage.createHash(req.getCode()));
@@ -94,7 +91,7 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         String username = loginParameter.getUsername();
         String password = loginParameter.getCode();
 
-        UserChl user = this.userChlRepository.queryChlUser(supportType(), NormalChlAppType.H5.getCode(), NormalChlAppType.H5, username);
+        UserChl user = this.userChlRepository.queryChlUser(supportType(), ChlAppType.H5.getCode(), ChlAppType.H5, username);
         if (Objects.isNull(user))
             UserResCode.UserNameOrPasswordErr.throwBiz();
 
@@ -105,9 +102,9 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         SessionUser sessionUser = userAgg.getSessionUser();
         sessionUser.setUserid(user.getUserid());
         sessionUser.setUsername(user.getChlUserId());
-        sessionUser.setChlType(NormalChlType.H5.getCode());
-        sessionUser.setChlAppid(NormalChlAppType.H5.getCode());
-        sessionUser.setChlAppType(NormalChlAppType.H5.getCode());
+        sessionUser.setChlType(ChlAppType.H5.getCode());
+        sessionUser.setChlAppid(ChlAppType.H5.getCode());
+        sessionUser.setChlAppType(ChlAppType.H5.getCode());
         return sessionUser;
     }
 }

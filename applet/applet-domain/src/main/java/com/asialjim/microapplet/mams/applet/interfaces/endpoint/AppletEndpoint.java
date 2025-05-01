@@ -1,28 +1,29 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.applet.interfaces.endpoint;
 
 import com.asialjim.microapplet.common.page.PageData;
 import com.asialjim.microapplet.common.page.PageParameter;
-import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
 import com.asialjim.microapplet.mams.applet.application.AppletAppService;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
+import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+import com.asialjim.microapplet.mams.applet.vo.AppletVo;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -45,8 +46,10 @@ public class AppletEndpoint {
      * @return {@link Applet }
      * @since 2025/4/24
      */
-    public Applet save(Applet applet) {
-        return this.appletAppService.save(applet);
+    public AppletVo save(AppletVo applet) {
+        Applet from = AppletVo.from(applet);
+        Applet save = this.appletAppService.save(from);
+        return AppletVo.to(save);
     }
 
     /**
@@ -57,9 +60,9 @@ public class AppletEndpoint {
      * @return {@link PageData<Applet> }
      * @since 2025/4/24
      */
-    public PageData<Applet> query(Applet condition,
+    public PageData<Applet> query(AppletVo condition,
                                   Supplier<PageParameter> pageParameter) {
-        return this.appletAppService.query(condition, pageParameter, PageParameter.pageOf());
+        return this.appletAppService.query(AppletVo.from(condition), pageParameter, PageParameter.pageOf());
     }
 
     /**

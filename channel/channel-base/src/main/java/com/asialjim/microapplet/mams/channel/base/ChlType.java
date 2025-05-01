@@ -1,29 +1,27 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.channel.base;
 
 
-import com.asialjim.microapplet.common.classloader.CommonsClassLoader;
-import lombok.Data;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 /**
  * 渠道类型
@@ -32,26 +30,20 @@ import java.util.List;
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface ChlType {
+@Getter
+@AllArgsConstructor
+public enum ChlType {
+    Myself("Myself", "本渠道"),
+    H5("H5", "H5/PC"),
+    WeChat("WeChat", "微信"),
+    Phone("Phone", "移动电话渠道");
 
-    /**
-     * 渠道类型编号
-     */
-    String getCode();
+    private final String code;
+    private final String desc;
 
-    /**
-     * 渠道类型描述
-     */
-    String getDesc();
-
-    static ChlType codeOf(String code) {
-        return new Meta().setCode(code);
-    }
-
-    @Data
-    @Accessors(chain = true)
-    class Meta implements ChlType {
-        private String code;
-        private String desc;
+    public static ChlType codeOf(String code) {
+        return Arrays.stream(values()).filter(item -> StringUtils.equals(code, item.getCode()))
+                .findAny()
+                .orElseThrow(ChlTypeResCode.ChlTypeMismatch::bizException);
     }
 }

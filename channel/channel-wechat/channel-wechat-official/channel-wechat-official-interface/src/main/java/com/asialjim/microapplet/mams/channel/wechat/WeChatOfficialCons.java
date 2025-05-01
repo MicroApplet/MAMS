@@ -1,16 +1,26 @@
+/*
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
+ */
+
 package com.asialjim.microapplet.mams.channel.wechat;
 
-import com.asialjim.microapplet.common.exception.BusinessException;
-import com.asialjim.microapplet.mams.channel.base.ChlAppType;
-import com.asialjim.microapplet.mams.channel.base.ChlEncType;
-import com.asialjim.microapplet.mams.channel.base.ChlType;
-import com.asialjim.microapplet.mams.channel.base.NormalChlType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 /**
  * 微信公众号常量池
@@ -168,25 +178,6 @@ public interface WeChatOfficialCons {
 
         public static XmlEventType codeOf(String text) {
             return Arrays.stream(values()).filter(item -> StringUtils.equals(item.getCode(),text)).findFirst().orElse(Empty);
-        }
-    }
-
-    @Getter
-    @AllArgsConstructor
-    enum EncType implements ChlEncType {
-        PlainText("PLAINTEXT","明文"),
-        CipherText("CIPHERTEXT","密文"),
-        Mixing("MIXING","混合模式");
-        private final String code;
-        private final String desc;
-
-        @Override
-        public ChlType getChlType() {
-            return NormalChlType.WeChat;
-        }
-
-        public static EncType codeOf(ChlEncType type){
-            return Arrays.stream(values()).filter(item -> StringUtils.equals(item.getCode(), type.getCode())).findFirst().orElse(Mixing);
         }
     }
 }

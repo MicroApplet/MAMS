@@ -1,25 +1,25 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.user.chl.wechat.infrastructure.adapter;
 
 
-import com.asialjim.microapplet.mams.channel.base.NormalChlType;
+import com.asialjim.microapplet.mams.channel.base.ChlAppType;
+import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.user.chl.wechat.po.WeChatAppChl;
-import com.asialjim.microapplet.mams.user.chl.wechat.strategy.WeChatChlAppType;
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
@@ -46,9 +46,9 @@ public class WeChatAppletUserAdapter implements WeChatUserAdapter {
         userChl.setChlUnionId(res.getUnionid());
         userChl.setChlUserCode(code);
         userChl.setChlUserToken(res.getSessionKey());
-        userChl.setChlType(NormalChlType.WeChat);
+        userChl.setChlType(ChlType.WeChat);
         userChl.setChlAppId(weChatAppChl.getAppid());
-        userChl.setChlAppType(WeChatChlAppType.Applet);
+        userChl.setChlAppType(ChlAppType.WeChatApplet);
         return userChl;
     }
 }

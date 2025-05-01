@@ -1,24 +1,26 @@
 /*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *  Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *   limitations under the License.
  */
 
 package com.asialjim.microapplet.mams.channel.base;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Arrays;
 
 /**
  * 渠道加密方式
@@ -27,46 +29,19 @@ import lombok.experimental.Accessors;
  * @version 1.0
  * @since 2025/4/10, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface ChlEncType {
+@Getter
+@AllArgsConstructor
+public enum ChlEncType {
+    WeChatOfficialPlainText("wx:official:PLAINTEXT", "明文", ChlType.WeChat, ChlAppType.WeChatOfficial),
+    WeChatOfficialCipherText("wx:official:CIPHERTEXT", "密文", ChlType.WeChat, ChlAppType.WeChatOfficial),
+    WeChatOfficialMixing("wx:official:MIXING", "混合模式", ChlType.WeChat, ChlAppType.WeChatOfficial);
 
-    /**
-     * 所属渠道类型
-     */
-    ChlType getChlType();
+    private final String code;
+    private final String desc;
+    private final ChlType chlType;
+    private final ChlAppType chlAppType;
 
-    /**
-     * 加密类型编号
-     */
-    String getCode();
-
-    /**
-     * 加密类型描述
-     */
-    String getDesc();
-
-    @Data
-    @NoArgsConstructor
-    @Accessors(chain = true)
-    class Meta implements ChlEncType{
-        private String code;
-        private String desc;
-        private String chlTypeCode;
-        private String chlTypeDesc;
-
-        public Meta(String code, String desc, ChlType chlType) {
-            this.code = code;
-            this.desc = desc;
-            this.chlTypeCode = chlType.getCode();
-            this.chlTypeDesc = chlType.getDesc();
-        }
-
-        @Override
-        public ChlType getChlType() {
-            return new ChlType.Meta().setCode(getChlTypeCode()).setDesc(getChlTypeDesc());
-        }
-    }
-
-    static ChlEncType codeOf(String code) {
-        return new Meta().setCode(code);
+    public static ChlEncType codeOf(String chlEncType) {
+        return Arrays.stream(values()).filter(item -> StringUtils.equals(item.getCode(), chlEncType)).findAny().orElse(WeChatOfficialMixing);
     }
 }

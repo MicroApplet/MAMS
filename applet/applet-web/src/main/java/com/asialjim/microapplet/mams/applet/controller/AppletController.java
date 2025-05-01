@@ -22,6 +22,8 @@ import com.asialjim.microapplet.mams.applet.interfaces.endpoint.AppletEndpoint;
 import com.asialjim.microapplet.mams.applet.interfaces.endpoint.ChlAppletEndpoint;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+import com.asialjim.microapplet.mams.applet.vo.AppletVo;
+import com.asialjim.microapplet.mams.applet.vo.ChlAppletVo;
 import com.asialjim.microapplet.web.mvc.page.MVCPageParameterFun;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -46,7 +48,7 @@ public class AppletController implements AppletInterface {
      * @since 2025/4/24
      */
     @PostMapping
-    public Applet save(@RequestBody Applet applet) {
+    public AppletVo save(@RequestBody AppletVo applet) {
         return this.appletEndpoint.save(applet);
     }
 
@@ -58,7 +60,7 @@ public class AppletController implements AppletInterface {
      * @since 2025/4/24
      */
     @PostMapping("/query")
-    public PageData<Applet> query(@RequestBody Applet condition) {
+    public PageData<Applet> query(@RequestBody AppletVo condition) {
         return this.appletEndpoint.query(condition, MVCPageParameterFun.INSTANCE);
     }
 
@@ -79,9 +81,9 @@ public class AppletController implements AppletInterface {
     }
 
     @PostMapping("/{id}/chl/applet/save")
-    public ChlApplet saveChlApplet(@PathVariable("id") String appletId,@RequestBody ChlApplet body){
+    public ChlApplet saveChlApplet(@PathVariable("id") String appletId,@RequestBody ChlAppletVo body){
         body.setAppletId(appletId);
-        return chlAppletEndpoint.save(body);
+        return chlAppletEndpoint.save(ChlAppletVo.from(body));
     }
 
     /**
