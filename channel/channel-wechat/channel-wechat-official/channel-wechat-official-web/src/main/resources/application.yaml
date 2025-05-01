@@ -21,9 +21,9 @@ springdoc:
     groups:
       enabled: true
   group-configs:
-    - group: 'WeChatOfficialChl'
+    - group: 'ChlWxOfficial'
       display-name: 微信公众号渠道
-      paths-to-match: '/chl-wx-official/**'
+      paths-to-match: '/ChlWxOfficial/**'
       packages-to-scan: com.asialjim.microapplet.mams.channel.wechat.official.controller
 
 spring:
