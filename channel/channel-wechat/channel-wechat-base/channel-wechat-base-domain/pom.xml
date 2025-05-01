@@ -49,6 +49,12 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>remote-spring</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams.applet</groupId>
+            <artifactId>applet-interface</artifactId>
+            <version>1.1.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>

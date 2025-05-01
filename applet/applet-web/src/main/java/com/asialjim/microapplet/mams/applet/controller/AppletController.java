@@ -81,7 +81,7 @@ public class AppletController implements AppletInterface {
     }
 
     @PostMapping("/{id}/chl/applet/save")
-    public ChlApplet saveChlApplet(@PathVariable("id") String appletId,@RequestBody ChlAppletVo body){
+    public ChlApplet saveChlApplet(@PathVariable("id") String appletId, @RequestBody ChlAppletVo body) {
         body.setAppletId(appletId);
         return chlAppletEndpoint.save(ChlAppletVo.from(body));
     }
@@ -93,7 +93,22 @@ public class AppletController implements AppletInterface {
      * @return the ChlApplet or null if not found
      */
     @GetMapping("/{id}/chl/{chlAppId}")
-    public ChlApplet getChlAppletByChlAppId(@PathVariable("id") String id,@PathVariable("chlAppId") String chlAppId) {
+    public ChlApplet getChlAppletByChlAppId(@PathVariable("id") String id, @PathVariable("chlAppId") String chlAppId) {
         return appletEndpoint.getChlAppletByChlAppId(chlAppId);
+    }
+
+    @Override
+    public ChlApplet getChlAppletById(String id) {
+        return chlAppletEndpoint.getChlAppletById(id);
+    }
+
+    @Override
+    public ChlApplet getChlAppletByIndex(String index) {
+        return chlAppletEndpoint.getChlAppletByIndex(index);
+    }
+
+    @Override
+    public ChlApplet getChlAppletByAppidAndType(String appid, String appTypeCode) {
+        return chlAppletEndpoint.getChlAppletByAppidAndType(appid,appTypeCode);
     }
 }

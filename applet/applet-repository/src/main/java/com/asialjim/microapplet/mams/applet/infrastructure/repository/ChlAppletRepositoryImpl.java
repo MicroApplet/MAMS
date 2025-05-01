@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
@@ -59,6 +60,29 @@ public class ChlAppletRepositoryImpl implements ChlAppletRepository {
     public ChlApplet save(ChlApplet body) {
         ChlAppletPo po = ChlAppletPo.toPo(body);
         this.chlAppletMapperService.save(po);
+        return ChlAppletPo.fromPo(po);
+    }
+
+    @Override
+    public ChlApplet queryById(String id) {
+        ChlAppletPo po = this.chlAppletMapperService.queryById(id);
+        return ChlAppletPo.fromPo(po);
+    }
+
+    @Override
+    public ChlApplet queryByIndex(String index) {
+        ChlAppletPo po = this.chlAppletMapperService.queryById(index);
+        if(Objects.isNull(po))
+            po = this.chlAppletMapperService.queryByChlAppId(index);
+
+        if(Objects.isNull(po))
+            po = this.chlAppletMapperService.queryBySubjectId(index);
+        return ChlAppletPo.fromPo(po);
+    }
+
+    @Override
+    public ChlApplet queryByAppidAndType(String appid, String appTypeCode) {
+        ChlAppletPo po = this.chlAppletMapperService.queryByChlAppidAndType(appid, appTypeCode);
         return ChlAppletPo.fromPo(po);
     }
 }

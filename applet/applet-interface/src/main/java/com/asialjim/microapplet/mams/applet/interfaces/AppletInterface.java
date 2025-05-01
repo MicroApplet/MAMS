@@ -41,4 +41,13 @@ public interface AppletInterface {
      */
     @GetMapping("/{id}/chl/{chlAppId}")
     ChlApplet getChlAppletByChlAppId(@PathVariable("id") String id, @PathVariable("chlAppId") String chlAppId);
+
+    @GetMapping("/chl/app/id/{id}")
+    ChlApplet getChlAppletById(@PathVariable("id") String id);
+
+    @GetMapping("/chl/app/index/{id}")
+    ChlApplet getChlAppletByIndex(@PathVariable("id") String index);
+
+    @GetMapping("/chl/app/id/{id}/type/{type}")
+    ChlApplet getChlAppletByAppidAndType(@PathVariable("id") String appid, @PathVariable("type") String appTypeCode);
 }

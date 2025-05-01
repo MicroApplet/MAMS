@@ -63,4 +63,16 @@ public class ChlAppletAppService {
 
         return chlAppletRepository.save(body);
     }
+
+    public ChlApplet queryById(String id) {
+        return chlAppletRepository.queryById(id);
+    }
+
+    public ChlApplet queryByIndex(String index) {
+        return chlAppletRepository.queryByIndex(index);
+    }
+
+    public ChlApplet queryByAppidAndType(String appid, String appTypeCode) {
+        return chlAppletRepository.queryByAppidAndType(appid,appTypeCode);
+    }
 }

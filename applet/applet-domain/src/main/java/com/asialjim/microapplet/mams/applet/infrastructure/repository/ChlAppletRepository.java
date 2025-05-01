@@ -48,4 +48,10 @@ public interface ChlAppletRepository {
     ChlApplet queryByChlAppId(String chlAppId);
 
     ChlApplet save(ChlApplet body);
+
+    ChlApplet queryById(String id);
+
+    ChlApplet queryByIndex(String index);
+
+    ChlApplet queryByAppidAndType(String appid, String appTypeCode);
 }

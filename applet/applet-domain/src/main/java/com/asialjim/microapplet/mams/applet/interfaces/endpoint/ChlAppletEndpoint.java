@@ -36,4 +36,16 @@ public class ChlAppletEndpoint {
     public ChlApplet save(ChlApplet body) {
         return chlAppletAppService.save(body);
     }
+
+    public ChlApplet getChlAppletById(String id) {
+        return this.chlAppletAppService.queryById(id);
+    }
+
+    public ChlApplet getChlAppletByIndex(String index) {
+        return this.chlAppletAppService.queryByIndex(index);
+    }
+
+    public ChlApplet getChlAppletByAppidAndType(String appid, String appTypeCode) {
+        return this.chlAppletAppService.queryByAppidAndType(appid,appTypeCode);
+    }
 }

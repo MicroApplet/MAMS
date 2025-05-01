@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.channel.wechat.pojo;
 
+import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlEncType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
@@ -115,5 +116,23 @@ public class WeChatApp implements Serializable {
 
     public final ChlType getChlType() {
         return ChlType.WeChat;
+    }
+    public static void populateFromChlAppletToWeChatApp(WeChatApp app, ChlApplet applet) {
+        app.setId(applet.getId());
+        app.setAppid(applet.getChlAppId());
+        app.setAppType(applet.getChlAppType());
+        app.setAppSecret(applet.getChlAppSecret());
+        app.setName(applet.getChlAppName());
+        app.setSubjectId(applet.getChlSubjectId());
+        app.setAgentId(applet.getChlAgentId());
+        app.setToken(applet.getChlToken());
+        app.setAesKey(applet.getChlEncKey());
+        app.setEncType(applet.getChlEncType());
+        app.setUrl(applet.getUrl());
+        app.setManager(applet.getManager());
+        app.setDescription(applet.getDescription());
+        app.setDeleted(applet.getDeleted());
+        app.setCreateTime(applet.getCreateTime());
+        app.setUpdateTime(applet.getUpdateTime());
     }
 }
