@@ -90,8 +90,8 @@ public class AppletController implements AppletInterface {
      * @param chlAppId the channel App ID
      * @return the ChlApplet or null if not found
      */
-    @GetMapping("/chl/{chlAppId}")
-    public ChlApplet getChlAppletByChlAppId(@PathVariable("chlAppId") String chlAppId) {
+    @GetMapping("/{id}/chl/{chlAppId}")
+    public ChlApplet getChlAppletByChlAppId(@PathVariable("id") String id,@PathVariable("chlAppId") String chlAppId) {
         return appletEndpoint.getChlAppletByChlAppId(chlAppId);
     }
 }
