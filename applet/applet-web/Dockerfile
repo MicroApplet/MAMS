@@ -5,5 +5,5 @@ COPY ./AppletApplication.jar /
 # 赋予执行权限
 RUN chmod 755 -R /AppletApplication.jar
 # 设置
-ENTRYPOINT ["java","-Xms256m -Xmx1g -jar","/AppletApplication.jar"]
+ENTRYPOINT ["java","-Xms256m", "-Xmx1g", "-jar", "/AppletApplication.jar"]
 MAINTAINER AsialJim
