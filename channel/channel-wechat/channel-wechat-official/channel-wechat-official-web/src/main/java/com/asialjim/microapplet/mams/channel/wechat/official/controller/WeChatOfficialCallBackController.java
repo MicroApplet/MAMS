@@ -59,8 +59,8 @@ public class WeChatOfficialCallBackController {
                        @RequestParam String timestamp,
                        @RequestParam String nonce,
                        @RequestParam String openid,
-                       @RequestParam String encrypt_type,
-                       @RequestParam String msg_signature,
+                       @RequestParam(required = false) String encrypt_type,
+                       @RequestParam(required = false) String msg_signature,
                        HttpServletRequest request) {
         WeChatOfficialCallbackMsgOptCmd cmd = WeChatOfficialCallbackMsgOptCmd.cmd(appid, signature, timestamp, nonce, openid, encrypt_type, msg_signature, request);
         return cmd.execute();

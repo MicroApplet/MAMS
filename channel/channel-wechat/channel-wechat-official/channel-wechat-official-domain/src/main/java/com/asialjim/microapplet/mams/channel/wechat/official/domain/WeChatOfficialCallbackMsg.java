@@ -3,10 +3,12 @@ package com.asialjim.microapplet.mams.channel.wechat.official.domain;
 import com.asialjim.microapplet.mams.channel.wechat.WeChatOfficialCons;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.IntNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.LongNode;
 import com.fasterxml.jackson.databind.node.TextNode;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.Objects;
 
@@ -46,15 +48,17 @@ public class WeChatOfficialCallbackMsg {
     }
 
     public LongNode createTime() {
-        return (LongNode) msg.get(WeChatOfficialCons.XmlMsgTag.createTime);
+        String createTime = textNodeValue(WeChatOfficialCons.XmlMsgTag.createTime);
+        long aLong = NumberUtils.toLong(createTime);
+        return LongNode.valueOf(aLong);
     }
 
     public TextNode msgType() {
         return (TextNode) msg.get(WeChatOfficialCons.XmlMsgTag.msgType);
     }
 
-    public LongNode msgId() {
-        return (LongNode) msg.get(WeChatOfficialCons.XmlMsgTag.msgId);
+    public TextNode msgId() {
+        return (TextNode) msg.get(WeChatOfficialCons.XmlMsgTag.msgId);
     }
 
     public TextNode msgDataId() {
@@ -62,7 +66,8 @@ public class WeChatOfficialCallbackMsg {
     }
 
     public IntNode idx() {
-        return (IntNode) msg.get(WeChatOfficialCons.XmlMsgTag.idx);
+        String idx = textNodeValue(WeChatOfficialCons.XmlMsgTag.idx);
+        return IntNode.valueOf(NumberUtils.toInt(idx));
     }
 
     public String textNodeValue(String tag){
