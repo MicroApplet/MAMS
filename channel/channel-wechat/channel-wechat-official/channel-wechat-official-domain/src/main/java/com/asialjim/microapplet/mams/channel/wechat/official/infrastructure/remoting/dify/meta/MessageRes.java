@@ -20,13 +20,11 @@
 
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.dify.meta;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+
 import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Optional;
-import java.util.UUID;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -41,6 +39,12 @@ public class MessageRes implements Serializable {
     private String message_id;
     private String event;
 
+    public static List<String> answer(MessageRes res){
+        String s = Optional.ofNullable(res)
+                .map(MessageRes::getAnswer)
+                .orElse("服务繁忙，请稍后再试");
+        return Collections.singletonList(s);
+    }
 
     public static List<String> msg(MessageRes res){
         Stream<RetrieverResource> stream = Optional.ofNullable(res)

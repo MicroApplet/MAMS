@@ -45,46 +45,4 @@ public class WeChatAppAgg {
         return this.weChatApp;
     }
 
-    public String accessToken() {
-        WeChatApp app = this.weChatApp();
-        String appid = app.getAppid();
-        String secret = app.getAppSecret();
-        String accessToken = accessTokenCache.get(appid);
-        if (StringUtils.isNotBlank(accessToken))
-            return accessToken;
-
-        // 获取锁
-        String tag;
-        String lockTag;
-        do {
-            tag = UUID.randomUUID().toString();
-            lockTag = accessTokenCache.getLockTag(appid, tag);
-            if (StringUtils.equals(tag, lockTag))
-                break;
-            //ThreadUtils.sleep(Duration.ofMillis(500));
-        } while (!StringUtils.equals(tag, lockTag));
-
-        // 执行网络查询
-        WeChatAccessTokenRes weChatAccessTokenRes = accessTokenRemoting.accessToken(appid, secret);
-        String token;
-        int index = 1;
-        do {
-            token = Optional.ofNullable(weChatAccessTokenRes)
-                    .map(WeChatAccessTokenRes::getAccess_token)
-                    .orElse(StringUtils.EMPTY);
-            if (StringUtils.isNotBlank(token)) {
-                accessTokenCache.set(appid, token);
-                accessTokenCache.cached(appid);
-            }
-            index++;
-        } while (StringUtils.isBlank(token) && index <= 3);
-
-        return token;
-    }
-
-    public void refreshAccessToken() {
-        WeChatApp app = this.weChatApp();
-        String appid = app.getAppid();
-        accessTokenCache.cached(appid);
-    }
 }

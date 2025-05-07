@@ -18,9 +18,17 @@ package com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.acc
 
 import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.channel.wechat.domain.WeChatAppAgg;
+import com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.meta.accesstoken.WeChatAccessTokenRes;
+import com.asialjim.microapplet.mams.channel.wechat.infrastructure.repository.WeChatAppRepository;
+import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
 
 /**
  * 微信公众平台API 访问令牌仓库
@@ -31,11 +39,19 @@ import javax.annotation.PostConstruct;
  */
 @Component
 public class WeChatAccessTokenRepository {
+    @Resource
+    private WeChatAppRepository weChatAppRepository;
+
 
     @PostConstruct
     public void init() {
         WeChatAccessTokenRepositoryHolder.repository(this);
     }
+
+    @Resource
+    private WeChatAccessTokenCache accessTokenCache;
+    @Resource
+    private WeChatAccessTokenRemoting accessTokenRemoting;
 
     /**
      * 获取微信 API 访问令牌
@@ -45,8 +61,41 @@ public class WeChatAccessTokenRepository {
      * @since 2023/1/28
      */
     public String accessToken(String weChatIndex) {
-        WeChatAppAgg agg = App.beanOrNull(WeChatAppAgg.class);
-        return agg.withId(weChatIndex).accessToken();
+        WeChatApp app = this.weChatAppRepository.queryByIndex(weChatIndex);
+
+        String appid = app.getAppid();
+        String secret = app.getAppSecret();
+        String accessToken = accessTokenCache.get(appid);
+        if (StringUtils.isNotBlank(accessToken))
+            return accessToken;
+
+        // 获取锁
+        String tag;
+        String lockTag;
+        do {
+            tag = UUID.randomUUID().toString();
+            lockTag = accessTokenCache.getLockTag(appid, tag);
+            if (StringUtils.equals(tag, lockTag))
+                break;
+            //ThreadUtils.sleep(Duration.ofMillis(500));
+        } while (!StringUtils.equals(tag, lockTag));
+
+        // 执行网络查询
+        WeChatAccessTokenRes weChatAccessTokenRes = accessTokenRemoting.accessToken(appid, secret);
+        String token;
+        int index = 1;
+        do {
+            token = Optional.ofNullable(weChatAccessTokenRes)
+                    .map(WeChatAccessTokenRes::getAccess_token)
+                    .orElse(StringUtils.EMPTY);
+            if (StringUtils.isNotBlank(token)) {
+                accessTokenCache.set(appid, token);
+                accessTokenCache.cached(appid);
+            }
+            index++;
+        } while (StringUtils.isBlank(token) && index <= 3);
+
+        return token;
     }
 
     /**
@@ -56,7 +105,10 @@ public class WeChatAccessTokenRepository {
      * @since 2023/1/28
      */
     public void refreshAccessToken(String weChatIndex) {
-        WeChatAppAgg agg = App.beanOrNull(WeChatAppAgg.class);
-        agg.withId(weChatIndex).refreshAccessToken();
+        WeChatApp app = this.weChatAppRepository.queryByIndex(weChatIndex);
+        if (Objects.isNull(app))
+            return;
+        String appid = app.getAppid();
+        accessTokenCache.remove(appid);
     }
 }
