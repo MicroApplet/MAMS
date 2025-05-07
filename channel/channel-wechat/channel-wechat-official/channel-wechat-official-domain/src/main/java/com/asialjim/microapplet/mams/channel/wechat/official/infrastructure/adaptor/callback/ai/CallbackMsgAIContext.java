@@ -75,6 +75,7 @@ public class CallbackMsgAIContext {
         this.wechatOfficialCallbackAISessionManager.addSession(session);
         ObjectNode res = JsonNodeFactory.instance.objectNode();
         res.put(WeChatOfficialCons.XmlMsgTag.content, "您已进入AI模式");
+        res.put(WeChatOfficialCons.XmlMsgTag.msgType, WeChatOfficialCons.XmlMsgType.Text.getCode());
         aiRoute(callBackMsg);
         return res;
     }

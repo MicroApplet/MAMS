@@ -30,6 +30,8 @@ import com.asialjim.microapplet.remote.net.jackson.AbstractJacksonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.NullNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.dataformat.xml.ser.ToXmlGenerator;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -56,6 +58,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class WeChatOfficialCallbackMsgOptCmd implements Cmd<String> {
     private static final Logger log = LoggerFactory.getLogger("WeChatOfficialMsgCallBackProcessor");
+    private static final XmlMapper XML_MAPPER = new XmlMapper();
+
+    static {
+        XML_MAPPER.disable(ToXmlGenerator.Feature.WRITE_XML_DECLARATION);
+    }
+
     private final String appid;
     private final String signature;
     private final String timestamp;
@@ -132,6 +140,7 @@ public class WeChatOfficialCallbackMsgOptCmd implements Cmd<String> {
                 return "success";
             }
 
+            log.info("公众号：{} 收到消息：{}", this.appid, this.plainTextMsg);
             WeChatOfficialCallbackMsg callBackMsg = new WeChatOfficialCallbackMsg(this.plainTextMsg);
             ObjectNode callback = this.weChatOfficialAppAgg.callback(callBackMsg);
             if (Objects.isNull(callback) || callback instanceof EmptyObjectNode)
@@ -146,10 +155,12 @@ public class WeChatOfficialCallbackMsgOptCmd implements Cmd<String> {
             //noinspection deprecation
             callback.put(WeChatOfficialCons.XmlMsgTag.msgId, callBackMsg.msgId());
 
-            String xmlRes = AbstractJacksonUtil.writeValueAsXmlString(callback);
-            return ChlEncType.WeChatOfficialPlainText.equals(wxEncType)
+            String xmlRes = AbstractJacksonUtil.writeValueAsString("xml", callback, XML_MAPPER);
+            String targetXml = ChlEncType.WeChatOfficialPlainText.equals(wxEncType)
                     ? xmlRes                                                    // 明文模式
                     : msgCrypt.encryptMsg(xmlRes, getTimestamp(), getNonce());  // 密文模式
+            log.info("公众号：{} 响应结果：{}", callBackMsg.toUserName(), targetXml);
+            return targetXml;
         } catch (AesException e) {
             log.error("公众号消息：{} 解密异常：{}", getMsg(), e.getMessage(), e);
             return "success";
