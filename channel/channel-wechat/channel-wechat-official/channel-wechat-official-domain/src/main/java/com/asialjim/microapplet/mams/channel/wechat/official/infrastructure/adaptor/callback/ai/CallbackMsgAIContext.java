@@ -16,19 +16,23 @@
 
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.callback.ai;
 
+import com.asialjim.microapplet.common.concurrent.ConcurrentRunner;
 import com.asialjim.microapplet.mams.channel.wechat.WeChatOfficialCons;
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackAISession;
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackMsg;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.node.EmptyObjectNode;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.dify.AsialJimDifyRemoting;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.dify.meta.Message;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.dify.meta.MessageRes;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.repository.WeChatOfficialCallbackAISessionManager;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import java.util.Objects;
+import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * 微信公众号回调消息AI路由组件
@@ -42,6 +46,8 @@ import java.util.Objects;
 public class CallbackMsgAIContext {
     @Resource
     private WeChatOfficialCallbackAISessionManager wechatOfficialCallbackAISessionManager;
+    @Resource
+    private AsialJimDifyRemoting asialJimDifyRemoting;
 
     /**
      * 将公众号消息/事件路由到AI系统
@@ -59,24 +65,52 @@ public class CallbackMsgAIContext {
 
         // 会话续期
         session = this.wechatOfficialCallbackAISessionManager.addSession(session);
-        log.info("当前AI会话：{}",session);
+        log.info("当前AI会话：{}", session);
 
+        String content = callBackMsg.textNodeValue(WeChatOfficialCons.XmlMsgTag.content);
 
-        // TODO 对接AI系统
-        return null;
+        Message msg = new Message();
+        msg.setUser(openid);
+        msg.setQuery(content);
+        msg.setConversation_id(session.getSessionId());
+        msg.setResponse_mode("blocking");
+        msg.withInput("a", "b");
+        MessageRes msgRes = asialJimDifyRemoting.chat(msg);
+        List<String> msgList = MessageRes.msg(msgRes);
+        StringJoiner sj = new StringJoiner("\r\n");
+        msgList.forEach(sj::add);
+
+        ObjectNode res = JsonNodeFactory.instance.objectNode();
+        res.put(WeChatOfficialCons.XmlMsgTag.content, sj.toString());
+        res.put(WeChatOfficialCons.XmlMsgTag.msgType, WeChatOfficialCons.XmlMsgType.Text.getCode());
+        return res;
     }
 
     public ObjectNode openAiSession(WeChatOfficialCallbackMsg callBackMsg) {
+        ConcurrentRunner.runAllTaskAsync(() -> ai(callBackMsg));
+        return EmptyObjectNode.instance;
+    }
+
+    private void ai(WeChatOfficialCallbackMsg callBackMsg) {
         WeChatOfficialCallbackAISession session = new WeChatOfficialCallbackAISession();
-        String sessionId = callBackMsg.fromUserName().asText() + callBackMsg.msgId().asText();
+        String openid = callBackMsg.fromUserName().asText();
+        Message msg = new Message();
+        msg.setUser(openid);
+        msg.setQuery("你好");
+        msg.setResponse_mode("blocking");
+        msg.withInput("a", "b");
+        MessageRes msgRes = asialJimDifyRemoting.chat(msg);
+        List<String> msgList = MessageRes.msg(msgRes);
+        StringJoiner sj = new StringJoiner("\r\n");
+        msgList.forEach(sj::add);
+
+        String sessionId = MessageRes.conversation(msgRes);
+
         session.setSessionId(sessionId);
         session.setOpenid(callBackMsg.fromUserName().asText());
         session.setCreateTime(callBackMsg.createTime().asLong());
         this.wechatOfficialCallbackAISessionManager.addSession(session);
-        ObjectNode res = JsonNodeFactory.instance.objectNode();
-        res.put(WeChatOfficialCons.XmlMsgTag.content, "您已进入AI模式");
-        res.put(WeChatOfficialCons.XmlMsgTag.msgType, WeChatOfficialCons.XmlMsgType.Text.getCode());
-        aiRoute(callBackMsg);
-        return res;
+
+        log.info("模拟发送客服消息：{}", sj);
     }
 }
