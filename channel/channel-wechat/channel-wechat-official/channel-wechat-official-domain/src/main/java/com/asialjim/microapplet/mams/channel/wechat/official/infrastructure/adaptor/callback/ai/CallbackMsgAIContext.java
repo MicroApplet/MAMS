@@ -16,13 +16,18 @@
 
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.callback.ai;
 
+import com.asialjim.microapplet.mams.channel.wechat.WeChatOfficialCons;
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackAISession;
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackMsg;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.node.EmptyObjectNode;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.repository.WeChatOfficialCallbackAISessionManager;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -32,22 +37,45 @@ import java.util.Objects;
  * @version 1.0
  * @since 2025/5/7, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 public class CallbackMsgAIContext {
+    @Resource
+    private WeChatOfficialCallbackAISessionManager wechatOfficialCallbackAISessionManager;
 
     /**
      * 将公众号消息/事件路由到AI系统
-	 * @param session {@link WeChatOfficialCallbackAISession session}
-	 * @param callBackMsg {@link WeChatOfficialCallbackMsg callBackMsg}
+     *
+     * @param callBackMsg {@link WeChatOfficialCallbackMsg callBackMsg}
      * @return {@link ObjectNode }
      * @since 2025/5/7
      */
-    public ObjectNode aiRoute(WeChatOfficialCallbackAISession session, WeChatOfficialCallbackMsg callBackMsg){
-        // 没有AI会话
-        if (Objects.isNull(session) || StringUtils.isBlank(session.getSessionId()))
+    public ObjectNode aiRoute(WeChatOfficialCallbackMsg callBackMsg) {
+        String openid = callBackMsg.fromUserName().asText();
+        WeChatOfficialCallbackAISession session = this.wechatOfficialCallbackAISessionManager.sessionOfUser(openid);
+        // 非AI 模式
+        if (WeChatOfficialCallbackAISession.emptySession(session))
             return null;
+
+        // 会话续期
+        session = this.wechatOfficialCallbackAISessionManager.addSession(session);
+        log.info("当前AI会话：{}",session);
+
 
         // TODO 对接AI系统
         return null;
+    }
+
+    public ObjectNode openAiSession(WeChatOfficialCallbackMsg callBackMsg) {
+        WeChatOfficialCallbackAISession session = new WeChatOfficialCallbackAISession();
+        String sessionId = callBackMsg.fromUserName().asText() + callBackMsg.msgId().asText();
+        session.setSessionId(sessionId);
+        session.setOpenid(callBackMsg.fromUserName().asText());
+        session.setCreateTime(callBackMsg.createTime().asLong());
+        this.wechatOfficialCallbackAISessionManager.addSession(session);
+        ObjectNode res = JsonNodeFactory.instance.objectNode();
+        res.put(WeChatOfficialCons.XmlMsgTag.content, "您已进入AI模式");
+        aiRoute(callBackMsg);
+        return res;
     }
 }

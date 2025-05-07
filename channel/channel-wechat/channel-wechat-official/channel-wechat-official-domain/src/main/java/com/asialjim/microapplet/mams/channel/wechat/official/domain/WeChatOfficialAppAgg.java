@@ -40,6 +40,7 @@ import javax.annotation.Resource;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * 微信公众号应用聚合根
@@ -139,16 +140,13 @@ public class WeChatOfficialAppAgg {
      * @since 2025/4/29
      */
     public ObjectNode callback(WeChatOfficialCallbackMsg callBackMsg) {
-        String openid = callBackMsg.fromUserName().asText();
-        // 获取AI会话
-        WeChatOfficialCallbackAISession aiSession = this.wechatOfficialCallbackAISessionManager.sessionOfUser(openid);
-
-        // 普通模式
-        if (WeChatOfficialCallbackAISession.emptySession(aiSession))
-            return this.callbackMsgProcessorContext.process(callBackMsg);
         // AI 模式
-        else
-            return this.callbackMsgAIContext.aiRoute(aiSession,callBackMsg);
+        ObjectNode aiRes = this.callbackMsgAIContext.aiRoute(callBackMsg);
+        if (Objects.nonNull(aiRes))
+            return aiRes;
+
+        // 非AI模式
+        return this.callbackMsgProcessorContext.process(callBackMsg);
     }
 
 

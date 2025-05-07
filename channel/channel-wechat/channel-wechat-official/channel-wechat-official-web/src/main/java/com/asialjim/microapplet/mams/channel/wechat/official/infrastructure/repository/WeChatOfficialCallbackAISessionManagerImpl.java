@@ -17,30 +17,29 @@
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.repository;
 
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackAISession;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.cache.OfficialCacheName;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Component;
 
 /**
- * 公众号消息/事件回调AI会话管理器
+ * AI 会话仓库
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/5/7, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface WeChatOfficialCallbackAISessionManager {
-    /**
-     * 查询指定用于的AI会话
-     *
-     * @param openid {@link String openid}
-     * @return {@link WeChatOfficialCallbackAISession }
-     * @since 2025/5/7
-     */
-    WeChatOfficialCallbackAISession sessionOfUser(String openid);
+@Component
+public class WeChatOfficialCallbackAISessionManagerImpl implements WeChatOfficialCallbackAISessionManager{
+    @Override
+    @Cacheable(value = OfficialCacheName.Name.officialAISession,key = "#openid")
+    public WeChatOfficialCallbackAISession sessionOfUser(String openid) {
+        return null;
+    }
 
-    /**
-     * 添加会话
-     *
-     * @param session {@link WeChatOfficialCallbackAISession session}
-     * @return {@link WeChatOfficialCallbackAISession }
-     * @since 2025/5/7
-     */
-    WeChatOfficialCallbackAISession addSession(WeChatOfficialCallbackAISession session);
+    @Override
+    @CachePut(value = OfficialCacheName.Name.officialAISession,key = "#session.openid")
+    public WeChatOfficialCallbackAISession addSession(WeChatOfficialCallbackAISession session) {
+        return session;
+    }
 }
