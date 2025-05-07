@@ -51,16 +51,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
 
 
         <!--suppress VulnerableLibrariesLocal -->
@@ -69,6 +59,7 @@
             <artifactId>commons-mybatis-flex</artifactId>
         </dependency>
 
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-cache-redis</artifactId>
@@ -83,6 +74,12 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-security-web</artifactId>
         </dependency>
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-web-feign</artifactId>
+        </dependency>
+
 
         <dependency>
             <groupId>com.mybatis-flex</groupId>
@@ -134,12 +131,8 @@
         <dependency>
             <groupId>com.asialjim.microapplet.mams.user</groupId>
             <artifactId>user-interface</artifactId>
-            <version>1.1.2-SNAPSHOT</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-jsr310</artifactId>
         </dependency>
 
     </dependencies>

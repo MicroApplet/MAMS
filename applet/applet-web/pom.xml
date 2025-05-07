@@ -45,21 +45,20 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-web-undertow</artifactId>
         </dependency>
+        <!--suppress VulnerableLibrariesLocal -->
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-web-feign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-cache-redis</artifactId>
+        </dependency>
 
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
-        </dependency>
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
         <dependency>

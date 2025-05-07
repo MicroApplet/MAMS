@@ -23,8 +23,10 @@ import com.asialjim.microapplet.mams.channel.wechat.infrastructure.adaptor.WeCha
 import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialCallbackUrlCheckCmd;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.aes.WeChatOfficialMsgCrypt;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.callback.CallbackMsgProcessorContext;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.callback.ai.CallbackMsgAIContext;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.qrcode.WeChatOfficialQrCodeRemoting;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.qrcode.meta.CreateQrCodeResponse;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.repository.WeChatOfficialCallbackAISessionManager;
 import com.asialjim.microapplet.mams.channel.wechat.official.pojo.QrCode;
 import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -57,6 +59,10 @@ public class WeChatOfficialAppAgg {
     private CallbackMsgProcessorContext callbackMsgProcessorContext;
     @Resource
     private WeChatOfficialQrCodeRemoting weChatOfficialQrCodeRemoting;
+    @Resource
+    private WeChatOfficialCallbackAISessionManager wechatOfficialCallbackAISessionManager;
+    @Resource
+    private CallbackMsgAIContext callbackMsgAIContext;
 
 
     public WeChatOfficialAppAgg withAppid(String appid) {
@@ -133,7 +139,16 @@ public class WeChatOfficialAppAgg {
      * @since 2025/4/29
      */
     public ObjectNode callback(WeChatOfficialCallbackMsg callBackMsg) {
-        return this.callbackMsgProcessorContext.process(callBackMsg);
+        String openid = callBackMsg.fromUserName().asText();
+        // 获取AI会话
+        WeChatOfficialCallbackAISession aiSession = this.wechatOfficialCallbackAISessionManager.sessionOfUser(openid);
+
+        // 普通模式
+        if (WeChatOfficialCallbackAISession.emptySession(aiSession))
+            return this.callbackMsgProcessorContext.process(callBackMsg);
+        // AI 模式
+        else
+            return this.callbackMsgAIContext.aiRoute(aiSession,callBackMsg);
     }
 
 

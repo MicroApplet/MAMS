@@ -1,17 +1,7 @@
-/*
- * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+/**
+ * 对公众平台发送给公众账号的消息加解密示例代码.
+ * 
+ * @copyright Copyright (c) 1998-2014 Tencent Inc.
  */
 
 // ------------------------------------------------------------------------
@@ -19,14 +9,13 @@
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.aes;
 
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 /**
  * 提供基于PKCS7算法的加解密接口.
  */
-public class PKCS7Encoder {
-	static Charset CHARSET = StandardCharsets.UTF_8;
+class PKCS7Encoder {
+	static Charset CHARSET = Charset.forName("utf-8");
 	static int BLOCK_SIZE = 32;
 
 	/**
@@ -43,11 +32,11 @@ public class PKCS7Encoder {
 		}
 		// 获得补位所用的字符
 		char padChr = chr(amountToPad);
-		StringBuilder tmp = new StringBuilder();
-		for (int i = 0; i < amountToPad; i++) {
-			tmp.append(padChr);
+		String tmp = new String();
+		for (int index = 0; index < amountToPad; index++) {
+			tmp += padChr;
 		}
-		return tmp.toString().getBytes(CHARSET);
+		return tmp.getBytes(CHARSET);
 	}
 
 	/**
@@ -57,7 +46,7 @@ public class PKCS7Encoder {
 	 * @return 删除补位字符后的明文
 	 */
 	static byte[] decode(byte[] decrypted) {
-		int pad = decrypted[decrypted.length - 1];
+		int pad = (int) decrypted[decrypted.length - 1];
 		if (pad < 1 || pad > 32) {
 			pad = 0;
 		}
@@ -74,4 +63,5 @@ public class PKCS7Encoder {
 		byte target = (byte) (a & 0xFF);
 		return (char) target;
 	}
+
 }

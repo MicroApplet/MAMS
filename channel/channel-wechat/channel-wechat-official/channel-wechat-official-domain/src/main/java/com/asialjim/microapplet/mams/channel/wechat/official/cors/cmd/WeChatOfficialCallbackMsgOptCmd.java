@@ -24,6 +24,7 @@ import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOffici
 import com.asialjim.microapplet.mams.channel.wechat.official.domain.WeChatOfficialCallbackMsg;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.aes.AesException;
 import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.aes.WeChatOfficialMsgCrypt;
+import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adaptor.node.EmptyObjectNode;
 import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
 import com.asialjim.microapplet.remote.net.jackson.AbstractJacksonUtil;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -133,7 +134,7 @@ public class WeChatOfficialCallbackMsgOptCmd implements Cmd<String> {
 
             WeChatOfficialCallbackMsg callBackMsg = new WeChatOfficialCallbackMsg(this.plainTextMsg);
             ObjectNode callback = this.weChatOfficialAppAgg.callback(callBackMsg);
-            if (Objects.isNull(callback))
+            if (Objects.isNull(callback) || callback instanceof EmptyObjectNode)
                 return "success";
 
             //noinspection deprecation
