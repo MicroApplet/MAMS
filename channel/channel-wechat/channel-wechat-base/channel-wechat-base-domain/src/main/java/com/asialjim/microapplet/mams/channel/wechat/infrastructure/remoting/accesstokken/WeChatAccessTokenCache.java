@@ -79,7 +79,7 @@ public class WeChatAccessTokenCache {
      */
     @Cacheable(value = WeChatAppCacheName.Name.accessTokenCached, key = "#appid")
     public String cached(@SuppressWarnings("unused") String appid) {
-        return StringUtils.EMPTY;
+        return appid;
     }
 
 
@@ -93,5 +93,9 @@ public class WeChatAccessTokenCache {
     @Cacheable(value = WeChatAppCacheName.Name.accessTokenLock, key = "#appid")
     public String getLockTag(@SuppressWarnings("unused") String appid, String tag){
         return tag;
+    }
+
+    @CacheEvict(value = WeChatAppCacheName.Name.accessTokenLock, key = "#appid")
+    public void delLockTag(@SuppressWarnings("unused") String appid){
     }
 }

@@ -19,35 +19,16 @@ package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.rem
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
-/**
- * AI会话消息
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/5/7, &nbsp;&nbsp; <em>version:1.0</em>
- */
 @Data
 @Accessors(chain = true)
-public class Message implements Serializable {
-    private static final long serialVersionUID = -4340760212321916740L;
-    private Map<String, Object> inputs;
-    private String query;
-    private String response_mode = "blocking";
-    private String conversation_id;
-    private String user;
-    private List<FileMessage> files;
+public class FunReq implements Serializable {
+    private static final long serialVersionUID = -2989104914922726048L;
 
-    public Message withInput(String key, String value) {
-        if (Objects.isNull(this.inputs))
-            this.inputs = new HashMap<>();
-        this.inputs.put(key, value);
-        return this;
-    }
+    private Map<String, Object> inputs;
+
+    private String response_mode = "blocking";
+    private String user;
 }

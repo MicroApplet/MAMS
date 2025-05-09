@@ -91,6 +91,7 @@ public class WeChatAccessTokenRepository {
             if (StringUtils.isNotBlank(token)) {
                 accessTokenCache.set(appid, token);
                 accessTokenCache.cached(appid);
+                accessTokenCache.delLockTag(appid);
             }
             index++;
         } while (StringUtils.isBlank(token) && index <= 3);

@@ -17,37 +17,39 @@
 package com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.remoting.dify.meta;
 
 import lombok.Data;
-import lombok.experimental.Accessors;
 
-import java.io.ObjectInputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
-/**
- * AI会话消息
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/5/7, &nbsp;&nbsp; <em>version:1.0</em>
- */
 @Data
-@Accessors(chain = true)
-public class Message implements Serializable {
-    private static final long serialVersionUID = -4340760212321916740L;
-    private Map<String, Object> inputs;
-    private String query;
-    private String response_mode = "blocking";
-    private String conversation_id;
-    private String user;
-    private List<FileMessage> files;
+public class FunRes implements Serializable {
+    private String task_id;
+    private String workflow_run_id;
+    private FunData data;
 
-    public Message withInput(String key, String value) {
-        if (Objects.isNull(this.inputs))
-            this.inputs = new HashMap<>();
-        this.inputs.put(key, value);
-        return this;
+    public static String content(FunRes res){
+        //noinspection ConstantValue
+        return Optional.ofNullable(res)
+                .map(FunRes::getData)
+                .map(FunData::getOutputs)
+                .filter(Objects::nonNull)
+                .map(item -> item.get("result"))
+                .orElse("AI智能体未返回数据");
     }
+}
+
+@Data
+class FunData{
+    private String id;
+    private String workflow_id;
+    private String status;
+    private Map<String,String> outputs;
+    private Object error;
+    private Double elapsed_time;
+    private Integer total_tokens;
+    private Integer total_steps;
+    private Long created_at;
+    private Long finished_at;
 }

@@ -53,6 +53,7 @@ public class WeChatOfficialCallbackAISession implements Serializable {
      * @since 2025/5/7
      */
     public static boolean emptySession(WeChatOfficialCallbackAISession session){
-        return Objects.isNull(session) || StringUtils.isBlank(session.getSessionId());
+        return Objects.isNull(session) || StringUtils.isBlank(session.getOpenid());
+        //return Objects.isNull(session) || StringUtils.isBlank(session.getSessionId());
     }
 }

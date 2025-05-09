@@ -38,6 +38,9 @@ public class MessageRes implements Serializable {
     private Long created_at;
     private String message_id;
     private String event;
+    private String task_id;
+    private String id;
+    private String from_variable_selector;
 
     public static List<String> answer(MessageRes res){
         String s = Optional.ofNullable(res)

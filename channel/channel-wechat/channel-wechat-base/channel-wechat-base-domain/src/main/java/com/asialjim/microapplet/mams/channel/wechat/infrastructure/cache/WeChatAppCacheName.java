@@ -44,7 +44,7 @@ public class WeChatAppCacheName extends CacheNameAndTTLConfig {
     @Getter
     enum Cache implements CacheNameAndTTL {
         app(Name.app,Duration.ofDays(1L),Duration.ofMillis(10L)),
-        accessTokenLock(Name.accessTokenLock, Duration.ofSeconds(5L),Duration.ZERO),
+        accessTokenLock(Name.accessTokenLock, Duration.ofSeconds(5L),Duration.ofMillis(50L)),
         accessTokenCached(Name.accessTokenCached, Duration.ofSeconds(5L), Duration.ZERO),
         accessToken(Name.accessToken, Duration.ofMinutes(110L), Duration.ZERO);
 

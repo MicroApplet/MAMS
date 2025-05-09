@@ -109,6 +109,11 @@ public @interface WeChatAccessTokenParam {
         private String doQueryAccessToken(final String weChatIndex) {
             try {
                 String accessToken = WeChatAccessTokenRepositoryHolder.repository().accessToken(weChatIndex);
+                if (StringUtils.isBlank(accessToken)) {
+                    WeChatAccessTokenRepositoryHolder.repository().refreshAccessToken(weChatIndex);
+                    accessToken = WeChatAccessTokenRepositoryHolder.repository().accessToken(weChatIndex);
+                }
+
                 if (StringUtils.isNotBlank(accessToken))
                     return accessToken;
             } catch (Throwable t) {
