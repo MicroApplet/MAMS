@@ -37,7 +37,7 @@ import com.asialjim.microapplet.mams.channel.wechat.constant.WeChatCons;
         schema = WeChatCons.Api.DefaultSchema,
         host = WeChatCons.Api.DefaultWeChatHost,
         port = WeChatCons.Api.DefaultWeChatPort,
-        proxyHost = "www.asialjim.cn",
+        proxyHost = "47.108.194.139",
         proxyPort = 13001
 )
 public interface WeChatAccessTokenRemoting {
