@@ -17,6 +17,13 @@ mkdir -p /app/build/channel/wechat/official/web
 cd ./channel/channel-wechat/channel-wechat-official/channel-wechat-official-web
 sh start.sh
 
+# channel/channel-wechat/channel-wechat-official/channel-wechat-applet-web
+# shellcheck disable=SC2164
+cd /drone/src
+mkdir -p /app/build/channel/wechat/applet/web
+# shellcheck disable=SC2164
+cd ./channel/channel-wechat/channel-wechat-applet/channel-wechat-applet-web
+sh start.sh
 
 # user/user-web
 # shellcheck disable=SC2164

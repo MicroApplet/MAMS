@@ -18,7 +18,8 @@ package com.asialjim.microapplet.mams.user.controller.authenticate;
 
 import com.asialjim.microapplet.commons.security.HasRole;
 import com.asialjim.microapplet.commons.security.Tourist;
-import com.asialjim.microapplet.mams.user.controller.vo.RegReqVo;
+import com.asialjim.microapplet.mams.user.interfaces.UserAuthenticateInterface;
+import com.asialjim.microapplet.mams.user.vo.RegReqVo;
 import com.asialjim.microapplet.mams.user.interfaces.endpoint.UserAuthenticateEndpoint;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
 import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
@@ -35,8 +36,8 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @AllArgsConstructor
-@RequestMapping("/{appid}/authenticate")
-public class UserAuthenticateController {
+@RequestMapping(UserAuthenticateInterface.PATH)
+public class UserAuthenticateController implements UserAuthenticateInterface {
     private final UserAuthenticateEndpoint userAuthenticationService;
 
     /**

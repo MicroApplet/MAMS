@@ -41,6 +41,10 @@ public class WeChatApp implements Serializable {
      * 主键
      */
     private String id;
+    /**
+     * 所属应用编号
+     */
+    private String appletId;
 
     /**
      * 渠道应用编号
@@ -118,6 +122,7 @@ public class WeChatApp implements Serializable {
         return ChlType.WeChat;
     }
     public static void populateFromChlAppletToWeChatApp(WeChatApp app, ChlApplet applet) {
+        app.setAppletId(applet.getAppletId());
         app.setId(applet.getId());
         app.setAppid(applet.getChlAppId());
         app.setAppType(applet.getChlAppType());

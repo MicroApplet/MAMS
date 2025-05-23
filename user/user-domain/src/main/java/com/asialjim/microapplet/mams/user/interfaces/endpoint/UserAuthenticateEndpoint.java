@@ -19,8 +19,8 @@ package com.asialjim.microapplet.mams.user.interfaces.endpoint;
 import com.asialjim.microapplet.mams.user.application.UserAuthenticationService;
 import com.asialjim.microapplet.mams.user.command.UserLoginCommand;
 import com.asialjim.microapplet.mams.user.command.UserRegCommand;
-import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
+import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 

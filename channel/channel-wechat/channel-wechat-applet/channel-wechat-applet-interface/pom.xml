@@ -20,23 +20,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>mams</artifactId>
+        <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
+        <artifactId>channel-wechat-applet</artifactId>
         <version>1.1.2-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.asialjim.microapplet.mams.user</groupId>
-    <artifactId>user</artifactId>
-    <name>User</name>
-    <packaging>pom</packaging>
-    <modules>
-        <module>user-domain</module>
-        <module>user-chl</module>
-        <module>user-web</module>
-        <module>user-repository</module>
-        <module>user-interface</module>
-        <module>user-cloud</module>
-    </modules>
+    <artifactId>channel-wechat-applet-interface</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.controller.vo;
+package com.asialjim.microapplet.mams.user.vo;
 
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;

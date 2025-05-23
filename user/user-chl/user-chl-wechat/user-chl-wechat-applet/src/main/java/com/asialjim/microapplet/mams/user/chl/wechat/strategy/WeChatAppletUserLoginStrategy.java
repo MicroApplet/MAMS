@@ -37,10 +37,10 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class WeChatAppletUserLoginStrategy extends WeChatUserLoginStrategy {
-    private final WeChatAppletUserAdapter weChatOfficialUserAdapter;
+    private final WeChatAppletUserAdapter weChatAppletUserAdapter;
     public WeChatAppletUserLoginStrategy(WeChatChlAppletAdapter chlAppletAdapter, WeChatAppletUserAdapter weChatOfficialUserAdapter) {
         super(chlAppletAdapter);
-        this.weChatOfficialUserAdapter = weChatOfficialUserAdapter;
+        this.weChatAppletUserAdapter = weChatOfficialUserAdapter;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class WeChatAppletUserLoginStrategy extends WeChatUserLoginStrategy {
     @Override
     public SessionUser doLogin(WeChatAppChl weChatAppChl, UserLoginCommand command) {
         String code = command.getReq().getCode();
-        UserChl user = this.weChatOfficialUserAdapter.login(weChatAppChl, code);
+        UserChl user = this.weChatAppletUserAdapter.login(weChatAppChl, code);
 
         SessionUser sessionUser = App.beanOrNull(SessionUser.class);
         sessionUser.setUserid(user.getUserid());
@@ -63,6 +63,6 @@ public class WeChatAppletUserLoginStrategy extends WeChatUserLoginStrategy {
     @Override
     public UserChl doRegistration(WeChatAppChl weChatAppChl, UserRegCommand command) {
         String code = command.getReq().getCode();
-        return this.weChatOfficialUserAdapter.login(weChatAppChl,code);
+        return this.weChatAppletUserAdapter.login(weChatAppChl,code);
     }
 }

@@ -30,6 +30,7 @@
     <modules>
         <module>channel-wechat-official</module>
         <module>channel-wechat-base</module>
+        <module>channel-wechat-applet</module>
     </modules>
     <packaging>pom</packaging>
 
