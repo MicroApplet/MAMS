@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.applet</groupId>
         <artifactId>applet</artifactId>
-        <version>1.1.2-SNAPSHOT</version>
+        <version>1.2.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>applet-domain</artifactId>
