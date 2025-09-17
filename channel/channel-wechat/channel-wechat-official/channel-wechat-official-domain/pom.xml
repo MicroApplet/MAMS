@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
         <artifactId>channel-wechat-official</artifactId>
-        <version>1.2.0-SNAPSHOT</version>
+        <version>1.2.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>channel-wechat-official-domain</artifactId>
@@ -37,13 +37,6 @@
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
         </dependency>
-        <!--suppress MavenDuplicateDependenciesInspection -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-
     </dependencies>
 
 </project>

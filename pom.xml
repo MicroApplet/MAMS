@@ -25,10 +25,9 @@
     </parent>
 
 
-
     <groupId>com.asialjim.microapplet.mams</groupId>
     <artifactId>mams</artifactId>
-    <version>1.2.0-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
     <name>MAMS</name>
     <url>https://github.com/MicroApplet/MAMS</url>
@@ -340,15 +339,6 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgument>-parameters</compilerArgument>
-                <!--
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                            <version>1.18.30</version>
-                        </path>
-                    </annotationProcessorPaths>
-                    -->
                 </configuration>
             </plugin>
 
