@@ -22,10 +22,11 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
         <artifactId>channel-wechat-applet</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
+        <version>1.2.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>channel-wechat-applet-domain</artifactId>
+    <name>Channel WeChat Applet Domain</name>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -43,12 +44,12 @@
         <dependency>
             <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
             <artifactId>channel-wechat-applet-interface</artifactId>
-            <version>1.2.1-SNAPSHOT</version>
+            <version>1.2.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet.mams.user</groupId>
             <artifactId>user-cloud</artifactId>
-            <version>1.2.1-SNAPSHOT</version>
+            <version>1.2.2-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

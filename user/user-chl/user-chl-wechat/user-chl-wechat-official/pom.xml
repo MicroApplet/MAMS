@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.user.chl.wechat</groupId>
         <artifactId>user-chl-wechat</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
+        <version>1.2.2-SNAPSHOT</version>
     </parent>
 
     <artifactId>user-chl-wechat-official</artifactId>
