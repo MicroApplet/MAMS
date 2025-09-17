@@ -22,11 +22,12 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams.channel</groupId>
         <artifactId>channel-wechat</artifactId>
-        <version>1.2.1-SNAPSHOT</version>
+        <version>1.2.2-SNAPSHOT</version>
     </parent>
 
     <groupId>com.asialjim.microapplet.mams.channel.wechat</groupId>
     <artifactId>channel-wechat-applet</artifactId>
+    <name>Channel WeChat Applet</name>
     <packaging>pom</packaging>
     <modules>
         <module>channel-wechat-applet-domain</module>
