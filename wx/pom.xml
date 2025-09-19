@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  ~    Copyright 2014-$year.today <a href="mailto:asialjim@qq.com">Asial Jim</a>
+  ~    Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
   ~
   ~    Licensed under the Apache License, Version 2.0 (the "License");
   ~    you may not use this file except in compliance with the License.
@@ -25,14 +25,7 @@
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user</artifactId>
-    <packaging>pom</packaging>
-    <name>User</name>
-    <modules>
-        <module>user-do-api</module>
-        <module>user-do-cloud</module>
-        <module>user-do-web</module>
-    </modules>
+    <artifactId>wx</artifactId>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

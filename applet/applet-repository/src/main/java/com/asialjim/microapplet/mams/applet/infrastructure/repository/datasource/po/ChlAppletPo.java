@@ -27,6 +27,7 @@ import com.mybatisflex.annotation.Table;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -42,6 +43,7 @@ import java.util.Optional;
 @Data
 @Table("chl_app")
 public class ChlAppletPo implements Serializable {
+    @Serial
     private static final long serialVersionUID = 6124621276650010767L;
 
     /**

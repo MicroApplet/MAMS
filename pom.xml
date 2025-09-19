@@ -79,10 +79,12 @@
     </scm>
 
     <modules>
-        <module>org</module>
         <module>applet</module>
-        <module>user</module>
+        <module>usr</module>
         <module>channel</module>
+        <module>app</module>
+        <module>user</module>
+        <module>wx</module>
     </modules>
 
     <properties>
@@ -152,6 +154,10 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
 
         <!--suppress VulnerableLibrariesLocal -->

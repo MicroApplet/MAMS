@@ -1,0 +1,6 @@
+
+mybatis-flex:
+  global-config:
+    version-column: version
+    logic-delete-column: deleted
+    normal-value-of-logic-delete: 0

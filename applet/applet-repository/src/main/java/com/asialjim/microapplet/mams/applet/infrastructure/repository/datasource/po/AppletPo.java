@@ -25,6 +25,7 @@ import com.mybatisflex.annotation.Table;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -40,6 +41,7 @@ import java.util.Optional;
 @Data
 @Table("applet")
 public class AppletPo implements Serializable {
+    @Serial
     private static final long serialVersionUID = -6885494239282113784L;
 
     /**
