@@ -52,7 +52,7 @@ public abstract class BaseUserAuthenticateStrategy {
     public void registration(UserRegCommand command) {
         ChlType chlType = command.regChlType();
         if (!StringUtils.equals(chlType.getCode(), supportType().getCode()))
-            ChlTypeResCode.ChlTypeMismatch.throwBiz();
+            ChlTypeResCode.ChlTypeMismatch.thr();
 
         // 自注册：如果当前会话用户编号为空，则注册一个主用户
         UserAggRoot userAgg = command.getUserAgg();

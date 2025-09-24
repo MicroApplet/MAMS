@@ -16,12 +16,16 @@
 
 package com.asialjim.microapplet.mams.app.vo;
 
+import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
+import com.asialjim.microapplet.mams.app.cons.ChannelType;
+import com.asialjim.microapplet.mams.app.context.ChlRs;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 渠道应用视图对象
@@ -131,4 +135,32 @@ public class ChlAppVo implements Serializable {
      * 更新时间
      */
     private LocalDateTime updateTime;
+
+
+    /**
+     * 渠道类型
+     *
+     * @param vo 签证官
+     * @return {@link ChannelType}
+     */
+    public static ChannelType channelType(ChlAppVo vo) {
+        if (Objects.isNull(vo))
+            ChlRs.NoSuchChlApp.thr();
+        return ChannelType.codeOf(vo.getChlType());
+    }
+
+    /**
+     * CHL应用类型
+     *
+     * @param vo 签证官
+     * @return {@link ChannelAppType}
+     */
+    public static ChannelAppType chlAppType(ChlAppVo vo) {
+        if (Objects.isNull(vo))
+            ChlRs.NoSuchChlAppType.thr();
+
+        String chl = vo.getChlType();
+        String chlAppType = vo.getChlAppType();
+        return ChannelAppType.chlAppTypeCodeOf(chl + ":" + chlAppType);
+    }
 }

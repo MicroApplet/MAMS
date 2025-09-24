@@ -32,6 +32,9 @@
         <module>user-do-api</module>
         <module>user-do-cloud</module>
         <module>user-do-web</module>
+        <module>user-auth-api</module>
+        <module>user-auth-cloud</module>
+        <module>user-auth-web</module>
     </modules>
 
     <properties>

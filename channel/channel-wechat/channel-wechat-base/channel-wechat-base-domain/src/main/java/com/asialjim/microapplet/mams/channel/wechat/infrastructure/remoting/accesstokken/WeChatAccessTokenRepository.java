@@ -15,17 +15,14 @@
  */
 package com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.accesstokken;
 
-
-import com.asialjim.microapplet.common.application.App;
-import com.asialjim.microapplet.mams.channel.wechat.domain.WeChatAppAgg;
 import com.asialjim.microapplet.mams.channel.wechat.infrastructure.remoting.meta.accesstoken.WeChatAccessTokenRes;
 import com.asialjim.microapplet.mams.channel.wechat.infrastructure.repository.WeChatAppRepository;
 import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
+import jakarta.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;

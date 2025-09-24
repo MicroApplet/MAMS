@@ -47,12 +47,12 @@ public class UserRegCommand implements Serializable {
     public ChlType regChlType() {
         return Optional.ofNullable(req)
                 .map(UserRegOrLoginReq::getChlType)
-                .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::bizException);
+                .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::ex);
     }
     public ChlAppType regChlAppType() {
         return Optional.ofNullable(req)
                 .map(UserRegOrLoginReq::getChlAppType)
-                .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::bizException);
+                .orElseThrow(ChlTypeResCode.ChlTypeNotProvide::ex);
     }
 
     public UserAggRoot getUserAgg() {

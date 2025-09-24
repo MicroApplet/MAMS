@@ -16,9 +16,12 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
+import com.asialjim.microapplet.common.context.ResCode;
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.api.UserSessionApi;
+import com.asialjim.microapplet.mams.user.service.UserSessionService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UserSessionApi.PATH)
 public class UserSessionController implements UserSessionApi {
+    private final UserSessionService userSessionService;
+
     /**
      * 登录
      *
@@ -40,6 +46,6 @@ public class UserSessionController implements UserSessionApi {
      */
     @Override
     public MamsSession login(ChlUserVo vo) {
-        return null;
+        return this.userSessionService.login(vo);
     }
 }

@@ -30,13 +30,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum WeChatAppletMsgResCode implements ResCode {
-    IllegalState("WX:APPLET:STATE:ILLEGAL", "小程序状态异常");
+    IllegalState(400,true,"WX:APPLET:STATE:ILLEGAL", "小程序状态异常");
 
+    private final  int status;
+    private final  boolean thr;
     private final String code;
     private final String msg;
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

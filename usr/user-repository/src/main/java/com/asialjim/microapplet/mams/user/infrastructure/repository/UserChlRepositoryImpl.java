@@ -23,7 +23,7 @@ import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.s
 import com.asialjim.microapplet.mams.user.pojo.UserChl;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

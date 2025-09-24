@@ -14,12 +14,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum WeChatOfficialMsgResCode implements ResCode {
-    UnSupportWeChatMsgType("WX:MSG:TYPE:UnSupport", "不支持的公众号消息类型");
+    UnSupportWeChatMsgType(400,false,"WX:MSG:TYPE:UnSupport", "不支持的公众号消息类型");
+    private final int status;
+    private final boolean thr;
     private final String code;
     private final String msg;
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

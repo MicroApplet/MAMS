@@ -72,5 +72,30 @@ public interface ChlAppMapperService extends IService<ChlAppPo> {
      */
     ChlAppPo queryByChlAndChlAppid(String chl, String chlAppid);
 
+    /**
+     * 按CHL和CHL索引查询
+     *
+     * @param chl   的背影
+     * @param index 指数
+     * @return {@link ChlAppPo}
+     */
     ChlAppPo queryByChlAndChlIndex(String chl, String index);
+
+    /**
+     * 按appid、CHL和CHL appid查询
+     *
+     * @param appid    appid
+     * @param chl      的背影
+     * @param chlAppid 的背影appid
+     * @return {@link ChlAppPo}
+     */
+    ChlAppPo queryByAppidAndChlAndChlAppid(String appid, String chl, String chlAppid);
+
+    /**
+     * 按CHL查询
+     *
+     * @param code 代码
+     * @return {@link List<ChlAppPo>}
+     */
+    List<ChlAppPo> queryByChl(String code);
 }

@@ -23,7 +23,7 @@ import com.asialjim.microapplet.mams.channel.wechat.infrastructure.repository.We
 import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Objects;
 
 import static com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp.populateFromChlAppletToWeChatApp;

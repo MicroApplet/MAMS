@@ -36,7 +36,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.time.Duration;
 import java.util.Objects;
 import java.util.Optional;
@@ -87,11 +87,11 @@ public class WeChatOfficialAppAgg {
 
         weChatApp = this.weChatAppAgg.weChatApp();
         if (Objects.isNull(weChatApp))
-            throw WeChatApiResultEnumeration.CODE_40013.sysException();
+            throw WeChatApiResultEnumeration.CODE_40013.ex();
         ChlAppType appType = weChatApp.getAppType();
 
         if (!ChlAppType.WeChatOfficial.equals(appType))
-            WeChatApiResultEnumeration.CODE_40013.throwBiz();
+            WeChatApiResultEnumeration.CODE_40013.thr();
 
         return weChatApp;
     }
@@ -111,7 +111,7 @@ public class WeChatOfficialAppAgg {
             this.msgCrypt = new WeChatOfficialMsgCrypt(weChatApp.getToken(), weChatApp.getAesKey(), weChatApp.getAppid());
             return this.msgCrypt;
         } catch (Throwable t) {
-            throw WeChatApiResultEnumeration.CODE_40013.sysException();
+            throw WeChatApiResultEnumeration.CODE_40013.ex();
         }
     }
 

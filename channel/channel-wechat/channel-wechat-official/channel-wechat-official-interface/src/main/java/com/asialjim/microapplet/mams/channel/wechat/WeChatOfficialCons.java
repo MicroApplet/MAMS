@@ -159,7 +159,7 @@ public interface WeChatOfficialCons {
             return Arrays.stream(values())
                     .filter(item -> StringUtils.equals(item.getCode(), code))
                     .findFirst()
-                    .orElseThrow(WeChatOfficialMsgResCode.UnSupportWeChatMsgType::bizException);
+                    .orElseThrow(WeChatOfficialMsgResCode.UnSupportWeChatMsgType::ex);
         }
     }
 

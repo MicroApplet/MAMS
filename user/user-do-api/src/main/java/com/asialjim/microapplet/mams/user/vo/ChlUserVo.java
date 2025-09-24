@@ -16,11 +16,14 @@
 
 package com.asialjim.microapplet.mams.user.vo;
 
+import com.asialjim.microapplet.mams.user.valid.UserLoginGroup;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * 渠道用户信息
@@ -35,14 +38,27 @@ public class ChlUserVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 4773152815800485170L;
 
+    private Boolean createIfAbsent;
     private String id;
     private String userid;
     private String appid;
+    @NotBlank(message = "LOGIN:CHL:ILLEGAL|渠道类型不能为空", groups = {UserLoginGroup.class})
     private String chlType;
     private String chlAppId;
     private String chlAppType;
+    @NotBlank(message = "LOGIN:CHL-USER:ID-MISSING|渠道用户编号不能为空", groups = {UserLoginGroup.class})
     private String chlUserId;
     private String chlUnionId;
     private String chlUserCode;
     private String chlUserToken;
+
+    /**
+     * 创建如果缺席
+     *
+     * @return boolean
+     */
+    public boolean createIfAbsent() {
+        return Optional.ofNullable(this.createIfAbsent)
+                .orElse(true);
+    }
 }

@@ -30,13 +30,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ChlAppletRes implements ResCode {
-    ChlAppIdNotSupport("CHL:APP-ID:NOT:SUPPORT","未提供渠道应用编号"),
-    NoSuchChlApplet("CHL:APPLET:NOT-EXIST","渠道应用不存在");
+    ChlAppIdNotSupport(400,true,"CHL:APP-ID:NOT:SUPPORT","未提供渠道应用编号"),
+    NoSuchChlApplet(400,true,"CHL:APPLET:NOT-EXIST","渠道应用不存在");
+    private final int status;
+    private final boolean thr;
     private final String code;
     private final String msg;
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

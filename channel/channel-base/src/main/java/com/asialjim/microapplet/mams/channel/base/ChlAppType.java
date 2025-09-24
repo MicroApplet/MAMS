@@ -45,6 +45,6 @@ public enum ChlAppType {
     public static ChlAppType codeOf(String code){
         return Arrays.stream(values()).filter(item -> StringUtils.equals(code, item.getCode()))
                 .findAny()
-                .orElseThrow(ChlAppTypeResCode.ChlAppTpUnknownEnum::sysException);
+                .orElseThrow(ChlAppTypeResCode.ChlAppTpUnknownEnum::ex);
     }
 }

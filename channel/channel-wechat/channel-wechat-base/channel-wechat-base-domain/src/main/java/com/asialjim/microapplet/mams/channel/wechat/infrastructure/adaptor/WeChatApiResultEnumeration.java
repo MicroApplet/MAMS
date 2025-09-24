@@ -20,13 +20,17 @@ public enum WeChatApiResultEnumeration implements ResCode {
     CODE__1(-1, "System is Busy", "系统繁忙，此时请开发者稍候再试"),
     CODE_0(0, "Request Success", "请求成功"){
         @Override
-        public boolean isSuccess() {
-            return true;
+        public int getStatus() {
+            return 200;
+        }
+
+        @Override
+        public boolean isThr() {
+            return false;
         }
     },
 
     CODE_20001(20001, "System Error", "系统错误"),
-
     CODE_40001(40001, "The AppSecret is incorrect or does not belong to this official account. Please confirm the correctness of the AppSecret.", "AppSecret错误或者AppSecret不属于这个公众号，请开发者确认AppSecret的正确性"),
     CODE_40002(40002, "Invalid credential type", "不合法的凭证类型"),
     CODE_40003(40003, "Invalid OpenID. Please confirm if the model has followed the official account or if the OpenID belongs to another official account.", "不合法的 OpenID ，请开发者确认 OpenID （该用户）是否已关注公众号，或是否是其他公众号的 OpenID"),
@@ -267,6 +271,8 @@ public enum WeChatApiResultEnumeration implements ResCode {
 
     UNKNOWN(-999, "Unknown error", "未知错误");
 
+
+
     /**
      * 微信服务器响应业务代码
      */
@@ -281,8 +287,13 @@ public enum WeChatApiResultEnumeration implements ResCode {
     }
 
     @Override
-    public boolean isSuccess() {
-        return false;
+    public int getStatus() {
+        return 400;
+    }
+
+    @Override
+    public boolean isThr() {
+        return true;
     }
 
     @Override

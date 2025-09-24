@@ -19,9 +19,9 @@ package com.asialjim.microapplet.mams.applet.infrastructure.repository;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.po.ChlAppletPo;
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.ChlAppletMapperService;
 import com.asialjim.microapplet.mams.applet.pojo.ChlApplet;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;

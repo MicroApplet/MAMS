@@ -76,7 +76,7 @@ public class WeChatUserAuthenticationStrategy extends BaseUserAuthenticateStrate
     protected void doRegistration(UserRegCommand command) {
         WeChatUserLoginStrategy strategy = this.strategyMap.get(command.regChlAppType());
         if (Objects.isNull(strategy))
-            ChlTypeResCode.ChlTypeNotSupport.throwBiz();
+            ChlTypeResCode.ChlTypeNotSupport.thr();
 
         UserAggRoot userAgg = command.getUserAgg();
         // 当前会话
@@ -104,7 +104,7 @@ public class WeChatUserAuthenticationStrategy extends BaseUserAuthenticateStrate
     public SessionUser login(UserLoginCommand command) {
         WeChatUserLoginStrategy strategy = this.strategyMap.get(command.regChlAppType());
         if (Objects.isNull(strategy))
-            ChlTypeResCode.ChlTypeNotSupport.throwBiz();
+            ChlTypeResCode.ChlTypeNotSupport.thr();
 
         UserRegOrLoginReq req = command.getReq();
         SessionUser login = strategy.login(command);

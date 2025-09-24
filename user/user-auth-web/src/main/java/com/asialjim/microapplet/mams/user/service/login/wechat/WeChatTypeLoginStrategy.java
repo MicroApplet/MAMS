@@ -14,29 +14,36 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.api;
+package com.asialjim.microapplet.mams.user.service.login.wechat;
 
 import com.asialjim.microapplet.common.security.MamsSession;
-import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
+import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
+import com.asialjim.microapplet.mams.user.vo.LoginReq;
 
 /**
- * 用户认证API
+ * 微信应用登录策略
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/23, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserTokenApi {
-    String PATH = "/user/token";
+public interface WeChatTypeLoginStrategy {
+
+    /**
+     * 支持渠道应用类型
+     *
+     * @param type 类型
+     * @return boolean
+     */
+    boolean supportChlAppType(ChannelAppType type);
 
     /**
      * 登录
      *
-     * @param vo 签证官
+     * @param chlApp 渠道应用信息
+     * @param req    登录参数
      * @return {@link MamsSession}
      */
-    @PostMapping("/login")
-    MamsSession login(@RequestBody ChlUserVo vo);
+    MamsSession login(ChlAppVo chlApp, LoginReq req);
 }

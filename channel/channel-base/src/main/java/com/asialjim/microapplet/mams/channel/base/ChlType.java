@@ -44,6 +44,6 @@ public enum ChlType {
     public static ChlType codeOf(String code) {
         return Arrays.stream(values()).filter(item -> StringUtils.equals(code, item.getCode()))
                 .findAny()
-                .orElseThrow(ChlTypeResCode.ChlTypeMismatch::bizException);
+                .orElseThrow(ChlTypeResCode.ChlTypeMismatch::ex);
     }
 }

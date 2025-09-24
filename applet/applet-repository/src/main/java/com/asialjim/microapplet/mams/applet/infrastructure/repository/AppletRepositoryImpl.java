@@ -23,10 +23,10 @@ import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource
 import com.asialjim.microapplet.mams.applet.infrastructure.repository.datasource.service.AppletMapperService;
 import com.asialjim.microapplet.mams.applet.pojo.Applet;
 import com.mybatisflex.core.paginate.Page;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -77,13 +77,13 @@ public class AppletRepositoryImpl implements AppletRepository {
         AppletPo po = AppletPo.toPo(condition);
         Page<AppletPo> appletPage = Pageable.ofPage(page, item -> Page.of(item.getPage(), item.getSize()));
         Page<AppletPo> res = this.appletMapperService.pageOf(appletPage,po);
-        PageData<Applet> targetRes = new PageData<>();
+        List<AppletPo> records = res.getRecords();
+        List<Applet> list = records.stream().map(AppletPo::fromPo).collect(Collectors.toList());
+        PageData<Applet> targetRes = new PageData<>(list);
         targetRes.setPage(res.getPageNumber());
         targetRes.setSize(res.getPageSize());
         targetRes.setPages(res.getTotalPage());
         targetRes.setTotal(res.getTotalRow());
-        List<AppletPo> records = res.getRecords();
-        List<Applet> list = records.stream().map(AppletPo::fromPo).collect(Collectors.toList());
         return targetRes.setRecords(list);
     }
 }

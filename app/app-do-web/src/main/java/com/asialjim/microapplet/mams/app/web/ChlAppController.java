@@ -74,6 +74,19 @@ public class ChlAppController implements ChlAppApi {
     }
 
     /**
+     * 按appid、CHL和CHL appid查询
+     *
+     * @param appid    appid
+     * @param chl      的背影
+     * @param chlAppid 的背影appid
+     * @return {@link ChlAppVo}
+     */
+    @Override
+    public ChlAppVo queryByAppidAndChlAndChlAppid(String appid, String chl, String chlAppid) {
+        return this.chlAppRepository.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
+    }
+
+    /**
      * 按组织id查询
      *
      * @param orgId org id
@@ -106,5 +119,16 @@ public class ChlAppController implements ChlAppApi {
     @Override
     public ChlAppVo queryByChlAndChlIndex(String chl, String appid) {
         return this.chlAppRepository.queryByChlAndChlIndex(chl,appid);
+    }
+
+    /**
+     * 按CHL查询
+     *
+     * @param code 代码
+     * @return {@link List<ChlAppVo>}
+     */
+    @Override
+    public List<ChlAppVo> queryByChl(String code) {
+        return this.chlAppRepository.queryByChl(code);
     }
 }

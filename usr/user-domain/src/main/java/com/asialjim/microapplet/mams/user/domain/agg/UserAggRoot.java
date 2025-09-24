@@ -146,7 +146,7 @@ public class UserAggRoot {
     public UserIdCard idCardRegByFile(MultipartFile file) {
         final UserIdCard user = new UserIdCard();
         // 获取当前会话用户
-        SessionUser current = CurrentUserAdapter.current(sessionUser -> user.setUserid(sessionUser.getUserid()).setAppletId(sessionUser.getAppid()), UserResCode.UserNotLogin::bizException);
+        SessionUser current = CurrentUserAdapter.current(sessionUser -> user.setUserid(sessionUser.getUserid()).setAppletId(sessionUser.getAppid()), UserResCode.UserNotLogin::ex);
 
         // 证件影像上传
         // 证件识别
@@ -177,7 +177,7 @@ public class UserAggRoot {
             return;
 
         if (StringUtils.equals(exist.getUserid(), user.getUserid()))
-            UserResCode.UserHasExist.throwBiz();
+            UserResCode.UserHasExist.thr();
     }
 
     /**
@@ -191,7 +191,7 @@ public class UserAggRoot {
         SessionUser current = getSessionUser();
         String userid = current.getUserid();
         if (StringUtils.isBlank(userid))
-            UserResCode.UserNotLogin.throwBiz();
+            UserResCode.UserNotLogin.thr();
 
         String appid = current.getChlAppid();
         IdCardOcrRes idCardCVOcrRes = idCardOcrAdapter.ocr(appid, file);

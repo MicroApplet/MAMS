@@ -44,7 +44,7 @@ public class UserIdCardService {
      * @since 2025/4/10
      */
     public UserIdCard idCardRegByFile(MultipartFile file) {
-        UserAggRoot userAgg = App.beanOrThrow(UserAggRoot.class, UserResCode.UserNotLogin::bizException);
+        UserAggRoot userAgg = App.beanOrThrow(UserAggRoot.class, UserResCode.UserNotLogin::ex);
         return userAgg.idCardRegByFile(file);
 
     }
@@ -56,6 +56,6 @@ public class UserIdCardService {
      * @since 2025/4/10
      */
     public void userIdCardConflictCheck(UserIdCard user) {
-        App.beanAndThenOrThrow(UserAggRoot.class, userAgg -> userAgg.userIdCardConflictCheck(user), UserResCode.UserNotLogin::bizException);
+        App.beanAndThenOrThrow(UserAggRoot.class, userAgg -> userAgg.userIdCardConflictCheck(user), UserResCode.UserNotLogin::ex);
     }
 }

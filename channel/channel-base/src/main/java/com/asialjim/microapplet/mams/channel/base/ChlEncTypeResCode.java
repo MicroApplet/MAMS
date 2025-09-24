@@ -31,16 +31,14 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ChlEncTypeResCode implements ResCode {
 
-    ChlEncTpUnknown("CHL:ENC:TP:UNKNOWN","未知加密类型"),
-    ChlEncTpUnknownEnum("CHL:ENC:TP:UNKNOWN:ENUM","加密类型枚举未知");
+    ChlEncTpUnknown(400,true,"CHL:ENC:TP:UNKNOWN","未知加密类型"),
+    ChlEncTpUnknownEnum(400,true,"CHL:ENC:TP:UNKNOWN:ENUM","加密类型枚举未知");
 
 
+    private final int status;
+    private final boolean thr;
     private final String code;
     private final String msg;
 
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

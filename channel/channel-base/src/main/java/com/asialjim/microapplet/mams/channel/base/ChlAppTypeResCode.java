@@ -30,16 +30,14 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ChlAppTypeResCode implements ResCode {
-    ChlAppTpUnknown("CHL:APP:TP:UNKNOWN","未知渠道应用类型"),
-    ChlAppTpUnknownEnum("CHL:APP:TP:UNKNOWN:ENUM","渠道应用类型枚举未知"),
-    ChlAppTpNotProvide("CHL:APP:TP:NOT:PROVIDE", "未提供渠道应用类型标识");
+    ChlAppTpUnknown(400,true,"CHL:APP:TP:UNKNOWN","未知渠道应用类型"),
+    ChlAppTpUnknownEnum(400,true,"CHL:APP:TP:UNKNOWN:ENUM","渠道应用类型枚举未知"),
+    ChlAppTpNotProvide(400,true,"CHL:APP:TP:NOT:PROVIDE", "未提供渠道应用类型标识");
 
+    private final int status;
+    private final boolean thr;
     private final String code;
     private final String msg;
 
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

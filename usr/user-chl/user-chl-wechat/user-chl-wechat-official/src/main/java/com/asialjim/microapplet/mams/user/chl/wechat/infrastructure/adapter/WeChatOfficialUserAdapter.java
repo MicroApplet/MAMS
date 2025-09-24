@@ -25,7 +25,7 @@ import com.asialjim.microapplet.wechat.official.remoting.user.WeChatPublicAccoun
 import com.asialjim.microapplet.wechat.official.remoting.user.meta.WeChatPublicAccountUserAccessTokenRes;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 微信公众号用户适配器

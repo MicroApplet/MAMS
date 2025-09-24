@@ -26,6 +26,8 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -36,8 +38,6 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.time.Duration;
 import java.util.*;
@@ -146,14 +146,14 @@ public class SessionUser implements Serializable {
             HttpServletRequest request = servletRequestAttributes.getRequest();
             verify(request,this.jwtConfProperty,this.jwtTokenCache);
         } catch (Throwable t){
-            UserResCode.UserNotLogin.throwBiz();
+            UserResCode.UserNotLogin.thr();
         }
     }
 
     public UserMain user(Consumer<UserMain> consumer) {
         String userid = getUserid();
         if (StringUtils.isBlank(userid))
-            throw UserResCode.UserNotLogin.bizException();
+            throw UserResCode.UserNotLogin.ex();
 
         UserAggRoot userAgg = App.beanAndThen(UserAggRoot.class, userAgg1 -> userAgg1.getSessionUser().setUserid(userid));
         UserMain user = userAgg.userMainOrThrow(null);
@@ -211,6 +211,7 @@ public class SessionUser implements Serializable {
             Algorithm algorithm = Algorithm.HMAC256(jwtConfProperty.getSecret());
             JWTVerifier verifier = JWT.require(algorithm).build();
             DecodedJWT jwt = verifier.verify(token);
+
             setId(body(SESSION_ID, jwt));
             setAppid(body(APPID, jwt));
             setUserid(body(USER_ID, jwt));
@@ -234,7 +235,7 @@ public class SessionUser implements Serializable {
         String authorization = AuthorizationHeader(request);
         String token = jwtTokenRepository.get(authorization);
         if (StringUtils.isBlank(token))
-            UserResCode.UserNotLogin.throwBiz();
+            UserResCode.UserNotLogin.thr();
         Algorithm algorithm = Algorithm.HMAC256(jwtConfProperty.getSecret());
         JWTVerifier verifier = JWT.require(algorithm).build();
         return verifier.verify(token);

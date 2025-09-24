@@ -3,9 +3,9 @@ package com.asialjim.microapplet.mams.channel.wechat.official.controller;
 import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialCallbackMsgOptCmd;
 import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialCallbackUrlCheckCmd;
 import com.asialjim.microapplet.mams.channel.wechat.official.cors.cmd.WeChatOfficialPageUrlQryCmd;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * 微信公众号消息/事件回调服务器

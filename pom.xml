@@ -96,6 +96,7 @@
         <spring-cloud-alibaba.version>2025.0.0.0-preview</spring-cloud-alibaba.version>
         <spring-alibaba-ai.version>1.0.0.2</spring-alibaba-ai.version>
         <spring-ai.version>1.0.1</spring-ai.version>
+        <mybatis-flex.version>1.11.1</mybatis-flex.version>
         <hutool.version>5.8.39</hutool.version>
     </properties>
 
@@ -126,6 +127,57 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- ////// spring 相关 ////// -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- ////// spring 相关 ////// -->
+
+            <!-- ////// alibaba 相关 ////// -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-bom</artifactId>
+                <version>${spring-alibaba-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- ////// alibaba 相关 ////// -->
+
+            <!-- ////// 数据库相关 ////// -->
+            <dependency>
+                <groupId>com.mybatis-flex</groupId>
+                <artifactId>mybatis-flex-dependencies</artifactId>
+                <version>${mybatis-flex.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!-- ////// 数据库相关 ////// -->
+
             <dependency>
                 <groupId>com.asialjim.microapplet</groupId>
                 <artifactId>commons-zen-dependencies</artifactId>
@@ -146,6 +198,24 @@
                 <version>${com.asialjim.microapplet}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.5.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>2.20.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.auth0</groupId>
+                <artifactId>java-jwt</artifactId>
+                <version>4.4.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -216,7 +286,6 @@
                     <preparationGoals>
                         clean
                         versions:use-releases
-                        versions:update-parent
                         verify
                     </preparationGoals>
                 </configuration>
@@ -242,7 +311,6 @@
                         <id>pre-release-update</id>
                         <phase>validate</phase>
                         <goals>
-                            <goal>update-parent</goal>
                             <goal>update-child-modules</goal>
                         </goals>
                     </execution>
@@ -252,7 +320,6 @@
                         <!--suppress MybatisXMapperXmlInspection, MybatisPlusMapperXmlInspection, MavenModelInspection -->
                         <phase>post-release</phase>
                         <goals>
-                            <goal>update-parent</goal>
                             <goal>update-child-modules</goal>
                         </goals>
                     </execution>

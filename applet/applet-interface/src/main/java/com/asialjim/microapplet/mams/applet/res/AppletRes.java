@@ -30,13 +30,11 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AppletRes implements ResCode {
-    NoSuchApplet("APPLET:NOT-EXIST","应用不存在");
+    NoSuchApplet(400,true,"APPLET:NOT-EXIST","应用不存在");
 
+    private final int status;
+    private final boolean thr;
     private final String code;
     private final String msg;
 
-    @Override
-    public boolean isSuccess() {
-        return false;
-    }
 }

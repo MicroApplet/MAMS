@@ -23,8 +23,7 @@ package com.asialjim.microapplet.mams.user.cloud;
  * @date 2025/09/19
  */
 
-import com.asialjim.microapplet.mams.user.api.UserSessionApi;
-import com.asialjim.microapplet.mams.user.api.UserTokenApi;
+import com.asialjim.microapplet.mams.user.api.UserRegistrarApi;
 import com.asialjim.microapplet.mams.user.cons.UserServerCons;
 import org.springframework.cloud.openfeign.FeignClient;
 
@@ -35,6 +34,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @version 1.0
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@FeignClient(value = UserServerCons.APP_FEIGN_NAME,path = UserTokenApi.PATH)
-public interface UserTokenCloud extends UserTokenApi {
+@FeignClient(value = UserServerCons.APP_FEIGN_NAME,path = UserRegistrarApi.PATH)
+public interface UserRegistrarCloud extends UserRegistrarApi {
 }

@@ -20,7 +20,6 @@ import com.asialjim.microapplet.common.application.App;
 import com.asialjim.microapplet.mams.channel.base.ChlAppType;
 import com.asialjim.microapplet.mams.channel.base.ChlType;
 import com.asialjim.microapplet.mams.channel.wechat.applet.cmd.WeChatAppletUserLoginCmd;
-import com.asialjim.microapplet.mams.channel.wechat.applet.infrastructure.remoting.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.mams.channel.wechat.domain.WeChatAppAgg;
 import com.asialjim.microapplet.mams.channel.wechat.infrastructure.adaptor.WeChatApiResultEnumeration;
 import com.asialjim.microapplet.mams.channel.wechat.pojo.WeChatApp;
@@ -31,7 +30,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -72,11 +71,11 @@ public class WeChatAppletAppAgg {
 
         weChatApp = this.weChatAppAgg.weChatApp();
         if (Objects.isNull(weChatApp))
-            throw WeChatApiResultEnumeration.CODE_40013.sysException();
+            throw WeChatApiResultEnumeration.CODE_40013.ex();
         ChlAppType appType = weChatApp.getAppType();
 
         if (!ChlAppType.WeChatApplet.equals(appType))
-            WeChatApiResultEnumeration.CODE_40013.throwBiz();
+            WeChatApiResultEnumeration.CODE_40013.thr();
 
         return weChatApp;
     }

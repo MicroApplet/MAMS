@@ -18,7 +18,6 @@ package com.asialjim.microapplet.mams.user.infrastructure.adapter;
 
 import com.asialjim.microapplet.commons.security.CurrentRoles;
 import com.asialjim.microapplet.commons.security.Role;
-import com.asialjim.microapplet.commons.security.UserRole;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -48,7 +47,7 @@ public class CurrentRolesImpl implements CurrentRoles {
 
         // 成功登录后，获取用户角色，此处仅为测试，仅添加已登录用户
         if (Boolean.TRUE.equals(function))
-            return Collections.singletonList(UserRole.Login);
+            return Collections.singletonList(Role.Authenticated);
 
         return Collections.emptyList();
     }

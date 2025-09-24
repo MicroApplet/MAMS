@@ -81,12 +81,12 @@ public class UserAuthenticationService {
 
     private BaseUserAuthenticateStrategy strategy(Supplier<ChlType> command) {
         return Optional.ofNullable(strategyMap.get(command.get()))
-                .orElseThrow(ChlTypeResCode.ChlTypeNotSupport::bizException);
+                .orElseThrow(ChlTypeResCode.ChlTypeNotSupport::ex);
     }
 
     public UserMain current() {
-        UserAggRoot userAgg = App.beanOrThrow(UserAggRoot.class, UserResCode.UserNotLogin::bizException);
-        return userAgg.userMainOrThrow(UserResCode.UserNotLogin::bizException);
+        UserAggRoot userAgg = App.beanOrThrow(UserAggRoot.class, UserResCode.UserNotLogin::ex);
+        return userAgg.userMainOrThrow(UserResCode.UserNotLogin::ex);
     }
 
     public void logout() {

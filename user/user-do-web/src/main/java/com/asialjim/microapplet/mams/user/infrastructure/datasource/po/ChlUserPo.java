@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.infrastructure.datasource.po;
 
+import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -26,6 +27,7 @@ import lombok.Data;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 渠道用户信息
@@ -42,18 +44,19 @@ public class ChlUserPo implements Serializable {
 
     @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
-
+    private String appid;
     /**
-/**
      * 主用户编号
      *
      * @see UserPo#getId()
-     */private String userid;
+     */
+    private String userid;
 
     /**
      * 渠道类型
      */
     private String chlType;
+
     /**
      * 渠道应用编号
      */
@@ -88,4 +91,22 @@ public class ChlUserPo implements Serializable {
 
     @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
+
+    public static ChlUserVo toVo(ChlUserPo po) {
+        if (Objects.isNull(po))
+            return null;
+
+        ChlUserVo vo = new ChlUserVo();
+        vo.setId(po.getId());
+        vo.setUserid(po.getUserid());
+        vo.setAppid(po.getAppid());
+        vo.setChlType(po.getChlType());
+        vo.setChlAppId(po.getChlAppid());
+        vo.setChlAppType(po.getChlAppType());
+        vo.setChlUserId(po.getChlUserid());
+        vo.setChlUnionId(po.getChlUnionid());
+        vo.setChlUserCode(po.getChlUserCode());
+        vo.setChlUserToken(po.getChlUserToken());
+        return vo;
+    }
 }

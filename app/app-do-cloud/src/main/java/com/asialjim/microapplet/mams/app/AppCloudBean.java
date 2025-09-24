@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-$year.today <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *    Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -15,3 +15,20 @@
  */
 
 package com.asialjim.microapplet.mams.app;
+
+import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
+/**
+ * 应用云服务包扫描1.0
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/9/23, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+@Configuration
+@ComponentScan
+@EnableFeignClients
+public class AppCloudBean {
+}

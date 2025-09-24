@@ -24,10 +24,10 @@ import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.p
 import com.asialjim.microapplet.mams.user.infrastructure.repository.datasource.service.UserIdCardMapperService;
 import com.asialjim.microapplet.mams.user.pojo.UserIdCard;
 import com.asialjim.microapplet.mams.user.res.UserResCode;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Objects;
 
 /**
@@ -47,7 +47,7 @@ public class UserIdCardRepositoryImpl implements UserIdCardRepository {
 
     @Override
     public void mergeAndSave(UserIdCard user) {
-        SessionUser session = CurrentUserAdapter.current(null, UserResCode.UserNotLogin::bizException);
+        SessionUser session = CurrentUserAdapter.current(null, UserResCode.UserNotLogin::ex);
         String sessionId = session.getId();
         UserIdCard exist = this.userIdCardCache.cachedBySessionId(sessionId);
         if (Objects.isNull(exist))

@@ -25,7 +25,7 @@ import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 微信公众号用户适配器

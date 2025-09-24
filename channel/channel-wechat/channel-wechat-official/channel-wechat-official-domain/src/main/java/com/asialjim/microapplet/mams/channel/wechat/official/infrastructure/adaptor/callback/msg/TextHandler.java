@@ -8,7 +8,7 @@ import com.asialjim.microapplet.mams.channel.wechat.official.infrastructure.adap
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 /**
  * 文本消息处理器

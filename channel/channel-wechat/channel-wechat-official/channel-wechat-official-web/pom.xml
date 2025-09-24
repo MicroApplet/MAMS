@@ -46,11 +46,7 @@
         </dependency>
 
 
-        <!--suppress VulnerableLibrariesLocal -->
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>commons-web-knife4j-mvc</artifactId>
-        </dependency>
+
         <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>

@@ -114,7 +114,7 @@ public class ChlAppRepository {
      * @return {@link ChlAppVo}
      */
     public ChlAppVo queryByChlAndChlAppid(String chl, String appid) {
-        ChlAppPo po = this.chlAppMapperService.queryByChlAndChlAppid(chl,appid);
+        ChlAppPo po = this.chlAppMapperService.queryByChlAndChlAppid(chl, appid);
         return ChlAppPo.toVo(po);
     }
 
@@ -126,7 +126,38 @@ public class ChlAppRepository {
      * @return {@link ChlAppVo}
      */
     public ChlAppVo queryByChlAndChlIndex(String chl, String index) {
-        ChlAppPo po = this.chlAppMapperService.queryByChlAndChlIndex(chl,index);
+        ChlAppPo po = this.chlAppMapperService.queryByChlAndChlIndex(chl, index);
         return ChlAppPo.toVo(po);
+    }
+
+    /**
+     * 按appid、CHL和CHL appid查询
+     *
+     * @param appid    appid
+     * @param chl      的背影
+     * @param chlAppid 的背影appid
+     * @return {@link ChlAppVo}
+     */
+    public ChlAppVo queryByAppidAndChlAndChlAppid(String appid, String chl, String chlAppid) {
+        ChlAppPo po = this.chlAppMapperService.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
+        return ChlAppPo.toVo(po);
+    }
+
+    /**
+     * 按CHL查询
+     *
+     * @param code 代码
+     * @return {@link List<ChlAppVo>}
+     */
+    public List<ChlAppVo> queryByChl(String code) {
+        List<ChlAppPo> pos = this.chlAppMapperService.queryByChl(code);
+
+        return Optional.ofNullable(pos)
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .map(ChlAppPo::toVo)
+                .filter(Objects::nonNull)
+                .toList();
     }
 }

@@ -16,14 +16,14 @@
 
 package com.asialjim.microapplet.mams.user.controller.authenticate;
 
-import com.asialjim.microapplet.commons.security.HasRole;
-import com.asialjim.microapplet.commons.security.Tourist;
+import com.asialjim.microapplet.commons.security.Role;
+import com.asialjim.microapplet.commons.security.RoleNeed;
 import com.asialjim.microapplet.mams.user.interfaces.UserAuthenticateInterface;
 import com.asialjim.microapplet.mams.user.vo.RegReqVo;
 import com.asialjim.microapplet.mams.user.interfaces.endpoint.UserAuthenticateEndpoint;
 import com.asialjim.microapplet.mams.user.pojo.UserMain;
 import com.asialjim.microapplet.mams.user.vo.UserRegOrLoginReq;
-import com.asialjim.microapplet.web.mvc.annotation.ResultWrap;
+import com.asialjim.microapplet.web.mvc.annotation.RwIgnore;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +65,7 @@ public class UserAuthenticateController implements UserAuthenticateInterface {
      * @return {@link UserMain }
      * @since 2025/4/10
      */
-    @HasRole(Tourist.code)
+    @RoleNeed(any = Role.Tourist)
     @PostMapping("/{chlType}/{chlAppId}/{chlAppType}/registration")
     public UserMain registration(@PathVariable("appid") String appid,
                                  @PathVariable("chlType") String chlType,
@@ -82,8 +82,8 @@ public class UserAuthenticateController implements UserAuthenticateInterface {
      *
      * @since 2025/4/10
      */
-    @ResultWrap
-    @HasRole(Tourist.code)
+    @RwIgnore
+    @RoleNeed(any = Role.Tourist)
     @PostMapping("/{chlType}/{chlAppId}/{chlAppType}/login")
     public String login(@PathVariable("appid") String appid,
                         @PathVariable("chlType") String chlType,

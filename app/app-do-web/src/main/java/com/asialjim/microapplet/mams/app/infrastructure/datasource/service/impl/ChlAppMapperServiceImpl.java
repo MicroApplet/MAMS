@@ -117,6 +117,7 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
      * @return {@link ChlAppPo}
      */
     @Override
+    @Cacheable(value = AppletCache.Name.chlAppPoByChlAndChlIndex, key = "#chl + ':' + #index")
     public ChlAppPo queryByChlAndChlIndex(String chl, String index) {
         return queryChain()
                 .where(ChlAppPo::getChlType).eq(chl)
@@ -126,5 +127,38 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
                     item.or(ChlAppPo::getChlAgentId).eq(index);
                 })
                 .one();
+    }
+
+    /**
+     * 按appid、CHL和CHL appid查询
+     *
+     * @param appid    appid
+     * @param chl      渠道号
+     * @param chlAppid 渠道应用appid
+     * @return {@link ChlAppPo}
+     */
+    @Override
+    @Cacheable(value = AppletCache.Name.chlAppPoByAppidChlAndChlAppid, key = "#appid + ':' + #chl + ':'+ #chlAppid")
+    public ChlAppPo queryByAppidAndChlAndChlAppid(String appid, String chl, String chlAppid) {
+
+        return queryChain()
+                .where(ChlAppPo::getAppid).eq(appid)
+                .where(ChlAppPo::getChlType).eq(chl)
+                .where(ChlAppPo::getChlAppid).eq(chlAppid)
+                .one();
+    }
+
+    /**
+     * 按CHL查询
+     *
+     * @param code 代码
+     * @return {@link List<ChlAppPo>}
+     */
+    @Override
+    @Cacheable(value = AppletCache.Name.chlAppPoByChl, key = "#code")
+    public List<ChlAppPo> queryByChl(String code) {
+        return queryChain()
+                .where(ChlAppPo::getChlType).eq(code)
+                .list();
     }
 }

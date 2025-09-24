@@ -50,16 +50,16 @@ public class ChlAppletAppService {
         String appletId = body.getAppletId();
         Applet applet = appletRepository.queryById(appletId);
         if (Objects.isNull(applet))
-            AppletRes.NoSuchApplet.throwBiz();
+            AppletRes.NoSuchApplet.thr();
         ChlType chlType = body.getChlType();
         if (Objects.isNull(chlType))
-            ChlTypeResCode.ChlTypeNotProvide.throwBiz();
+            ChlTypeResCode.ChlTypeNotProvide.thr();
         ChlAppType chlAppType = body.getChlAppType();
         if (Objects.isNull(chlAppType))
-            ChlAppTypeResCode.ChlAppTpNotProvide.throwBiz();
+            ChlAppTypeResCode.ChlAppTpNotProvide.thr();
         String chlAppId = body.getChlAppId();
         if (StringUtils.isBlank(chlAppId))
-            ChlAppletRes.ChlAppIdNotSupport.throwBiz();
+            ChlAppletRes.ChlAppIdNotSupport.thr();
 
         return chlAppletRepository.save(body);
     }

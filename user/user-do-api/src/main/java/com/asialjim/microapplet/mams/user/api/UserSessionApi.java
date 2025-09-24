@@ -34,8 +34,9 @@ public interface UserSessionApi {
     /**
      * 登录
      *
-     * @param vo 签证官
-     * @return {@link MamsSession}
+     * @param vo {@link ChlUserVo vo}
+     * @return {@link MamsSession }
+     * @since 2025/9/22
      */
     @PostMapping("/login")
     MamsSession login(@RequestBody ChlUserVo vo);

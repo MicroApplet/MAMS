@@ -66,7 +66,7 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
         String username = req.getUsername();
         UserChl exist = this.userChlRepository.queryChlUser(supportType(), ChlType.H5.getCode(), ChlAppType.H5, username);
         if (Objects.nonNull(exist))
-            UserResCode.UsernameUnavailable.throwBiz();
+            UserResCode.UsernameUnavailable.thr();
 
         UserChl target = new UserChl();
         //target.setId("");//数据库自动生成
@@ -93,11 +93,11 @@ public class H5UserAuthenticateStrategy extends BaseUserAuthenticateStrategy {
 
         UserChl user = this.userChlRepository.queryChlUser(supportType(), ChlAppType.H5.getCode(), ChlAppType.H5, username);
         if (Objects.isNull(user))
-            UserResCode.UserNameOrPasswordErr.throwBiz();
+            UserResCode.UserNameOrPasswordErr.thr();
 
         boolean passwordCheck = PasswordStorage.verifyPassword(password, user.getChlUserCode());
         if (!passwordCheck)
-            UserResCode.UserNameOrPasswordErr.throwBiz();
+            UserResCode.UserNameOrPasswordErr.thr();
         UserAggRoot userAgg = command.getUserAggWithUserid(user.getUserid());
         SessionUser sessionUser = userAgg.getSessionUser();
         sessionUser.setUserid(user.getUserid());

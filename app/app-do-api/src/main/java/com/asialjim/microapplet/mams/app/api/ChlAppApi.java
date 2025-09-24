@@ -32,21 +32,80 @@ import java.util.List;
 public interface ChlAppApi {
     String path = "/chl";
 
+    /**
+     * 按id查询
+     *
+     * @param id id
+     * @return {@link ChlAppVo}
+     */
     @GetMapping("/{id}")
     ChlAppVo queryById(@PathVariable("id") String id);
 
+    /**
+     * 按appid查询
+     *
+     * @param appid appid
+     * @return {@link List<ChlAppVo>}
+     */
     @GetMapping("/app/{id}")
     List<ChlAppVo> queryByAppid(@PathVariable("id") String appid);
 
+    /**
+     * 按appid和CHL查询
+     *
+     * @param appid appid
+     * @param chl   的背影
+     * @return {@link List<ChlAppVo>}
+     */
     @GetMapping("/app/{id}/chl/{chl}")
     List<ChlAppVo> queryByAppidAndChl(@PathVariable("id") String appid, @PathVariable("chl") String chl);
 
+    /**
+     * 按appid、CHL和CHL appid查询
+     *
+     * @param appid    appid
+     * @param chl      的背影
+     * @param chlAppid 的背影appid
+     * @return {@link ChlAppVo}
+     */
+    @GetMapping("/app/{id}/chl/{chl}/chl-appid/{chlAppid}")
+    ChlAppVo queryByAppidAndChlAndChlAppid(@PathVariable("id") String appid, @PathVariable("chl") String chl, @PathVariable("chlAppid") String chlAppid);
+
+    /**
+     * 按组织id查询
+     *
+     * @param orgId org id
+     * @return {@link List<ChlAppVo>}
+     */
     @GetMapping("/org/{id}")
     List<ChlAppVo> queryByOrgId(@PathVariable("id") String orgId);
 
+    /**
+     * 按CHL和CHL appid查询
+     *
+     * @param chl   的背影
+     * @param appid appid
+     * @return {@link ChlAppVo}
+     */
     @GetMapping("/chl/{chl}/appid/{appid}")
     ChlAppVo queryByChlAndChlAppid(@PathVariable("chl") String chl, @PathVariable("appid") String appid);
 
+    /**
+     * 按CHL和CHL索引查询
+     *
+     * @param chl   的背影
+     * @param appid appid
+     * @return {@link ChlAppVo}
+     */
     @GetMapping("/chl/{chl}/index/{index}")
     ChlAppVo queryByChlAndChlIndex(@PathVariable("chl") String chl, @PathVariable("index") String appid);
+
+    /**
+     * 按CHL查询
+     *
+     * @param code 代码
+     * @return {@link List<ChlAppVo>}
+     */
+    @GetMapping("/chl/{chl}")
+    List<ChlAppVo> queryByChl(@PathVariable("chl") String code);
 }
