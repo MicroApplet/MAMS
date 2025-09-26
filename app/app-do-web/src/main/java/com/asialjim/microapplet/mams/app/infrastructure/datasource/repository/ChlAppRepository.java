@@ -20,6 +20,7 @@ import com.asialjim.microapplet.mams.app.infrastructure.datasource.po.ChlAppPo;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.service.ChlAppMapperService;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -34,6 +35,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 public class ChlAppRepository {
     @Resource
@@ -150,6 +152,7 @@ public class ChlAppRepository {
      * @return {@link List<ChlAppVo>}
      */
     public List<ChlAppVo> queryByChl(String code) {
+        log.info("queryByChl:{}",code);
         List<ChlAppPo> pos = this.chlAppMapperService.queryByChl(code);
 
         return Optional.ofNullable(pos)

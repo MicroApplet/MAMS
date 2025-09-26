@@ -39,12 +39,6 @@
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>remote-net-http-apache</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
 

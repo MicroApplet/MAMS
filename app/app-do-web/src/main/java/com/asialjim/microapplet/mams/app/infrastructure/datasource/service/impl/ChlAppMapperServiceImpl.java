@@ -20,7 +20,10 @@ import com.asialjim.microapplet.mams.app.infrastructure.cache.AppletCache;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.mapper.ChlAppBaseMapper;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.po.ChlAppPo;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.service.ChlAppMapperService;
+import com.mybatisflex.core.query.QueryChain;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
@@ -34,6 +37,7 @@ import java.util.List;
  * @version 1.0
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Repository
 public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAppPo> implements ChlAppMapperService {
 
@@ -157,8 +161,10 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
     @Override
     @Cacheable(value = AppletCache.Name.chlAppPoByChl, key = "#code")
     public List<ChlAppPo> queryByChl(String code) {
-        return queryChain()
-                .where(ChlAppPo::getChlType).eq(code)
-                .list();
+        QueryChain<ChlAppPo> chain = queryChain().where(ChlAppPo::getChlType).eq(code);
+        List<ChlAppPo> list = chain.list();
+        if (CollectionUtils.isEmpty(list))
+            return null;
+        return list;
     }
 }

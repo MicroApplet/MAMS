@@ -21,7 +21,9 @@ import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import com.asialjim.microapplet.wechat.application.WeChatApplication;
 import com.asialjim.microapplet.wechat.application.WeChatApplicationRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -36,6 +38,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 2025/9/23, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class MamsWeChatApplicationRepository implements WeChatApplicationRepository {
@@ -50,6 +53,7 @@ public class MamsWeChatApplicationRepository implements WeChatApplicationReposit
     @Override
     public List<WeChatApplication> allApps() {
         List<ChlAppVo> vos = chlAppApi.queryByChl(ChannelType.WeChat.getCode());
+        log.info("MAMS 微信应用表：{}", vos);
         return Optional.ofNullable(vos)
                 .stream()
                 .flatMap(Collection::stream)

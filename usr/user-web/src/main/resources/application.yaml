@@ -1,32 +1,5 @@
 server:
-  port: ${user_port:80}
-
-knife4j:
-  basic:
-    enable: true
-  setting:
-    enable-document-manage: false
-    enable-after-script: false
-    enable-open-api: false
-    enable-footer: false
-    enable-group: true
-
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html
-    tags-sorter: alpha
-    operations-sorter: alpha
-  api-docs:
-    path: /v3/api-docs
-  group-configs:
-#    - group: 'user'
-#      paths-to-match: '/user/**'
-#      packages-to-scan: com.asialjim.microapplet.mams.user
-    - group: 'user:id-card'
-      packages-to-scan: com.asialjim.microapplet.mams.user.controller.idcard
-    - group: 'user:authenticate'
-      packages-to-scan: com.asialjim.microapplet.mams.user.controller.idcardauthenticate
-
+  port: ${user_port:40001}
 
 spring:
   datasource:

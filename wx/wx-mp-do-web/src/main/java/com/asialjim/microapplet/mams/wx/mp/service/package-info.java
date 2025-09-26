@@ -14,4 +14,4 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.wx.common;
+package com.asialjim.microapplet.mams.wx.mp.service;

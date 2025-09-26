@@ -14,30 +14,22 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.wx.common;
+package com.asialjim.microapplet.mams.wx.mp;
 
 import com.asialjim.microapplet.common.application.App;
-import com.asialjim.microapplet.mams.app.cloud.AppCloud;
-import com.asialjim.microapplet.remote.spring.RemoteScan;
+import com.asialjim.microapplet.mams.wx.common.infrastructure.repository.MamsWeChatApplicationRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ApplicationContext;
 
 /**
- * 通用微信API服务
+ * 微信公众号服务启动器
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/23, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/25, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
 public class Main {
-
-
-    /**
-     * 主要
-     *
-     * @param args arg游戏
-     */
     public static void main(String[] args) {
         App.voidStart(Main.class,args);
     }
