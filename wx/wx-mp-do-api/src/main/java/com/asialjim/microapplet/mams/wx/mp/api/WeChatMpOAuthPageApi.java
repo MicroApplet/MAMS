@@ -14,25 +14,29 @@
  * limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.wx.mp.infrastructure.config;
+package com.asialjim.microapplet.mams.wx.mp.api;
 
-import lombok.Data;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
+import com.asialjim.microapplet.mams.wx.mp.vo.oauth.BuildWeChatOAuthPageVo;
+import com.asialjim.microapplet.mams.wx.mp.vo.oauth.WeChatMpOAuthHandlerVo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-import java.io.Serializable;
+import java.util.List;
 
 /**
- * 微信公众号服务器信息配置
+ * 微信公众号授权网页API
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
  * @since 2025/9/5, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Data
-@Configuration
-@ConfigurationProperties(prefix = "wechat.mp.server")
-public class WeChatMpServerProperty implements Serializable {
+public interface WeChatMpOAuthPageApi {
+    String path = "/{appid}/oauth/page";
 
-    private String baseUrl;
+    @GetMapping("/handlers")
+    List<WeChatMpOAuthHandlerVo> handlers();
+
+    @PostMapping
+    String build(@RequestBody BuildWeChatOAuthPageVo req);
 }

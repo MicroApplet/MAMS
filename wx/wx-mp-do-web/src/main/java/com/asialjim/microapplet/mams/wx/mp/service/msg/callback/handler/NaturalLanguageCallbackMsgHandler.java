@@ -17,16 +17,15 @@
 package com.asialjim.microapplet.mams.wx.mp.service.msg.callback.handler;
 
 import com.asialjim.microapplet.common.concurrent.ConcurrentRunner;
-import com.asialjim.microapplet.wechat.official.module.message.CallbackMsgHandler;
-import com.asialjim.microapplet.wechat.official.module.message.WeChatOfficialMsgCallbackEvent;
-import com.asialjim.microapplet.wechat.official.module.message.reply.WxMpXmlOutMessage;
+import com.asialjim.microapplet.wechat.official.service.msg.CallbackMsgHandler;
+import com.asialjim.microapplet.wechat.official.service.msg.WeChatOfficialMsgCallbackEvent;
+import com.asialjim.microapplet.wechat.official.service.msg.reply.WxMpXmlOutMessage;
 import com.asialjim.microapplet.wechat.official.remoting.ai.WeChatAIVoiceRemoting;
 import com.asialjim.microapplet.wechat.official.remoting.ai.meta.WeChatQueryRecoResultForTextRes;
 import com.asialjim.microapplet.wechat.official.remoting.customer.WeChatPaCustomerMessageRemoting;
 import com.asialjim.microapplet.wechat.official.remoting.customer.meta.WeChatCustomerTextMessage;
 import com.asialjim.microapplet.wechat.official.remoting.customer.meta.item.Text;
 import com.asialjim.microapplet.wechat.remoting.context.BaseWeChatApiRes;
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -78,11 +77,22 @@ public class NaturalLanguageCallbackMsgHandler implements CallbackMsgHandler {
         } else {
             content = event.nodeTextValue("Content");
         }
-        log.info("用户发送文本信息:{}",content);
+        log.info("用户发送文本信息:{}", content);
 
         WxMpXmlOutMessage out = new WxMpXmlOutMessage();
         out.setMsgType("text");
         out.setContent("你好");
+        ConcurrentRunner.runAllTask(new Runnable() {
+            @Override
+            public void run() {
+                WeChatCustomerTextMessage msg = new WeChatCustomerTextMessage();
+                msg.setTouser(event.getOpenid());
+                msg.setText(Text.builder().content("Are you OK?").build());
+                BaseWeChatApiRes apiRes = weChatPaCustomerMessageRemoting.sendCustomerMsg(event.getAppid(), msg);
+                log.info("\r\n发送客服消息：{}\r\n结果：{}", msg, apiRes);
+            }
+        });
+
         return out;
 
         // todo 发送给 AI

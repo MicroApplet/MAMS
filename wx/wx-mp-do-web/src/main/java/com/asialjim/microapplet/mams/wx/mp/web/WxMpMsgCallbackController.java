@@ -17,7 +17,7 @@
 package com.asialjim.microapplet.mams.wx.mp.web;
 
 import com.asialjim.microapplet.mams.wx.mp.service.msg.callback.WxMpMsgCallbackService;
-import com.asialjim.microapplet.wechat.official.module.message.crypt.WeChatOfficialCallBackVerifyService;
+import com.asialjim.microapplet.wechat.official.service.msg.crypt.WeChatOfficialCallBackVerifyService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.RequestEntity;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
-@Controller
+//@Controller
 @RequestMapping("/{appid}/msg/callback")
 public class WxMpMsgCallbackController {
     @Resource

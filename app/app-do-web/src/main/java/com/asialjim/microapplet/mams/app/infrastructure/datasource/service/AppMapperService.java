@@ -44,4 +44,6 @@ public interface AppMapperService extends IService<AppPo> {
      * @return {@link List<AppPo>}
      */
     List<AppPo> queryByOrgId(String id);
+
+    List<AppPo> queryByName(String name);
 }

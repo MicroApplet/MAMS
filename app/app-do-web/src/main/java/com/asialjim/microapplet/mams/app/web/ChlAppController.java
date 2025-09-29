@@ -17,13 +17,20 @@
 package com.asialjim.microapplet.mams.app.web;
 
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
+import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
+import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.repository.ChlAppRepository;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import jakarta.annotation.Resource;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.function.Supplier;
 
 /**
  * 渠道 APP 服务
@@ -86,6 +93,35 @@ public class ChlAppController implements ChlAppApi {
         return this.chlAppRepository.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
     }
 
+    @Override
+    public ChlAppVo queryByAppidAndChlAndChlAppType(String appid, String chl, String chlAppType) {
+        return this.chlAppRepository.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
+    }
+
+    @Override
+    public ChlAppVo queryRootByAppid(String appid) {
+        List<ChlAppVo> vos = this.chlAppRepository.queryByAppidAndChl(appid, ChannelType.PC.getCode());
+        return vos.stream()
+                .filter(Objects::nonNull)
+                .filter(item -> StringUtils.equals(item.getChlAppId(), "root"))
+                .filter(item -> StringUtils.equals(item.getChlAppType(), ChannelAppType.CMS.getCode()))
+                .findAny()
+                .orElseGet(() -> {
+                    ChlAppVo vo = new ChlAppVo();
+                    vo.setId("root");
+                    vo.setAppid(appid);
+                    vo.setOrgId("root");
+                    vo.setChlType(ChannelType.PC.getCode());
+                    vo.setChlAppId("root");
+                    vo.setChlAppType(ChannelAppType.CMS.getCode());
+                    vo.setChlAppName("超管应用");
+                    vo.setDeleted(false);
+                    vo.setCreateTime(LocalDateTime.now());
+                    vo.setUpdateTime(LocalDateTime.now());
+                    return chlAppRepository.create(vo);
+                });
+    }
+
     /**
      * 按组织id查询
      *
@@ -106,7 +142,7 @@ public class ChlAppController implements ChlAppApi {
      */
     @Override
     public ChlAppVo queryByChlAndChlAppid(String chl, String appid) {
-        return this.chlAppRepository.queryByChlAndChlAppid(chl,appid);
+        return this.chlAppRepository.queryByChlAndChlAppid(chl, appid);
     }
 
     /**
@@ -118,7 +154,7 @@ public class ChlAppController implements ChlAppApi {
      */
     @Override
     public ChlAppVo queryByChlAndChlIndex(String chl, String appid) {
-        return this.chlAppRepository.queryByChlAndChlIndex(chl,appid);
+        return this.chlAppRepository.queryByChlAndChlIndex(chl, appid);
     }
 
     /**

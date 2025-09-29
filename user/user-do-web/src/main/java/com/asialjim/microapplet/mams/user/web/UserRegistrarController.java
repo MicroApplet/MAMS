@@ -16,9 +16,12 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
+import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.api.UserRegistrarApi;
+import com.asialjim.microapplet.mams.user.service.registrar.UserRegistrarService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -30,8 +33,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UserRegistrarApi.PATH)
 public class UserRegistrarController implements UserRegistrarApi {
+    private final UserRegistrarService userRegistrarService;
 
     /**
      * 注册
@@ -41,7 +46,12 @@ public class UserRegistrarController implements UserRegistrarApi {
      */
     @Override
     public ChlUserVo register(ChlUserVo user) {
-        return null;
+        return this.userRegistrarService.register(user);
+    }
+
+    @Override
+    public Result<Void> root() {
+        return this.userRegistrarService.rootExist();
     }
 
     /**

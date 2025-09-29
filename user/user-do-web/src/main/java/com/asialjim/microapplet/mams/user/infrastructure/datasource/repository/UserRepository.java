@@ -48,6 +48,11 @@ public class UserRepository {
         return po;
     }
 
+    public UserPo create(UserPo po) {
+        this.userMapperService.save(po);
+        return po;
+    }
+
     /**
      * 按id查询
      *

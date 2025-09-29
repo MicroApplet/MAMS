@@ -30,7 +30,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum AppRs implements ResCode {
-    NoSuchApp(400,true,"APP:NOT-EXIST","该应用不存在");
+    ChlAppNotSet(400,true,"CHL-APP:PARAMETER:MISS","渠道应用类型或编号未指定"),
+    NoSuchApp(400, true, "APP:NOT-EXIST", "该应用不存在"),
+    NoSuchChlApp(400, true, "CHL-APP:NOT-EXIST", "该渠道应用不存在"),
+    RootExistMoreThanOne(400, true, "APP:ROOT-EXIST:MORE-THAN-ONE", "存在多个超管应用");
 
     private final int status;
     private final boolean thr;

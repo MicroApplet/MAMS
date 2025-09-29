@@ -60,7 +60,7 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
      * @return {@link List<ChlAppPo>}
      */
     @Override
-    @Cacheable(value = AppletCache.Name.chlAppPoByAppid, key = "#appid")
+    //@Cacheable(value = AppletCache.Name.chlAppPoByAppid, key = "#appid")
     public List<ChlAppPo> queryByAppid(String appid) {
         return queryChain()
                 .where(ChlAppPo::getAppid).eq(appid)
@@ -75,7 +75,7 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
      * @return {@link List<ChlAppPo>}
      */
     @Override
-    @Cacheable(value = AppletCache.Name.chlAppPoByAppidAndChl, key = "#appid + ':' + #chl")
+    //@Cacheable(value = AppletCache.Name.chlAppPoByAppidAndChl, key = "#appid + ':' + #chl")
     public List<ChlAppPo> queryByAppidAndChl(String appid, String chl) {
         return queryChain()
                 .where(ChlAppPo::getAppid).eq(appid)
@@ -90,7 +90,7 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
      * @return {@link List<ChlAppPo>}
      */
     @Override
-    @Cacheable(value = AppletCache.Name.chlAppPoByOrgId, key = "#orgId")
+    //@Cacheable(value = AppletCache.Name.chlAppPoByOrgId, key = "#orgId")
     public List<ChlAppPo> queryByOrgId(String orgId) {
         return queryChain()
                 .where(ChlAppPo::getOrgId).eq(orgId)
@@ -152,6 +152,18 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
                 .one();
     }
 
+
+    @Override
+    @Cacheable(value = AppletCache.Name.chlAppPoByAppidChlAndChlAppType, key = "#appid + ':' + #chl + ':'+ #chlAppType")
+    public ChlAppPo queryByAppidAndChlAndChlAppType(String appid, String chl, String chlAppType) {
+        return queryChain()
+                .where(ChlAppPo::getAppid).eq(appid)
+                .where(ChlAppPo::getChlType).eq(chl)
+                .where(ChlAppPo::getChlAppType).eq(chlAppType)
+                .one();
+
+    }
+
     /**
      * 按CHL查询
      *
@@ -159,7 +171,7 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
      * @return {@link List<ChlAppPo>}
      */
     @Override
-    @Cacheable(value = AppletCache.Name.chlAppPoByChl, key = "#code")
+    //@Cacheable(value = AppletCache.Name.chlAppPoByChl, key = "#code")
     public List<ChlAppPo> queryByChl(String code) {
         QueryChain<ChlAppPo> chain = queryChain().where(ChlAppPo::getChlType).eq(code);
         List<ChlAppPo> list = chain.list();
@@ -167,4 +179,5 @@ public class ChlAppMapperServiceImpl extends ServiceImpl<ChlAppBaseMapper, ChlAp
             return null;
         return list;
     }
+
 }

@@ -30,6 +30,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ChlRs implements ResCode {
+    RegistrarChlIllegal(400,true,"REGISTER:CHL:ILLEGAL","不支持该渠道类型或者渠道应用类型注册"),
     LoginChlIllegal(400, true, "LOGIN:CHL:ILLEGAL", "非法登录渠道"),
     IllegalLoginChlAppType(400, true, "LOGIN:CHL-APP-TYPE:ILLEGAL", "非法登录渠道应用类型"),
     ChlUnSupportEx(400, true, "CHL:UN-SUPPORT:EX", "不支持的请求渠道"),

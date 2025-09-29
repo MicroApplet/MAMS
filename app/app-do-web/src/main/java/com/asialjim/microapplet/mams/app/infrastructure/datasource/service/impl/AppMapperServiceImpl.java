@@ -55,8 +55,13 @@ public class AppMapperServiceImpl extends ServiceImpl<AppBaseMapper, AppPo> impl
      * @return {@link List<AppPo>}
      */
     @Override
-    @Cacheable(value = AppletCache.Name.appPoByOrgId, key = "#id")
+    //@Cacheable(value = AppletCache.Name.appPoByOrgId, key = "#id")
     public List<AppPo> queryByOrgId(String id) {
         return queryChain().where(AppPo::getOrgId).eq(id).list();
+    }
+
+    @Override
+    public List<AppPo> queryByName(String name) {
+        return queryChain().where(AppPo::getName).eq(name).list();
     }
 }

@@ -21,12 +21,16 @@ import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
 import com.mybatisflex.core.keygen.KeyGenerators;
+import com.mybatisflex.core.keygen.impl.SnowFlakeIDKeyGenerator;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import static com.asialjim.microapplet.mybatis.flex.MyBatisFlexIdUtils.SNOW_FLAKE_ID_KEY_GENERATOR;
 
 /**
  * 主用户表ORM映射
@@ -39,12 +43,19 @@ import java.time.LocalDateTime;
 @Table("user")
 @Accessors(chain = true)
 public class UserPo implements Serializable {
-
     @Serial
     private static final long serialVersionUID = -596323214539423748L;
 
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Id(keyType = KeyType.None)
     private String id;
+
+    public String getId() {
+        if (StringUtils.isNotBlank(this.id))
+            return this.id;
+
+        return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+    }
+
     private String appid;
     private String orgId;
     private String nickname;

@@ -16,8 +16,10 @@
 
 package com.asialjim.microapplet.mams.user.api;
 
+import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -40,6 +42,9 @@ public interface UserRegistrarApi {
      */
     @PostMapping("/register")
     ChlUserVo register(@RequestBody ChlUserVo user);
+
+    @GetMapping("/root")
+    Result<Void> root();
 
     /**
      * 用户注销

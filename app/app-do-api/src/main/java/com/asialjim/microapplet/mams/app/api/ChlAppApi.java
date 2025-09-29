@@ -71,6 +71,15 @@ public interface ChlAppApi {
     @GetMapping("/app/{id}/chl/{chl}/chl-appid/{chlAppid}")
     ChlAppVo queryByAppidAndChlAndChlAppid(@PathVariable("id") String appid, @PathVariable("chl") String chl, @PathVariable("chlAppid") String chlAppid);
 
+    @GetMapping("/app/{id}/chl/{chl}/chl-app-type/{chlAppType}")
+    ChlAppVo queryByAppidAndChlAndChlAppType(@PathVariable("id") String appid,
+                                             @PathVariable("chl") String chl,
+                                             @PathVariable("chlAppType") String chlAppType);
+
+
+    @GetMapping("/app/{id}/root")
+    ChlAppVo queryRootByAppid(@PathVariable("id")String appid);
+
     /**
      * 按组织id查询
      *

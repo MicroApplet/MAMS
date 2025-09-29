@@ -45,8 +45,10 @@ public interface AuthApi {
     @PostMapping("/login")
     ResponseEntity<Result<String>> login(@RequestHeader(name = Headers.APP_ID) String appid,
                                          @RequestHeader(name = Headers.APP_CHL) String chl,
-                                         @RequestHeader(name = Headers.APP_CHL_APPID) String chlAppid,
+                                         @RequestHeader(name = Headers.APP_CHL_APPID, required = false) String chlAppid,
+                                         @RequestHeader(name = Headers.APP_CHL_APP_TYPE, required = false) String chlAppType,
                                          @RequestBody LoginReq req);
+
 
     /**
      * 身份验证

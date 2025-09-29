@@ -53,7 +53,7 @@ public class UserChlMapperServiceImpl
     }
 
     @Override
-    @Cacheable(value = UserCacheName.Name.userChl, key = "#userid +':'+ #appletId")
+   // @Cacheable(value = UserCacheName.Name.userChl, key = "#userid +':'+ #appletId")
     public List<UserChlPo> listByUseridOfApplet(String userid, String appletId) {
         QueryChain<UserChlPo> wrapper = queryChain();
         wrapper.where(UserChlPo::getUserid).eq(userid);

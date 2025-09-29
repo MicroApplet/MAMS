@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.vo;
 
 import com.asialjim.microapplet.mams.user.valid.UserLoginGroup;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -38,7 +39,8 @@ public class ChlUserVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 4773152815800485170L;
 
-    private Boolean createIfAbsent;
+    @JsonIgnore
+    private transient Boolean createIfAbsent;
     private String id;
     private String userid;
     private String appid;

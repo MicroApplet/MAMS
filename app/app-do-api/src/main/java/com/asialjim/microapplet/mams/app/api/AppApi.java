@@ -43,6 +43,11 @@ public interface AppApi {
     @GetMapping("/{id}")
     AppVo queryById(@PathVariable("id") String id);
 
+
+    @GetMapping("/name/root")
+    AppVo getRootApp();
+
+
     /**
      * 按组织id查询
      *

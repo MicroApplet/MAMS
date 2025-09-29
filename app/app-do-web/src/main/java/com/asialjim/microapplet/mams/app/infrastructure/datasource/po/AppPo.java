@@ -24,11 +24,14 @@ import com.mybatisflex.annotation.Table;
 import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static com.asialjim.microapplet.mybatis.flex.MyBatisFlexIdUtils.SNOW_FLAKE_ID_KEY_GENERATOR;
 
 /**
  * app 表
@@ -44,8 +47,16 @@ public class AppPo implements Serializable {
     @Serial
     private static final long serialVersionUID = 7769389212866455204L;
 
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.flexId)
+    @Id(keyType = KeyType.None)
     private String id;
+
+    public String getId() {
+        if (StringUtils.isNotBlank(this.id))
+            return this.id;
+
+        return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+    }
+
     private String name;
     private String orgId;
     private String status;
@@ -73,5 +84,19 @@ public class AppPo implements Serializable {
         vo.setCreateTime(po.getCreateTime());
         vo.setUpdateTime(po.getUpdateTime());
         return vo;
+    }
+
+    public static AppPo fromVo(AppVo vo) {
+        if (Objects.isNull(vo))
+            return null;
+        AppPo po = new AppPo();
+        po.setId(vo.getId());
+        po.setName(vo.getName());
+        po.setOrgId(vo.getOrgId());
+        po.setStatus(vo.getStatus());
+        po.setDeleted(vo.getDeleted());
+        po.setCreateTime(vo.getCreateTime());
+        po.setUpdateTime(vo.getUpdateTime());
+        return po;
     }
 }

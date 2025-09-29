@@ -21,14 +21,16 @@ import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
-import com.mybatisflex.core.keygen.KeyGenerators;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
+
+import static com.asialjim.microapplet.mybatis.flex.MyBatisFlexIdUtils.SNOW_FLAKE_ID_KEY_GENERATOR;
 
 /**
  * chl_app
@@ -45,9 +47,15 @@ public class ChlAppPo implements Serializable {
     @Serial
     private static final long serialVersionUID = 8150722772961566010L;
 
-    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
+    @Id(keyType = KeyType.None)
     private String id;
 
+    public String getId() {
+        if (StringUtils.isNotBlank(this.id))
+            return this.id;
+
+        return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+    }
     private String appid;
 
     private String orgId;
@@ -95,5 +103,32 @@ public class ChlAppPo implements Serializable {
         vo.setCreateTime(po.getCreateTime());
         vo.setUpdateTime(po.getUpdateTime());
         return vo;
+    }
+
+    public static ChlAppPo fromVo(ChlAppVo vo) {
+        if(Objects.isNull(vo))
+            return null;
+
+        ChlAppPo po = new ChlAppPo();
+        po.setId(vo.getId());
+        po.setAppid(vo.getAppid());
+        po.setOrgId(vo.getOrgId());
+        po.setChlType(vo.getChlType());
+        po.setChlAppid(vo.getChlAppId());
+        po.setChlAppType(vo.getChlAppType());
+        po.setChlAppSecret(vo.getChlAppSecret());
+        po.setChlAppName(vo.getChlAppName());
+        po.setChlSubjectId(vo.getChlSubjectId());
+        po.setChlAgentId(vo.getChlAgentId());
+        po.setChlToken(vo.getChlToken());
+        po.setChlEncKey(vo.getChlEncKey());
+        po.setChlEncType(vo.getChlEncType());
+        po.setUrl(vo.getUrl());
+        po.setManager(vo.getManager());
+        po.setDescription(vo.getDescription());
+        po.setDeleted(vo.getDeleted());
+        po.setCreateTime(vo.getCreateTime());
+        po.setUpdateTime(vo.getUpdateTime());
+        return po;
     }
 }

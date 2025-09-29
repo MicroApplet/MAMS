@@ -56,6 +56,10 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>wechat-applet-remoting</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>remote-net-http-apache</artifactId>
+        </dependency>
 
 
         <dependency>
@@ -79,6 +83,24 @@
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-cache-redis</artifactId>
+        </dependency>
+       <!--
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-mybatis-flex</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+        </dependency>
+        -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>

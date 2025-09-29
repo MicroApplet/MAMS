@@ -16,10 +16,13 @@
 
 package com.asialjim.microapplet.mams.app.infrastructure.datasource.repository;
 
+import com.asialjim.microapplet.common.utils.JsonUtil;
+import com.asialjim.microapplet.mams.app.infrastructure.cache.AppletCache;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.po.AppPo;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.service.AppMapperService;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import jakarta.annotation.Resource;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -61,5 +64,30 @@ public class AppRepository {
                 .map(AppPo::toVo)
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    @Cacheable(value = AppletCache.Name.appVosByName, key = "#name")
+    //public String queryVoByName(String name) {
+    public List<AppVo> queryVoByName(String name) {
+        List<AppPo> pos = appMapperService.queryByName(name);
+        //List<AppVo> list = Optional.ofNullable(pos)
+        return Optional.ofNullable(pos)
+                .stream()
+                .flatMap(Collection::stream)
+                .filter(Objects::nonNull)
+                .map(AppPo::toVo)
+                .filter(Objects::nonNull)
+                .toList();
+        //return JsonUtil.instance.toStr(list);
+    }
+
+    public AppVo create(AppVo vo) {
+        // TODO 此处应有锁
+        AppPo po = AppPo.fromVo(vo);
+        if (Objects.isNull(po))
+            return null;
+        appMapperService.save(po);
+        vo.setId(po.getId());
+        return AppPo.toVo(po);
     }
 }

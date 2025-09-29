@@ -52,8 +52,8 @@ public class AuthController implements AuthApi {
      */
     @RwIgnore
     @Override
-    public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, LoginReq req) {
-        return this.authService.login(appid, chl, chlAppid, req);
+    public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, String chlAppType, LoginReq req) {
+        return this.authService.login(appid, chl, chlAppid, chlAppType, req);
     }
 
     /**

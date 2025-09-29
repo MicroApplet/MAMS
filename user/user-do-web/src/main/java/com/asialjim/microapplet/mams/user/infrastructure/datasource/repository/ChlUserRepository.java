@@ -18,6 +18,7 @@ package com.asialjim.microapplet.mams.user.infrastructure.datasource.repository;
 
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.ChlUserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.ChlUserMapperService;
+import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -65,6 +66,12 @@ public class ChlUserRepository {
      */
     public void save(ChlUserPo po) {
         this.chlUserMapperService.save(po);
+    }
+
+    public ChlUserVo save(ChlUserVo vo) {
+        ChlUserPo po = ChlUserPo.fromVo(vo);
+        this.chlUserMapperService.save(po);
+        return ChlUserPo.toVo(po);
     }
 
     /**

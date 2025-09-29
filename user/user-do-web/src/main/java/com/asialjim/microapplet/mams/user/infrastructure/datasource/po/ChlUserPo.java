@@ -109,4 +109,22 @@ public class ChlUserPo implements Serializable {
         vo.setChlUserToken(po.getChlUserToken());
         return vo;
     }
+
+    public static ChlUserPo fromVo(ChlUserVo vo) {
+        if (Objects.isNull(vo))
+            return null;
+
+        ChlUserPo po = new ChlUserPo();
+        po.setId(vo.getId());
+        po.setUserid(vo.getUserid());
+        po.setAppid(vo.getAppid());
+        po.setChlType(vo.getChlType());
+        po.setChlAppid(vo.getChlAppId());
+        po.setChlAppType(vo.getChlAppType());
+        po.setChlUserid(vo.getChlUserId());
+        po.setChlUnionid(vo.getChlUnionId());
+        po.setChlUserCode(vo.getChlUserCode());
+        po.setChlUserToken(vo.getChlUserToken());
+        return po;
+    }
 }

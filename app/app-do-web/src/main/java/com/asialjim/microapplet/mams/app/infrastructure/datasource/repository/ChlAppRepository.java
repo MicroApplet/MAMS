@@ -145,6 +145,11 @@ public class ChlAppRepository {
         return ChlAppPo.toVo(po);
     }
 
+    public ChlAppVo queryByAppidAndChlAndChlAppType(String appid, String chl, String chlAppType) {
+        ChlAppPo po = this.chlAppMapperService.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
+        return ChlAppPo.toVo(po);
+    }
+
     /**
      * 按CHL查询
      *
@@ -152,7 +157,6 @@ public class ChlAppRepository {
      * @return {@link List<ChlAppVo>}
      */
     public List<ChlAppVo> queryByChl(String code) {
-        log.info("queryByChl:{}",code);
         List<ChlAppPo> pos = this.chlAppMapperService.queryByChl(code);
 
         return Optional.ofNullable(pos)
@@ -163,4 +167,11 @@ public class ChlAppRepository {
                 .filter(Objects::nonNull)
                 .toList();
     }
+
+    public ChlAppVo create(ChlAppVo vo) {
+        ChlAppPo  po = ChlAppPo.fromVo(vo);
+        this.chlAppMapperService.save(po);
+        return ChlAppPo.toVo(po);
+    }
+
 }

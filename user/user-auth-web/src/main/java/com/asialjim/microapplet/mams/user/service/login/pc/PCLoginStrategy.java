@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.service.login.pc;
 
 import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import com.asialjim.microapplet.mams.user.api.UserSessionApi;
@@ -37,6 +38,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class PCLoginStrategy implements ChlLoginStrategy {
     private final UserSessionApi userSessionApi;
+
     /**
      * 支持
      *
@@ -67,6 +69,8 @@ public class PCLoginStrategy implements ChlLoginStrategy {
         vo.setChlUserCode(req.getPassword());
         vo.setChlUserToken(req.getCode());
         vo.setCreateIfAbsent(false);
-        return userSessionApi.login(vo);
+        MamsSession login = userSessionApi.login(vo);
+        PasswordStorage.verifyPassword(req.getPassword(), login.getChlUserCode());
+        return login;
     }
 }

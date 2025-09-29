@@ -48,6 +48,7 @@ public enum ChannelAppType {
     WeChatPlatform("PLATFORM", ChannelType.WeChat, "开放平台"),
     WeChatVideo("VIDEO", ChannelType.WeChat, "视频号"),
     WEB("WEB",ChannelType.PC,"站点网页"),
+    CMS("CMS",ChannelType.PC,"后台管理"),
     H5("H5",ChannelType.H5,"H5");
 
     /**

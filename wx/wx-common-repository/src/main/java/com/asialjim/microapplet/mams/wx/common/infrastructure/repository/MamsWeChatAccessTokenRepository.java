@@ -97,7 +97,7 @@ public class MamsWeChatAccessTokenRepository implements WeChatAccessTokenReposit
             if (StringUtils.isNotBlank(accessToken))
                 return accessToken;
 
-            WeChatAccessTokenRes accessTokenRes = remoting.accessToken(targetAppid, targetSecret);
+            WeChatAccessTokenRes accessTokenRes = this.remoting.accessToken(targetAppid, targetSecret);
             if (WeChatApiRes.notSuccess(accessTokenRes))
                 throw new WeChatAPIException(accessTokenRes);
 

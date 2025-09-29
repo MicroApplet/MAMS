@@ -37,6 +37,7 @@ public class AppletCache extends CacheNameAndTTLConfig {
     public interface Name {
         String appPoById = "tmp:app:po:by-id";
         String appPoByOrgId = "tmp:app:po:by-id";
+        String appVosByName = "tmp:app:vos:by-name";
 
         String chlAppPoById = "tmp:chl-app:po:by-id";
         String chlAppPoByOrgId = "tmp:chl-app:po:by-org-id";
@@ -46,6 +47,8 @@ public class AppletCache extends CacheNameAndTTLConfig {
         String chlAppPoByChlAndChlAppid = "tmp:chl-app:po:by-chl-and-chl-appid";
         String chlAppPoByChlAndChlIndex = "tmp:chl-app:po:by-chl-and-chl-index";
         String chlAppPoByAppidChlAndChlAppid = "tmp:chl-app:po:by-appid-chl-and-chl-appid";
+        String chlAppPoByAppidChlAndChlAppType = "tmp:chl-app:po:by-appid-chl-and-chl-appType";
+
         String chlAppPoByChl = "tmp:chl-app:po:by-chl";
 
 
@@ -56,6 +59,7 @@ public class AppletCache extends CacheNameAndTTLConfig {
     enum Cache implements CacheNameAndTTL {
         appPoById(Name.appPoById, Duration.ofDays(7)),
         appPoByOrgId(Name.appPoByOrgId, Duration.ofHours(7)),
+        appVosByName(Name.appVosByName,Duration.ofHours(2)),
 
         chlAppPoById(Name.chlAppPoById, Duration.ofDays(7)),
         chlAppPoByOrgId(Name.chlAppPoByOrgId, Duration.ofDays(7)),
@@ -64,6 +68,7 @@ public class AppletCache extends CacheNameAndTTLConfig {
         chlAppPoByChlAndChlAppid(Name.chlAppPoByChlAndChlAppid, Duration.ofDays(7)),
         chlAppPoByChlAndChlIndex(Name.chlAppPoByChlAndChlIndex, Duration.ofDays(7)),
         chlAppPoByAppidChlAndChlAppid(Name.chlAppPoByAppidChlAndChlAppid, Duration.ofDays(7)),
+        chlAppPoByAppidChlAndChlAppType(Name.chlAppPoByAppidChlAndChlAppType,Duration.ofDays(7)),
         chlAppPoByChl(Name.chlAppPoByChl,Duration.ofDays(7)),
 
         orgPoById(Name.orgPoById, Duration.ofDays(7)),

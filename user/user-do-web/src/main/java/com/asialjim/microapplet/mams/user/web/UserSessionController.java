@@ -16,10 +16,9 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
-import com.asialjim.microapplet.common.context.ResCode;
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.api.UserSessionApi;
-import com.asialjim.microapplet.mams.user.service.UserSessionService;
+import com.asialjim.microapplet.mams.user.service.session.UserSessionService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;

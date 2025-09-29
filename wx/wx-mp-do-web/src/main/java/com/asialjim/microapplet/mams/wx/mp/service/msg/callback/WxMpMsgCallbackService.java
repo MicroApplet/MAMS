@@ -22,10 +22,10 @@ import com.asialjim.microapplet.wechat.application.WeChatApplication;
 import com.asialjim.microapplet.wechat.application.WeChatApplicationRepository;
 import com.asialjim.microapplet.wechat.encryt.official.WeChatOfficialMsgCryptService;
 import com.asialjim.microapplet.wechat.encryt.official.aes.WeChatOfficialMsgCrypt;
-import com.asialjim.microapplet.wechat.official.module.message.CallbackMsgHandler;
-import com.asialjim.microapplet.wechat.official.module.message.WeChatOfficialMsgCallbackEvent;
-import com.asialjim.microapplet.wechat.official.module.message.reply.WeChatOutMsgListEvent;
-import com.asialjim.microapplet.wechat.official.module.message.reply.WxMpXmlOutMessage;
+import com.asialjim.microapplet.wechat.official.service.msg.CallbackMsgHandler;
+import com.asialjim.microapplet.wechat.official.service.msg.WeChatOfficialMsgCallbackEvent;
+import com.asialjim.microapplet.wechat.official.service.msg.reply.WeChatOutMsgListEvent;
+import com.asialjim.microapplet.wechat.official.service.msg.reply.WxMpXmlOutMessage;
 import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,7 @@ import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
-@Component
+//@Component
 public class WxMpMsgCallbackService {
 
     @Resource

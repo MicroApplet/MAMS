@@ -98,4 +98,6 @@ public interface ChlAppMapperService extends IService<ChlAppPo> {
      * @return {@link List<ChlAppPo>}
      */
     List<ChlAppPo> queryByChl(String code);
+
+    ChlAppPo queryByAppidAndChlAndChlAppType(String appid, String chl, String chlAppType);
 }

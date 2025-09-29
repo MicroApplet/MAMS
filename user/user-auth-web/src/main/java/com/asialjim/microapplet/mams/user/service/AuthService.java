@@ -24,8 +24,10 @@ import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
+import com.asialjim.microapplet.mams.app.context.AppRs;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
+import com.asialjim.microapplet.mams.user.context.UserRs;
 import com.asialjim.microapplet.mams.user.infrastructure.config.JwtConfigProperty;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.SessionRepository;
 import com.asialjim.microapplet.mams.user.service.login.ChlLoginStrategy;
@@ -66,26 +68,37 @@ public class AuthService {
      * @param req      {@link LoginReq req}
      * @since 2025/9/23
      */
-    public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, LoginReq req) {
-        if (log.isDebugEnabled()) log.debug("登录({}, {}, {}),参数: {}", appid, chl, chlAppid, req);
-        ChlAppVo chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
-        if (log.isDebugEnabled()) log.debug("登录渠道应用:{}",chlAppVo);
+    public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, String chlAppType, LoginReq req) {
+        if (log.isDebugEnabled()) log.debug("登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
+
+        ChlAppVo chlAppVo = null;
+        if (StringUtils.isAllBlank(chlAppid,chlAppType)){
+            AppRs.ChlAppNotSet.thr();
+        } else if (StringUtils.isNotBlank(chlAppid)){
+            chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
+        } else {
+            chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
+        }
+
+        if (log.isDebugEnabled()) log.debug("登录渠道应用:{}", chlAppVo);
         ChannelType channelType = ChlAppVo.channelType(chlAppVo);
-        if (log.isDebugEnabled()) log.debug("登录渠道:{}",channelType);
+        if (log.isDebugEnabled()) log.debug("登录渠道:{}", channelType);
         MamsSession session = strategy(channelType).login(chlAppVo, req);
         session.addRole(Role.Authenticated.getBit());
         final String sessionId = UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY);
-        if (log.isDebugEnabled()) log.debug("创建会话:{}",sessionId);
+        if (log.isDebugEnabled()) log.debug("创建会话:{}", sessionId);
         final String token = PasswordStorage.createHash(sessionId);
         String jwtToken = this.jwtConfigProperty.jwt(sessionId, token, appid, chl, chlAppid);
-        if (log.isDebugEnabled()) log.debug("创建令牌:{}",jwtToken);
+        if (log.isDebugEnabled()) log.debug("创建令牌:{}", jwtToken);
         session.setId(sessionId);
         session.expireAfter(jwtConfigProperty.jwtTimeout());
         session.setToken(jwtToken);
         this.sessionRepository.setCache(session);
 
-        if (log.isDebugEnabled()) log.debug("登录结果:{}",session);
-        final ResponseCookie tokenCookie = ResponseCookie.from(Headers.USER_TOKEN, jwtToken).path("/").maxAge(Duration.ofHours(2)).httpOnly(true).secure(true).sameSite("Lax").build();
+        if (log.isDebugEnabled()) log.debug("登录结果:{}", session);
+        final ResponseCookie tokenCookie = ResponseCookie.from(Headers.USER_TOKEN, jwtToken).path("/").maxAge(Duration.ofHours(2)).httpOnly(true).secure(true)
+                .sameSite("None").build();
+                //.sameSite("Lax").build();
         return ResponseEntity.ok()
                 .header(HttpHeaders.SET_COOKIE, tokenCookie.toString())
                 .body(Res.OK.result(jwtToken));

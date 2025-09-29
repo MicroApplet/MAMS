@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.service;
+package com.asialjim.microapplet.mams.user.service.session;
 
 import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.security.MamsSession;
@@ -127,6 +127,8 @@ public class UserSessionService {
         usr.setChlAppType(chlUserPo.getChlAppType());
         usr.setChlUserid(chlUserPo.getChlUserid());
         usr.setChlUnionid(chlUserPo.getChlUnionid());
+        usr.setChlUserCode(chlUserPo.getChlUserCode());
+        usr.setChlUserToken(chlUserPo.getChlUserToken());
         usr.setLoginTime(LocalDateTime.now());
         return usr;
     }
