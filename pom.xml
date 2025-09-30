@@ -79,9 +79,6 @@
     </scm>
 
     <modules>
-        <module>applet</module>
-        <module>usr</module>
-        <module>channel</module>
         <module>app</module>
         <module>user</module>
         <module>wx</module>

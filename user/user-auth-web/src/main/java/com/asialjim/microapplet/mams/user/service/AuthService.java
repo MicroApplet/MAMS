@@ -27,7 +27,6 @@ import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.context.AppRs;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
-import com.asialjim.microapplet.mams.user.context.UserRs;
 import com.asialjim.microapplet.mams.user.infrastructure.config.JwtConfigProperty;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.SessionRepository;
 import com.asialjim.microapplet.mams.user.service.login.ChlLoginStrategy;
@@ -79,6 +78,8 @@ public class AuthService {
         } else {
             chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
         }
+        if (Objects.isNull(chlAppVo))
+            throw AppRs.NoSuchChlApp.ex();
 
         if (log.isDebugEnabled()) log.debug("登录渠道应用:{}", chlAppVo);
         ChannelType channelType = ChlAppVo.channelType(chlAppVo);
@@ -88,7 +89,7 @@ public class AuthService {
         final String sessionId = UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY);
         if (log.isDebugEnabled()) log.debug("创建会话:{}", sessionId);
         final String token = PasswordStorage.createHash(sessionId);
-        String jwtToken = this.jwtConfigProperty.jwt(sessionId, token, appid, chl, chlAppid);
+        String jwtToken = this.jwtConfigProperty.jwt(sessionId, token, appid, chlAppVo.getChlType(), chlAppVo.getChlAppId());
         if (log.isDebugEnabled()) log.debug("创建令牌:{}", jwtToken);
         session.setId(sessionId);
         session.expireAfter(jwtConfigProperty.jwtTimeout());

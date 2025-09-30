@@ -15,18 +15,20 @@
   ~    limitations under the License.
   -->
 
-<!--suppress ALL -->
+<!--suppress VulnerableLibrariesLocal -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>user</artifactId>
+        <artifactId>wx</artifactId>
         <version>2.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>user-auth-web</artifactId>
+    <artifactId>wx-mp-admin-web</artifactId>
+    <name>WX MP CMS WEB</name>
+    <description>微信公众号后管服务</description>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -34,12 +36,9 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+
     <dependencies>
-        <dependency>
-            <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>app-do-cloud</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
             <artifactId>user-do-cloud</artifactId>
@@ -47,22 +46,36 @@
         </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>user-auth-api</artifactId>
+            <artifactId>app-do-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
-
-
         <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-applet-remoting</artifactId>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>wx-mp-do-api</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.39</version>
+        </dependency>
+
+
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>remote-net-http-apache</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>wx-common-repository</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
-
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-web-tomcat</artifactId>
@@ -79,14 +92,25 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-cache-redis</artifactId>
         </dependency>
-
         <dependency>
-            <groupId>jakarta.validation</groupId>
-            <artifactId>jakarta.validation-api</artifactId>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-mybatis-flex</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
         </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>commons-security-core</artifactId>
+            <artifactId>wechat-official-repository</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>wechat-official-service</artifactId>
         </dependency>
     </dependencies>
 

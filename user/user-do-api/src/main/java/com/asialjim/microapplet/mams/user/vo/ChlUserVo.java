@@ -37,7 +37,7 @@ import java.util.Optional;
 @Accessors(chain = true)
 public class ChlUserVo implements Serializable {
     @Serial
-    private static final long serialVersionUID = 4773152815800485170L;
+    private static final long serialVersionUID = 3502706923976242333L;
 
     @JsonIgnore
     private transient Boolean createIfAbsent;

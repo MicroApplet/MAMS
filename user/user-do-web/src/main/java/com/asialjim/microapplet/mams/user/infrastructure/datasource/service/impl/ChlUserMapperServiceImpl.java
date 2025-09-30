@@ -123,7 +123,7 @@ public class ChlUserMapperServiceImpl extends ServiceImpl<ChlUserBaseMapper, Chl
      * @return {@link List<ChlUserPo>}
      */
     @Override
-    //@Cacheable(value = UserCache.Name.chlUserPosOfUserid, key = "#id")
+    @Cacheable(value = UserCache.Name.chlUserPosOfUserid, key = "#id")
     public List<ChlUserPo> queryByUserid(String id) {
         return queryChain().where(ChlUserPo::getUserid).eq(id).list();
     }

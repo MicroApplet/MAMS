@@ -38,7 +38,7 @@
         <module>wx-mp-do-cloud</module>
         <module>wx-mp-do-web</module>
         <module>wx-common-repository</module>
-        <module>wx-mp-cms-web</module>
+        <module>wx-mp-admin-web</module>
     </modules>
 
     <properties>

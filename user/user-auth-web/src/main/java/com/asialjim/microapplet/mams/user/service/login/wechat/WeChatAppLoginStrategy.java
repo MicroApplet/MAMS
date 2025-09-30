@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.service.login.wechat;
 
 import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
@@ -84,6 +85,8 @@ public class WeChatAppLoginStrategy implements WeChatTypeLoginStrategy {
         chlUser.setChlUnionId(session.getUnionid());
         chlUser.setChlUserCode(req.getCode());
         chlUser.setChlUserToken(session.getSessionKey());
-        return this.userSessionApi.login(chlUser);
+        MamsSession mamsSession = this.userSessionApi.login(chlUser);
+        mamsSession.addRole(Role.WeChatApplet.getBit());
+        return mamsSession;
     }
 }

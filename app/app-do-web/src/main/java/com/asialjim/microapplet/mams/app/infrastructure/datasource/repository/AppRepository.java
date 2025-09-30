@@ -16,11 +16,16 @@
 
 package com.asialjim.microapplet.mams.app.infrastructure.datasource.repository;
 
+import com.asialjim.microapplet.common.context.Res;
+import com.asialjim.microapplet.common.context.Result;
+import com.asialjim.microapplet.common.page.PageParameter;
 import com.asialjim.microapplet.common.utils.JsonUtil;
 import com.asialjim.microapplet.mams.app.infrastructure.cache.AppletCache;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.po.AppPo;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.service.AppMapperService;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
+import com.asialjim.microapplet.mybatis.flex.page.MyBatisFlexPageFun;
+import com.mybatisflex.core.paginate.Page;
 import jakarta.annotation.Resource;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -67,10 +72,8 @@ public class AppRepository {
     }
 
     @Cacheable(value = AppletCache.Name.appVosByName, key = "#name")
-    //public String queryVoByName(String name) {
     public List<AppVo> queryVoByName(String name) {
         List<AppPo> pos = appMapperService.queryByName(name);
-        //List<AppVo> list = Optional.ofNullable(pos)
         return Optional.ofNullable(pos)
                 .stream()
                 .flatMap(Collection::stream)
@@ -78,7 +81,6 @@ public class AppRepository {
                 .map(AppPo::toVo)
                 .filter(Objects::nonNull)
                 .toList();
-        //return JsonUtil.instance.toStr(list);
     }
 
     public AppVo create(AppVo vo) {
@@ -89,5 +91,12 @@ public class AppRepository {
         appMapperService.save(po);
         vo.setId(po.getId());
         return AppPo.toVo(po);
+    }
+
+    public Result<List<AppVo>> list(Long page, Long size) {
+        Page<AppPo> condition = MyBatisFlexPageFun.<AppPo>of().apply(PageParameter.pageOf(page, size));
+        Page<AppPo> result = appMapperService.page(condition);
+        List<AppVo> list = result.getRecords().stream().map(AppPo::toVo).toList();
+        return Res.OK.page(result.getPageNumber(), result.getPageSize(), result.getTotalPage(), result.getTotalRow(), list);
     }
 }

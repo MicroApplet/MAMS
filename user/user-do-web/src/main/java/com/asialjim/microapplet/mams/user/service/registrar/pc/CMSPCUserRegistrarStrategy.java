@@ -19,6 +19,7 @@ package com.asialjim.microapplet.mams.user.service.registrar.pc;
 import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
+import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.api.AppApi;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
 import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
@@ -145,6 +146,7 @@ public class CMSPCUserRegistrarStrategy implements ChlUserRegistrarStrategy {
         mainUser.setOrgId(rootApp.getOrgId());
         mainUser.setNickname("root");
         mainUser.setUsername("root");
+        mainUser.addRole(Role.Root);
         mainUser.setPassword(PasswordStorage.createHash(user.getChlUserCode()));
         mainUser.setDeleted(false);
         mainUser.setCreateTime(LocalDateTime.now());
@@ -152,7 +154,6 @@ public class CMSPCUserRegistrarStrategy implements ChlUserRegistrarStrategy {
         try {
             mainUser = this.userRepository.create(mainUser);
         } catch (Throwable t) {
-            t.printStackTrace();
             UserRs.UserRegisterPermissionMiss.thr();
         }
 

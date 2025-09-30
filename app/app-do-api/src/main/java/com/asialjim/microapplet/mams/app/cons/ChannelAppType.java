@@ -26,6 +26,8 @@ import org.apache.commons.collections4.multimap.UnmodifiableMultiValuedMap;
 
 import java.util.*;
 
+import static com.asialjim.microapplet.mams.app.cons.ChannelCons.*;
+
 /**
  * 渠道应用类型
  *
@@ -37,19 +39,20 @@ import java.util.*;
 @AllArgsConstructor
 public enum ChannelAppType {
 
-    WeChatApplet("APPLET", ChannelType.WeChat, "微信小程序"),
-    WeChatMp("OFFICIAL", ChannelType.WeChat, "微信公众号"),
-    WeChatEnt("ENTERPRISE", ChannelType.WeChat, "微信企业号"),
-    WeChatMicTencent("MIC_TENCENT", ChannelType.WeChat, "腾讯小微"),
-    WeChatGame("GAME", ChannelType.WeChat, "小游戏"),
-    WeChatAIConversation("AI_CONVERSATION", ChannelType.WeChat, "智能对话"),
-    WeChatPay("PAY", ChannelType.WeChat, "微信支付"),
-    WeChatMall("MALL", ChannelType.WeChat, "小商店"),
-    WeChatPlatform("PLATFORM", ChannelType.WeChat, "开放平台"),
-    WeChatVideo("VIDEO", ChannelType.WeChat, "视频号"),
-    WEB("WEB",ChannelType.PC,"站点网页"),
-    CMS("CMS",ChannelType.PC,"后台管理"),
-    H5("H5",ChannelType.H5,"H5");
+    WeChatApplet(APPLET, ChannelType.WeChat, "微信小程序"),
+    WeChatMp(OFFICIAL, ChannelType.WeChat, "微信公众号"),
+    WeChatEnt(ENTERPRISE, ChannelType.WeChat, "微信企业号"),
+    WeChatMicTencent(MIC_TENCENT, ChannelType.WeChat, "腾讯小微"),
+    WeChatGame(GAME, ChannelType.WeChat, "小游戏"),
+    WeChatAIConversation(AI_CONVERSATION, ChannelType.WeChat, "智能对话"),
+    WeChatPay(PAY, ChannelType.WeChat, "微信支付"),
+    WeChatMall(MALL, ChannelType.WeChat, "小商店"),
+    WeChatPlatform(PLATFORM, ChannelType.WeChat, "开放平台"),
+    WeChatVideo(VIDEO, ChannelType.WeChat, "视频号"),
+    WEB(ChannelCons.WEB, ChannelType.PC, "站点网页"),
+    Phone(PHONE, ChannelType.Mobile, "手机渠道"),
+    CMS(ChannelCons.CMS, ChannelType.PC, "后台管理"),
+    H5(ChannelCons.H5, ChannelType.Mobile, "H5");
 
     /**
      * 渠道应用编号

@@ -1,0 +1,29 @@
+server:
+  port: ${port:10004}
+
+spring:
+  application:
+    name: adminapp
+
+  config:
+    import:
+      - nacos:feign.yaml
+      - nacos:redis.yaml
+      - nacos:datasource.yaml
+      - nacos:thread.yaml
+      - nacos:log.yaml
+      - nacos:mvc.yaml
+      - nacos:wxmp.mcp.client.yaml
+      - nacos:nacos.yaml
+
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        group: ${spring.cloud.nacos.discovery.group}
+        enable-remote-sync-config: true
+        refresh-enabled: true

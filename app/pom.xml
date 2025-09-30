@@ -18,6 +18,7 @@
         <module>app-service-cloud</module>
         <module>app-do-web</module>
         <module>app-service-web</module>
+        <module>app-admin-web</module>
     </modules>
 
     <properties>

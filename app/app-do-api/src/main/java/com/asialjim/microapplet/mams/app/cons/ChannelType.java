@@ -36,12 +36,13 @@ import java.util.Optional;
 @Getter
 @AllArgsConstructor
 public enum ChannelType {
-    PC("PC", "PC渠道"),
-    WeChat("wechat", "微信渠道"),
-    H5("H5", "H5");
+    PC(ChannelCons.PC, "PC渠道"),
+    WeChat(ChannelCons.WECHAT, "微信渠道"),
+    Mobile(ChannelCons.MOBILE,"移动端");
 
-    private final String code;
-    private final String desc;
+
+    public final String code;
+    public final String desc;
 
     public static final Map<String, ChannelType> CODE_MAP;
     public static final Map<String, ChannelType> NAME_MAP;

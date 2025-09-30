@@ -20,15 +20,16 @@ import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
 import com.mybatisflex.annotation.Table;
-import com.mybatisflex.core.keygen.KeyGenerators;
-import com.mybatisflex.core.keygen.impl.SnowFlakeIDKeyGenerator;
+import com.asialjim.microapplet.commons.security.Role;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static com.asialjim.microapplet.mybatis.flex.MyBatisFlexIdUtils.SNOW_FLAKE_ID_KEY_GENERATOR;
 
@@ -61,9 +62,36 @@ public class UserPo implements Serializable {
     private String nickname;
     private String username;
     private String password;
+    private long roleBit;
     private Boolean deleted;
     @Column(onInsertValue = "now()")
     private LocalDateTime createTime;
     @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
+
+    public void addRoleBit(Long... bits) {
+        if (ArrayUtils.isEmpty(bits))
+            return;
+        for (Long bit : bits) {
+            if (Objects.isNull(bit))
+                continue;
+            if ((roleBit & bit) == bit)
+                continue;
+            this.roleBit += bit;
+        }
+    }
+
+    public void addRole(Role... roles) {
+        if (ArrayUtils.isEmpty(roles))
+            return;
+        for (Role role : roles) {
+            if (Objects.isNull(role))
+                continue;
+            long bit = role.getBit();
+            if ((roleBit & bit) == bit) {
+                continue;
+            }
+            this.roleBit += bit;
+        }
+    }
 }
