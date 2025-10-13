@@ -118,7 +118,7 @@ public class UserSessionService {
             }
         }
         MamsSession usr = new MamsSession();
-        usr.addRole(Role.Authenticated.getBit());
+        usr.addRole(mainUser.getRoleBit());
         usr.setAppid(chlAppVo.getAppid());
         usr.setUserid(mainUser.getId());
         usr.setNickname(mainUser.getNickname());

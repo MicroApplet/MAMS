@@ -17,9 +17,21 @@
 package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
+/**
+ * 证件用户信息API
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/10/13, &nbsp;&nbsp; <em>version:1.0</em>
+ */
 public interface IdCardUserApi {
-    List<IdCardUserVo> queryByUserid(String userid);
+    String path = "/id-card-user";
+
+    @GetMapping("/user/{id}")
+    List<IdCardUserVo> queryByUserid(@PathVariable("id") String userid);
 }

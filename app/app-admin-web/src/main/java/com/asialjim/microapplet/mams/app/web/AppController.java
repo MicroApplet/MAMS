@@ -22,13 +22,17 @@ import com.asialjim.microapplet.commons.security.RoleNeed;
 import com.asialjim.microapplet.mams.app.api.AppApi;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 主应用信息管理API
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/10/13, &nbsp;&nbsp; <em>version:1.0</em>
+ */
 @RestController
 @RequestMapping("/app")
 @RequiredArgsConstructor
@@ -37,8 +41,16 @@ public class AppController {
     private final AppApi appApi;
 
     @GetMapping("/list")
-    //@RoleNeed(any = {Role.Root,Role.System})
     public Result<List<AppVo>> list(@RequestParam Long page, @RequestParam Long size){
         return appApi.list(page,size);
     }
-}
+
+    @PostMapping
+    public AppVo save(@RequestBody AppVo vo){
+        return appApi.save(vo);
+    }
+
+    @PutMapping
+    public AppVo update(@RequestBody AppVo vo){
+        return appApi.update(vo);
+    }}

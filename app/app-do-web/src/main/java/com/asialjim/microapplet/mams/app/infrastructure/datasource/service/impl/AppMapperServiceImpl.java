@@ -61,6 +61,7 @@ public class AppMapperServiceImpl extends ServiceImpl<AppBaseMapper, AppPo> impl
     }
 
     @Override
+    @Cacheable(value = AppletCache.Name.appPosByName, key = "#name")
     public List<AppPo> queryByName(String name) {
         return queryChain().where(AppPo::getName).eq(name).list();
     }

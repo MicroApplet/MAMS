@@ -16,6 +16,9 @@
 
 package com.asialjim.microapplet.mams.app.vo;
 
+import com.asialjim.microapplet.mams.app.valid.AppCreateGroup;
+import com.asialjim.microapplet.mams.app.valid.AppUpdateGroup;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -39,16 +42,19 @@ public class AppVo implements Serializable {
     /**
      * 应用编号
      */
+    @NotBlank(message = "PARAM:APP-ID:EMPTY|应用编号不能为空", groups = AppUpdateGroup.class)
     private String id;
 
     /**
      * 应用名称
      */
+    @NotBlank(message = "PARAM:APP-NAME:EMPTY|应用名称不能为空", groups = {AppCreateGroup.class, AppUpdateGroup.class})
     private String name;
 
     /**
      * 所属组织机构编号
      */
+    @NotBlank(message = "PARAM:APP-ORG-ID:EMPTY|应用所属机构不能为空", groups = {AppCreateGroup.class, AppUpdateGroup.class})
     private String orgId;
 
     /**

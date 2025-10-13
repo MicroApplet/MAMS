@@ -23,13 +23,16 @@ import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
+import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.context.AppRs;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
+import com.asialjim.microapplet.mams.user.api.ChlUserApi;
 import com.asialjim.microapplet.mams.user.infrastructure.config.JwtConfigProperty;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.SessionRepository;
 import com.asialjim.microapplet.mams.user.service.login.ChlLoginStrategy;
+import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.LoginReq;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -57,6 +60,7 @@ public class AuthService {
     private final JwtConfigProperty jwtConfigProperty;
     private final SessionRepository sessionRepository;
     private final ChlAppApi chlAppApi;
+    private final ChlUserApi chlUserApi;
 
     /**
      * 用户登录
@@ -71,21 +75,24 @@ public class AuthService {
         if (log.isDebugEnabled()) log.debug("登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
 
         ChlAppVo chlAppVo = null;
-        if (StringUtils.isAllBlank(chlAppid,chlAppType)){
+        if (StringUtils.isAllBlank(chlAppid, chlAppType)) {
             AppRs.ChlAppNotSet.thr();
-        } else if (StringUtils.isNotBlank(chlAppid)){
+        } else if (StringUtils.isNotBlank(chlAppid)) {
             chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
         } else {
             chlAppVo = this.chlAppApi.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
         }
-        if (Objects.isNull(chlAppVo))
-            throw AppRs.NoSuchChlApp.ex();
+        if (Objects.isNull(chlAppVo)) throw AppRs.NoSuchChlApp.ex();
 
         if (log.isDebugEnabled()) log.debug("登录渠道应用:{}", chlAppVo);
         ChannelType channelType = ChlAppVo.channelType(chlAppVo);
         if (log.isDebugEnabled()) log.debug("登录渠道:{}", channelType);
         MamsSession session = strategy(channelType).login(chlAppVo, req);
-        session.addRole(Role.Authenticated.getBit());
+        String userid = session.getUserid();
+        List<ChlUserVo> chlUserVos = this.chlUserApi.queryByUserid(userid);
+        // 添加渠道用户角色表
+        Optional.ofNullable(chlUserVos).stream().flatMap(Collection::stream).filter(Objects::nonNull).map(ChlUserVo::getRoleBit).forEach(session::addRole);
+        session.addRole(Role.Authenticated.getBit());// 添加登录用户角色表
         final String sessionId = UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY);
         if (log.isDebugEnabled()) log.debug("创建会话:{}", sessionId);
         final String token = PasswordStorage.createHash(sessionId);
@@ -97,12 +104,9 @@ public class AuthService {
         this.sessionRepository.setCache(session);
 
         if (log.isDebugEnabled()) log.debug("登录结果:{}", session);
-        final ResponseCookie tokenCookie = ResponseCookie.from(Headers.USER_TOKEN, jwtToken).path("/").maxAge(Duration.ofHours(2)).httpOnly(true).secure(true)
-                .sameSite("None").build();
-                //.sameSite("Lax").build();
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, tokenCookie.toString())
-                .body(Res.OK.result(jwtToken));
+        final ResponseCookie tokenCookie = ResponseCookie.from(Headers.USER_TOKEN, jwtToken).path("/").maxAge(Duration.ofHours(2)).httpOnly(true).secure(true).sameSite("None").build();
+        //.sameSite("Lax").build();
+        return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, tokenCookie.toString()).body(Res.OK.result(jwtToken));
     }
 
 

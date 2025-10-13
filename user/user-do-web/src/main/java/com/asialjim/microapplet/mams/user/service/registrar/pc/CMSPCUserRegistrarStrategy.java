@@ -16,8 +16,6 @@
 
 package com.asialjim.microapplet.mams.user.service.registrar.pc;
 
-import com.asialjim.microapplet.common.context.Res;
-import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.api.AppApi;
@@ -67,28 +65,6 @@ public class CMSPCUserRegistrarStrategy implements ChlUserRegistrarStrategy {
 
     @Override
     public ChlUserVo register(ChlUserVo user) {
-        String userid = user.getUserid();
-        String appid = user.getAppid();
-        String chlAppId = user.getChlAppId();
-        String chlUserId = user.getChlUserId();
-
-        // 注册超管
-        if (createRoot(userid, appid, chlAppId, chlUserId))
-            return registerRoot(user);
-
-        // 注册普通用户
-        return registerUser(user);
-    }
-
-
-    public Result<Void> rootExist() {
-        UserPo root = this.userRepository.queryById("root");
-        if (Objects.nonNull(root))
-            return Res.OK.create();
-        return Res.UsernameOfPasswordIllegal.create();
-    }
-
-    private ChlUserVo registerUser(ChlUserVo user) {
         String appid = user.getAppid();
         AppVo appVo = this.appApi.queryById(appid);
         if (Objects.isNull(appVo))
@@ -108,7 +84,6 @@ public class CMSPCUserRegistrarStrategy implements ChlUserRegistrarStrategy {
             mainUser.setAppid(user.getAppid());
             mainUser.setOrgId(appVo.getOrgId());
             mainUser.setUsername(user.getChlUserId());
-            mainUser.setPassword(password);
             mainUser.setDeleted(false);
             mainUser.setCreateTime(LocalDateTime.now());
             mainUser.setUpdateTime(LocalDateTime.now());
@@ -126,56 +101,9 @@ public class CMSPCUserRegistrarStrategy implements ChlUserRegistrarStrategy {
         user.setChlAppType(ChannelAppType.CMS.getCode());
         user.setChlUserId(user.getChlUserId());
         user.setChlUnionId(user.getChlUnionId());
+        user.setRoleBit(Role.CMSUser.getBit());
         user.setChlUserCode(password);
         user.setChlUserToken(user.getChlUserToken());// 双因素认证
         return this.chlUserRepository.save(user);
     }
-
-    private ChlUserVo registerRoot(ChlUserVo user) {
-        UserPo root = this.userRepository.queryById("root");
-        if (Objects.nonNull(root))
-            UserRs.UserRegisterPermissionMiss.thr();
-
-        AppVo rootApp = this.appApi.getRootApp();
-        String appid = rootApp.getId();
-        user.setAppid(appid);
-
-        UserPo mainUser = new UserPo();
-        mainUser.setId("root");
-        mainUser.setAppid(user.getAppid());
-        mainUser.setOrgId(rootApp.getOrgId());
-        mainUser.setNickname("root");
-        mainUser.setUsername("root");
-        mainUser.addRole(Role.Root);
-        mainUser.setPassword(PasswordStorage.createHash(user.getChlUserCode()));
-        mainUser.setDeleted(false);
-        mainUser.setCreateTime(LocalDateTime.now());
-        mainUser.setUpdateTime(LocalDateTime.now());
-        try {
-            mainUser = this.userRepository.create(mainUser);
-        } catch (Throwable t) {
-            UserRs.UserRegisterPermissionMiss.thr();
-        }
-
-        ChlAppVo rootChlApp = this.chlAppApi.queryRootByAppid(appid);
-        user.setId("root");
-        user.setUserid(mainUser.getId());
-        user.setAppid(rootApp.getId());
-        user.setChlType(ChannelType.PC.getCode());
-        user.setChlAppId(rootChlApp.getChlAppId());
-        user.setChlAppType(ChannelAppType.CMS.getCode());
-        user.setChlUserId("root");
-        user.setChlUnionId("root");
-        user.setChlUserCode(mainUser.getPassword());
-        user.setChlUserToken("");// 双因素认证
-        return this.chlUserRepository.save(user);
-    }
-
-    private boolean createRoot(String userid, String appid, String chlAppid, String chlUserid) {
-        return StringUtils.equals(userid, "root")
-                && StringUtils.equals(appid, "root")
-                && StringUtils.equals(chlAppid, "root")
-                && StringUtils.equals(chlUserid, "root");
-    }
-
 }

@@ -77,7 +77,7 @@ public class UserPo implements Serializable {
                 continue;
             if ((roleBit & bit) == bit)
                 continue;
-            this.roleBit += bit;
+            this.roleBit |= roleBit; // 使用按位或添加角色
         }
     }
 
@@ -91,7 +91,7 @@ public class UserPo implements Serializable {
             if ((roleBit & bit) == bit) {
                 continue;
             }
-            this.roleBit += bit;
+            this.roleBit |= bit; // 使用按位或添加角色
         }
     }
 }

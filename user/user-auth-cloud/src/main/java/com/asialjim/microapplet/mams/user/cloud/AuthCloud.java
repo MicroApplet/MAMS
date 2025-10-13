@@ -27,7 +27,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * @version 1.0
  * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@SuppressWarnings("DefaultAnnotationParam")
 @FeignClient(value = UserAuthServerCons.APP_FEIGN_NAME, path = AuthApi.path)
 public interface AuthCloud extends AuthApi {
 }

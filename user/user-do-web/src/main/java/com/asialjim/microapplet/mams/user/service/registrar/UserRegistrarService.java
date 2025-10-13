@@ -21,6 +21,7 @@ import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import com.asialjim.microapplet.mams.user.service.registrar.pc.CMSPCUserRegistrarStrategy;
+import com.asialjim.microapplet.mams.user.service.registrar.pc.RootPCUserRegistrarStrategy;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -39,10 +40,10 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UserRegistrarService {
     private final List<ChlUserRegistrarStrategy> registrarStrategies;
-    private final CMSPCUserRegistrarStrategy cmspcUserRegistrarStrategy;
+    private final RootPCUserRegistrarStrategy rootPCUserRegistrarStrategy;
 
     public Result<Void> rootExist() {
-        return cmspcUserRegistrarStrategy.rootExist();
+        return rootPCUserRegistrarStrategy.rootExist();
     }
 
     public ChlUserVo register(ChlUserVo user) {
@@ -61,5 +62,4 @@ public class UserRegistrarService {
                 .findAny()
                 .orElseThrow(ChlRs.RegistrarChlIllegal::ex);
     }
-
 }

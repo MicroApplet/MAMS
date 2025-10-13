@@ -14,15 +14,21 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.security;
+package com.asialjim.microapplet.mams.user.infrastructure.datasource.service;
 
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
+import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.IdCardUserPo;
+import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.UserPo;
+import com.mybatisflex.core.service.IService;
 
-public class MamsAuthenticationManager implements AuthenticationManager {
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return null;
-    }
+import java.util.List;
+
+/**
+ * 证件用户表服务
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/9/22, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+public interface IdCardUserMapperService extends IService<IdCardUserPo> {
+    List<IdCardUserPo> queryByUserid(String userid);
 }

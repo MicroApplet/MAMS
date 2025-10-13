@@ -17,6 +17,8 @@
 package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.mams.user.vo.UserVo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 /**
  * 用户相关API
@@ -26,5 +28,8 @@ import com.asialjim.microapplet.mams.user.vo.UserVo;
  * @since 2025/9/30, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface UserApi {
-    UserVo queryByUserid(String userid);
+    String path = "/user";
+
+    @GetMapping("/{id}")
+    UserVo queryByUserid(@PathVariable("id") String userid);
 }

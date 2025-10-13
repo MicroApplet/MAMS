@@ -17,12 +17,11 @@
 package com.asialjim.microapplet.mams.app.api;
 
 
+import com.asialjim.microapplet.common.context.ResCode;
 import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,6 +44,11 @@ public interface AppApi {
     @GetMapping("/{id}")
     AppVo queryById(@PathVariable("id") String id);
 
+    @PostMapping
+    AppVo save(@RequestBody AppVo vo);
+
+    @PutMapping
+    AppVo update(@RequestBody AppVo vo);
 
     @GetMapping("/name/root")
     AppVo getRootApp();
@@ -61,4 +65,5 @@ public interface AppApi {
 
     @GetMapping("/list")
     Result<List<AppVo>> list(@RequestParam Long page,@RequestParam Long size);
+
 }

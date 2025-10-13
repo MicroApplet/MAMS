@@ -55,6 +55,15 @@ public class AppController implements AppApi {
         return this.appRepository.queryVoById(id);
     }
 
+    @Override
+    public AppVo save(AppVo vo) {
+        return this.appRepository.create(vo);
+    }
+
+    @Override
+    public AppVo update(AppVo vo) {
+        return this.appRepository.updateById(vo);
+    }
 
     @Override
     public AppVo getRootApp() {

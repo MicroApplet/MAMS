@@ -36,15 +36,18 @@ import java.util.List;
 public class UserCache extends CacheNameAndTTLConfig {
     public interface Name {
         String userPoOf = "tmp:user:po";
+        String idCardUserPosOf = "tmp:id-card-user:pos:userid";
         String chlUserPoOf = "tmp:chl-user:po";
         String chlUserPosOfUserid = "tmp:chl-user:pos:userid";
     }
 
     @Getter
     enum Cache implements CacheNameAndTTL {
-        chlUserPoOf(Name.chlUserPoOf,Duration.ofHours(2)),
-        userPoOf(Name.userPoOf,Duration.ofHours(2)),
-        chlUserPosOfUserid(Name.chlUserPosOfUserid,Duration.ofMinutes(30)),
+        chlUserPoOf(Name.chlUserPoOf, Duration.ofHours(2)),
+        userPoOf(Name.userPoOf, Duration.ofHours(2)),
+        chlUserPosOfUserid(Name.chlUserPosOfUserid, Duration.ofMinutes(30)),
+
+        idCardUserPosOf(Name.idCardUserPosOf, Duration.ofMinutes(30)),
         placeholder("placeholder");
 
         Cache(String name) {

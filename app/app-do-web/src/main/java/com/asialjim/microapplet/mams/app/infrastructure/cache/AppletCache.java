@@ -38,6 +38,7 @@ public class AppletCache extends CacheNameAndTTLConfig {
         String appPoById = "tmp:app:po:by-id";
         String appPoByOrgId = "tmp:app:po:by-id";
         String appVosByName = "tmp:app:vos:by-name";
+        String appPosByName = "tmp:app:pos:by-name";
 
         String chlAppPoById = "tmp:chl-app:po:by-id";
         String chlAppPoByOrgId = "tmp:chl-app:po:by-org-id";
@@ -60,6 +61,7 @@ public class AppletCache extends CacheNameAndTTLConfig {
         appPoById(Name.appPoById, Duration.ofDays(7)),
         appPoByOrgId(Name.appPoByOrgId, Duration.ofHours(7)),
         appVosByName(Name.appVosByName,Duration.ofHours(2)),
+        appPosByName(Name.appPosByName,Duration.ofHours(2)),
 
         chlAppPoById(Name.chlAppPoById, Duration.ofDays(7)),
         chlAppPoByOrgId(Name.chlAppPoByOrgId, Duration.ofDays(7)),

@@ -52,7 +52,8 @@ public enum ChannelAppType {
     WEB(ChannelCons.WEB, ChannelType.PC, "站点网页"),
     Phone(PHONE, ChannelType.Mobile, "手机渠道"),
     CMS(ChannelCons.CMS, ChannelType.PC, "后台管理"),
-    H5(ChannelCons.H5, ChannelType.Mobile, "H5");
+    ROOT(ChannelCons.ROOT, ChannelType.PC, "超级管理"),
+    H5(ChannelCons.H5, ChannelType.Mobile, "H5平台");
 
     /**
      * 渠道应用编号

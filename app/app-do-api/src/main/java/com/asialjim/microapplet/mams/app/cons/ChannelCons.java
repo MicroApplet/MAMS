@@ -41,5 +41,6 @@ public interface ChannelCons {
     String WEB = "WEB";
     String PHONE = "PHONE";
     String CMS = "CMS";
+    String ROOT = "ROOT";
     String H5 = "H5";
 }

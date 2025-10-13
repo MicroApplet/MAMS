@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.infrastructure.datasource.po;
 
+import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -27,6 +28,7 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * 用户证件信息
@@ -44,12 +46,13 @@ public class IdCardUserPo implements Serializable {
     /**
      * TODO 主键生成方案： MD5(appid) . MD5(userid) . MD5(idType)
      */
-    @Id(keyType = KeyType.Generator,value = KeyGenerators.snowFlakeId)
+    @Id(keyType = KeyType.Generator, value = KeyGenerators.snowFlakeId)
     private String id;
     private String appid;
 
     /**
      * 主表用户编号
+     *
      * @see UserPo#getId()
      */
     private String userid;
@@ -74,4 +77,54 @@ public class IdCardUserPo implements Serializable {
 
     @Column(onInsertValue = "now()", onUpdateValue = "now()")
     private LocalDateTime updateTime;
+
+    public static IdCardUserVo toVo(IdCardUserPo po) {
+        if (Objects.isNull(po))
+            return null;
+        IdCardUserVo vo = new IdCardUserVo();
+        vo.setId(po.getId());
+        vo.setAppid(po.getAppid());
+        vo.setUserid(po.getUserid());
+        vo.setIdType(po.getIdType());
+        vo.setIdNo(po.getIdNo());
+        vo.setName(po.getName());
+        vo.setGender(po.getGender());
+        vo.setNationality(po.getNationality());
+        vo.setBirthday(po.getBirthday());
+        vo.setAddress(po.getAddress());
+        vo.setIssue(po.getIssue());
+        vo.setIssueDate(po.getIssueDate());
+        vo.setIssueExpires(po.getIssueExpires());
+        vo.setFrontFileId(po.getFrontFileId());
+        vo.setBackFileId(po.getBackFileId());
+        vo.setDeleted(po.getDeleted());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setUpdateTime(po.getUpdateTime());
+        return vo;
+    }
+
+    public static IdCardUserPo fromVo(IdCardUserVo source) {
+        if (Objects.isNull(source))
+            return null;
+        IdCardUserPo target = new IdCardUserPo();
+        target.setId(source.getId());
+        target.setAppid(source.getAppid());
+        target.setUserid(source.getUserid());
+        target.setIdType(source.getIdType());
+        target.setIdNo(source.getIdNo());
+        target.setName(source.getName());
+        target.setGender(source.getGender());
+        target.setNationality(source.getNationality());
+        target.setBirthday(source.getBirthday());
+        target.setAddress(source.getAddress());
+        target.setIssue(source.getIssue());
+        target.setIssueDate(source.getIssueDate());
+        target.setIssueExpires(source.getIssueExpires());
+        target.setFrontFileId(source.getFrontFileId());
+        target.setBackFileId(source.getBackFileId());
+        target.setDeleted(source.getDeleted());
+        target.setCreateTime(source.getCreateTime());
+        target.setUpdateTime(source.getUpdateTime());
+        return target;
+    }
 }

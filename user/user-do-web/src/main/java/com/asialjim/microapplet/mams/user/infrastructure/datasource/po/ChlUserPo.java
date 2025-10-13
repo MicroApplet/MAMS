@@ -73,6 +73,8 @@ public class ChlUserPo implements Serializable {
      * 渠道联合用户标识
      */
     private String chlUnionid;
+
+    private Long roleBit;
     /**
      * 用户授权码
      */
@@ -105,6 +107,7 @@ public class ChlUserPo implements Serializable {
         vo.setChlAppType(po.getChlAppType());
         vo.setChlUserId(po.getChlUserid());
         vo.setChlUnionId(po.getChlUnionid());
+        vo.setRoleBit(po.getRoleBit());
         vo.setChlUserCode(po.getChlUserCode());
         vo.setChlUserToken(po.getChlUserToken());
         return vo;
@@ -123,6 +126,7 @@ public class ChlUserPo implements Serializable {
         po.setChlAppType(vo.getChlAppType());
         po.setChlUserid(vo.getChlUserId());
         po.setChlUnionid(vo.getChlUnionId());
+        po.setRoleBit(vo.getRoleBit());
         po.setChlUserCode(vo.getChlUserCode());
         po.setChlUserToken(vo.getChlUserToken());
         return po;

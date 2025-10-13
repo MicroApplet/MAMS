@@ -19,11 +19,13 @@ package com.asialjim.microapplet.mams.user.security;
 import com.asialjim.microapplet.common.cons.Headers;
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.common.security.MamsSessionAttribute;
+import com.asialjim.microapplet.common.utils.JsonUtil;
 import com.asialjim.microapplet.mams.user.api.AuthApi;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -40,6 +42,7 @@ import java.util.Optional;
  * @version 1.0
  * @since 2025/9/24, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Primary
 @Component
 public class UserMamsSessionAttribute implements MamsSessionAttribute {
     @Resource
@@ -56,6 +59,10 @@ public class UserMamsSessionAttribute implements MamsSessionAttribute {
         //noinspection ConstantValue
         if (Objects.isNull(request))
             return null;
+
+        String sessionJson = request.getHeader(Headers.CURRENT_SESSION);
+        if (StringUtils.isNotBlank(sessionJson))
+            return JsonUtil.instance.toBean(sessionJson, MamsSession.class);
 
         String token = request.getHeader(Headers.AUTHORIZATION);
         if (StringUtils.isBlank(token))

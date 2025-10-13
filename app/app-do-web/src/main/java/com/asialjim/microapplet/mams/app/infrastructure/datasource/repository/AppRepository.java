@@ -19,16 +19,18 @@ package com.asialjim.microapplet.mams.app.infrastructure.datasource.repository;
 import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.page.PageParameter;
-import com.asialjim.microapplet.common.utils.JsonUtil;
-import com.asialjim.microapplet.mams.app.infrastructure.cache.AppletCache;
+import com.asialjim.microapplet.mams.app.context.AppRs;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.po.AppPo;
+import com.asialjim.microapplet.mams.app.valid.AppCreateGroup;
+import com.asialjim.microapplet.mams.app.valid.AppUpdateGroup;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.service.AppMapperService;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import com.asialjim.microapplet.mybatis.flex.page.MyBatisFlexPageFun;
 import com.mybatisflex.core.paginate.Page;
 import jakarta.annotation.Resource;
-import org.springframework.cache.annotation.Cacheable;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.*;
 
@@ -71,7 +73,6 @@ public class AppRepository {
                 .toList();
     }
 
-    @Cacheable(value = AppletCache.Name.appVosByName, key = "#name")
     public List<AppVo> queryVoByName(String name) {
         List<AppPo> pos = appMapperService.queryByName(name);
         return Optional.ofNullable(pos)
@@ -83,14 +84,30 @@ public class AppRepository {
                 .toList();
     }
 
-    public AppVo create(AppVo vo) {
-        // TODO 此处应有锁
+    public AppVo create(@Validated(AppCreateGroup.class)
+                        @NotNull(message = "APP-UPDATE:FAILURE:EMPTY-PARAMETER|应用信息不能为空")
+                        AppVo vo) {
+
         AppPo po = AppPo.fromVo(vo);
         if (Objects.isNull(po))
             return null;
         appMapperService.save(po);
         vo.setId(po.getId());
         return AppPo.toVo(po);
+    }
+
+
+    public AppVo updateById(@Validated(AppUpdateGroup.class)
+                            @NotNull(message = "APP-UPDATE:FAILURE:EMPTY-PARAMETER|应用信息不能为空")
+                            AppVo vo) {
+
+        String id = vo.getId();
+        AppVo exist = this.queryVoById(id);
+        if (Objects.isNull(exist))
+            AppRs.NoSuchApp.thr();
+        AppPo appPo = AppPo.fromVo(vo);
+        this.appMapperService.updateById(appPo);
+        return AppPo.toVo(appPo);
     }
 
     public Result<List<AppVo>> list(Long page, Long size) {

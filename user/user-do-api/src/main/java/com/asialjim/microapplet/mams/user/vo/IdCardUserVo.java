@@ -60,4 +60,5 @@ public class IdCardUserVo implements Serializable {
     private LocalDateTime createTime;
 
     private LocalDateTime updateTime;
+
 }

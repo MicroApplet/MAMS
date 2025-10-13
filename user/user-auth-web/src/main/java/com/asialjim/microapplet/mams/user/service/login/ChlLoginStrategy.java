@@ -18,6 +18,7 @@ package com.asialjim.microapplet.mams.user.service.login;
 
 
 import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import com.asialjim.microapplet.mams.user.vo.LoginReq;

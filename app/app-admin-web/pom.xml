@@ -40,6 +40,11 @@
             <artifactId>app-do-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>user-auth-cloud</artifactId>
+            <version>${project.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>

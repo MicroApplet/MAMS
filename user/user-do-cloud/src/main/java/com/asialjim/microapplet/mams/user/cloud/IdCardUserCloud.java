@@ -14,4 +14,19 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user;
+package com.asialjim.microapplet.mams.user.cloud;
+
+import com.asialjim.microapplet.mams.user.api.IdCardUserApi;
+import com.asialjim.microapplet.mams.user.cons.UserServerCons;
+import org.springframework.cloud.openfeign.FeignClient;
+
+/**
+ * 证件用户云服务
+ *
+ * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
+ * @version 1.0
+ * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+@FeignClient(value = UserServerCons.APP_FEIGN_NAME,path = IdCardUserApi.path)
+public interface IdCardUserCloud extends IdCardUserApi {
+}

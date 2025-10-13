@@ -21,9 +21,11 @@ import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.ChlU
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -99,7 +101,18 @@ public class ChlUserRepository {
      * @param id id
      * @return {@link List<ChlUserPo>}
      */
-    public List<ChlUserPo> queryByUserId(String id) {
-        return this.chlUserMapperService.queryByUserid(id);
+    public List<ChlUserVo> queryByUserId(String id) {
+        List<ChlUserPo> pos = this.chlUserMapperService.queryByUserid(id);
+        if (CollectionUtils.isEmpty(pos))
+            return Collections.emptyList();
+        return pos.stream()
+                .filter(Objects::nonNull)
+                .map(ChlUserPo::toVo)
+                .toList();
+    }
+
+    public ChlUserVo queryById(String root) {
+        ChlUserPo po = this.chlUserMapperService.queryById(root);
+        return ChlUserPo.toVo(po);
     }
 }

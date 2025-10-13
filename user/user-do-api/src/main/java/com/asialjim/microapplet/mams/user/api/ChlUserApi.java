@@ -18,6 +18,8 @@ package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -29,7 +31,9 @@ import java.util.List;
  * @since 2025/9/30, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface ChlUserApi {
-    List<ChlUserVo> queryByUserid(String userid);
+    String path = "/chl-user";
 
 
+    @GetMapping("/user/{userid}")
+    List<ChlUserVo> queryByUserid(@PathVariable("userid") String userid);
 }

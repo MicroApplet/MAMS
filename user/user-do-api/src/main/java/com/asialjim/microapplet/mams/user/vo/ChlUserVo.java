@@ -51,6 +51,7 @@ public class ChlUserVo implements Serializable {
     @NotBlank(message = "LOGIN:CHL-USER:ID-MISSING|渠道用户编号不能为空", groups = {UserLoginGroup.class})
     private String chlUserId;
     private String chlUnionId;
+    private Long roleBit;
     private String chlUserCode;
     private String chlUserToken;
 
