@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *    Copyright 2014-$year.today <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,21 +14,21 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.wx.mp;
+package com.asialjim.microapplet.mams.app;
 
 import com.asialjim.microapplet.common.application.App;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 微信公众号后管服务
+ * APP 应用启动器
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/28, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class Main {
+public class AppDomain {
     public static void main(String[] args) {
-        App.voidStart(Main.class,args);
+        App.voidStart(AppDomain.class, args);
     }
 }

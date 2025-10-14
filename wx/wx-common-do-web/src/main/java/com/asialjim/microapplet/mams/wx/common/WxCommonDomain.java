@@ -17,10 +17,7 @@
 package com.asialjim.microapplet.mams.wx.common;
 
 import com.asialjim.microapplet.common.application.App;
-import com.asialjim.microapplet.mams.app.cloud.AppCloud;
-import com.asialjim.microapplet.remote.spring.RemoteScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * 通用微信API服务
@@ -30,7 +27,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @since 2025/9/23, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class Main {
+public class WxCommonDomain {
 
 
     /**
@@ -39,6 +36,6 @@ public class Main {
      * @param args arg游戏
      */
     public static void main(String[] args) {
-        App.voidStart(Main.class,args);
+        App.voidStart(WxCommonDomain.class,args);
     }
 }

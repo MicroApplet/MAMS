@@ -21,6 +21,7 @@ import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -159,8 +160,11 @@ public class ChlAppVo implements Serializable {
         if (Objects.isNull(vo))
             ChlRs.NoSuchChlAppType.thr();
 
-        String chl = vo.getChlType();
         String chlAppType = vo.getChlAppType();
+        if (StringUtils.contains(chlAppType,":"))
+            return ChannelAppType.chlAppTypeCodeOf(chlAppType);
+
+        String chl = vo.getChlType();
         return ChannelAppType.chlAppTypeCodeOf(chl + ":" + chlAppType);
     }
 }

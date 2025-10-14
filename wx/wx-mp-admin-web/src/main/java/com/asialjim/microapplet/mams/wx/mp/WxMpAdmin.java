@@ -17,20 +17,18 @@
 package com.asialjim.microapplet.mams.wx.mp;
 
 import com.asialjim.microapplet.common.application.App;
-import com.asialjim.microapplet.mams.wx.common.infrastructure.repository.MamsWeChatApplicationRepository;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
 
 /**
- * 微信公众号服务启动器
+ * 微信公众号后管服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/25, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/28, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class Main {
+public class WxMpAdmin {
     public static void main(String[] args) {
-        App.voidStart(Main.class,args);
+        App.voidStart(WxMpAdmin.class,args);
     }
 }

@@ -16,24 +16,26 @@
 
 package com.asialjim.microapplet.mams.user;
 
-import com.asialjim.microapplet.common.application.App;
+import com.asialjim.microapplet.web.mvc.MicroBankWebMVCBean;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 用户领域启动器
+ * 用户认证服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/22, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class Main {
+public class UserAuth {
     /**
      * 主要
      *
      * @param args arg游戏
      */
     public static void main(String[] args) {
-        App.voidStart(Main.class, args);
+        //App.voidStart(Main.class, args);
+        System.out.println(SpringApplication.run(UserAuth.class,args).getBean(MicroBankWebMVCBean.class));
     }
 }

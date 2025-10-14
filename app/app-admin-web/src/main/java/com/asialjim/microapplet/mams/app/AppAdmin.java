@@ -14,26 +14,14 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user;
+package com.asialjim.microapplet.mams.app;
 
 import com.asialjim.microapplet.common.application.App;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-/**
- * 用户认证服务
- *
- * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
- * @version 1.0
- * @since 2025/9/22, &nbsp;&nbsp; <em>version:1.0</em>
- */
 @SpringBootApplication
-public class Main {
-    /**
-     * 主要
-     *
-     * @param args arg游戏
-     */
+public class AppAdmin {
     public static void main(String[] args) {
-        App.voidStart(Main.class, args);
+        App.voidStart(AppAdmin.class,args);
     }
 }

@@ -27,11 +27,14 @@ import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.LoginReq;
 import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
+import com.asialjim.microapplet.wechat.remoting.context.BaseWeChatApiRes;
+import com.asialjim.microapplet.wechat.remoting.context.WeChatApiRes;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
+import java.util.Optional;
 
 /**
  * 微信小程序登录策略
@@ -71,6 +74,8 @@ public class WeChatAppLoginStrategy implements WeChatTypeLoginStrategy {
         WeChatAppletUserLoginRes session;
         try {
             session = this.weChatAppletUserRemoting.login(chlApp.getChlAppId(), chlApp.getChlAppSecret(), req.getCode());
+            if (WeChatApiRes.notSuccess(session))
+                throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(Optional.ofNullable(session).map(BaseWeChatApiRes::getErrmsg).orElse("微信用户登录失败")));
         } catch (Throwable e) {
             throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(e.getMessage()));
         }

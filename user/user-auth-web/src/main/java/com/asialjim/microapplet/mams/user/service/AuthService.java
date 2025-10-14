@@ -72,7 +72,7 @@ public class AuthService {
      * @since 2025/9/23
      */
     public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, String chlAppType, LoginReq req) {
-        if (log.isDebugEnabled()) log.debug("登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
+        log.info("登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
 
         ChlAppVo chlAppVo = null;
         if (StringUtils.isAllBlank(chlAppid, chlAppType)) {
