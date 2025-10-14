@@ -119,6 +119,7 @@ public class AuthService {
      */
     public MamsSession auth(String token) {
         final MamsSession session = this.sessionRepository.getCache(token);
+        log.info("用户令牌：{} 会话：{}",token,session);
         this.jwtConfigProperty.verify(token, session);
         return session;
     }

@@ -40,6 +40,7 @@ public interface ChannelCons {
     String VIDEO = "video";
     String WEB = "WEB";
     String PHONE = "PHONE";
+    String WX_PHONE = "WX-PHONE";
     String CMS = "CMS";
     String ROOT = "ROOT";
     String H5 = "H5";

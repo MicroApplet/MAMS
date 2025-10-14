@@ -49,6 +49,7 @@ public enum ChannelAppType {
     WeChatMall(MALL, ChannelType.WeChat, "小商店"),
     WeChatPlatform(PLATFORM, ChannelType.WeChat, "开放平台"),
     WeChatVideo(VIDEO, ChannelType.WeChat, "视频号"),
+    WeChatPhone(WX_PHONE, ChannelType.WeChat, "微信手机号"),
     WEB(ChannelCons.WEB, ChannelType.PC, "站点网页"),
     Phone(PHONE, ChannelType.Mobile, "手机渠道"),
     CMS(ChannelCons.CMS, ChannelType.PC, "后台管理"),
