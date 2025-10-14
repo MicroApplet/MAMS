@@ -47,4 +47,9 @@ public class UserSessionController implements UserSessionApi {
     public MamsSession login(ChlUserVo vo) {
         return this.userSessionService.login(vo);
     }
+
+    @Override
+    public MamsSession current() {
+        return this.userSessionService.current();
+    }
 }

@@ -18,6 +18,7 @@ package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -40,4 +41,7 @@ public interface UserSessionApi {
      */
     @PostMapping("/login")
     MamsSession login(@RequestBody ChlUserVo vo);
+
+    @GetMapping
+    MamsSession current();
 }

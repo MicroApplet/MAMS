@@ -27,9 +27,11 @@ import com.asialjim.microapplet.wechat.official.infrastructure.api.OAuthPageLogi
 import com.asialjim.microapplet.wechat.official.remoting.user.meta.WeChatPublicAccountUserAccessTokenRes;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 @Slf4j
+@Primary
 @Component
 @RequiredArgsConstructor
 public class MamsOAuthPageLogin implements OAuthPageLogin {

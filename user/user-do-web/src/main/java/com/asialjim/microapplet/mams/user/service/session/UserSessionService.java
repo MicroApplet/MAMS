@@ -30,6 +30,7 @@ import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.C
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.UserRepository;
 import com.asialjim.microapplet.mams.user.valid.UserLoginGroup;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import com.asialjim.microapplet.web.mvc.security.MVCMamsSessionAttribute;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,7 @@ public class UserSessionService {
     private final UserRepository userRepository;
     private final ChlAppApi chlAppApi;
     private final AppApi appApi;
+    private final MVCMamsSessionAttribute mvcMamsSessionAttribute;
 
     /**
      * 用户登录
@@ -131,6 +133,16 @@ public class UserSessionService {
         usr.setChlUserToken(chlUserPo.getChlUserToken());
         usr.setLoginTime(LocalDateTime.now());
         return usr;
+    }
+
+
+    public MamsSession current() {
+        MamsSession mamsSession = this.mvcMamsSessionAttribute.currentSession();
+        if (Objects.isNull(mamsSession))
+            throw Res.UserAuthFailure401Thr.ex();
+
+        mamsSession.setRoleBit(Role.Authenticated.getBit());
+        return mamsSession;
     }
 
     /**
