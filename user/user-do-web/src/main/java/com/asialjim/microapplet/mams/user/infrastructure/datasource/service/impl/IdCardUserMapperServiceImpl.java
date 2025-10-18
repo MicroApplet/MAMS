@@ -41,4 +41,20 @@ public class IdCardUserMapperServiceImpl extends ServiceImpl<IdCardUserBaseMappe
     public List<IdCardUserPo> queryByUserid(String userid) {
         return queryChain().where(IdCardUserPo::getUserid).eq(userid).list();
     }
+
+    @Override
+    @Cacheable(value = UserCache.Name.idCardUserPoOf, key = "#userid + ':' + #idType")
+    public IdCardUserPo queryByUseridAndIdType(String userid, String idType) {
+        return queryChain().where(IdCardUserPo::getUserid).eq(userid).where(IdCardUserPo::getIdType).eq(idType).one();
+    }
+
+    @Override
+    @Cacheable(value = UserCache.Name.idCardUserPoOf, key = "#userid + ':' + #idType + ':' + #idNo")
+    public IdCardUserPo queryByUseridAndIdTypeAndIdNo(String userid, String idType, String idNo) {
+        return queryChain()
+                .where(IdCardUserPo::getUserid).eq(userid)
+                .where(IdCardUserPo::getIdType).eq(idType)
+                .where(IdCardUserPo::getIdNo).eq(idNo)
+                .one();
+    }
 }

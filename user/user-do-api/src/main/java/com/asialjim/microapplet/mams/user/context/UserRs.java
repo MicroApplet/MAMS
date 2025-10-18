@@ -30,7 +30,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum UserRs implements ResCode {
-    UserRegisterPermissionMiss(403,true,"USER-REGISTER:PERMISSION:MISS","用户注册权限不足");
+    UserRegisterFailure(400, true, "USER-REGISTER:FAILURE", "用户注册失败"),
+    UserRegisterPermissionMiss(403, true, "USER-REGISTER:PERMISSION:MISS", "用户注册权限不足"),
+    UserExistWithoutThr(200, false, "USER:HAD:EXIST", "用户已注册"),
+    UserExist(400, true, "USER:HAD:EXIST", "用户已注册");
 
     private final int status;
     private final boolean thr;

@@ -86,12 +86,13 @@ public class WeChatAppLoginStrategy implements WeChatTypeLoginStrategy {
         chlUser.setChlAppType(ChannelAppType.WeChatApplet.getCode());
         chlUser.setChlAppId(chlApp.getChlAppId());
 
+        chlUser.setRoleBit(Role.WeChatUser.getBit());
         chlUser.setChlUserId(session.getOpenid());
         chlUser.setChlUnionId(session.getUnionid());
         chlUser.setChlUserCode(req.getCode());
         chlUser.setChlUserToken(session.getSessionKey());
         MamsSession mamsSession = this.userSessionApi.login(chlUser);
-        mamsSession.addRole(Role.WeChatApplet.getBit());
+        mamsSession.addRole(Role.WeChatUser.getBit());
         return mamsSession;
     }
 }

@@ -20,6 +20,7 @@ import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.api.UserSessionApi;
 import com.asialjim.microapplet.mams.user.service.session.UserSessionService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,10 +33,11 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(UserSessionApi.PATH)
 public class UserSessionController implements UserSessionApi {
-    private final UserSessionService userSessionService;
+    @Resource
+    private UserSessionService userSessionService;
+
 
     /**
      * 登录

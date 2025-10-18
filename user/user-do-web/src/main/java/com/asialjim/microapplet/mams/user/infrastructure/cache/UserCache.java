@@ -37,6 +37,7 @@ public class UserCache extends CacheNameAndTTLConfig {
     public interface Name {
         String userPoOf = "tmp:user:po";
         String idCardUserPosOf = "tmp:id-card-user:pos:userid";
+        String idCardUserPoOf = "tmp:id-card-user:po:userid";
         String chlUserPoOf = "tmp:chl-user:po";
         String chlUserPosOfUserid = "tmp:chl-user:pos:userid";
     }
@@ -48,6 +49,8 @@ public class UserCache extends CacheNameAndTTLConfig {
         chlUserPosOfUserid(Name.chlUserPosOfUserid, Duration.ofMinutes(30)),
 
         idCardUserPosOf(Name.idCardUserPosOf, Duration.ofMinutes(30)),
+        idCardUserPoOf(Name.idCardUserPoOf, Duration.ofMinutes(30)),
+
         placeholder("placeholder");
 
         Cache(String name) {

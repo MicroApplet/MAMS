@@ -25,13 +25,12 @@ import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import com.asialjim.microapplet.common.security.MamsSessionAttribute;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.*;
 
 /**
  * 获取当前用户角色代码
@@ -49,21 +48,31 @@ public class CurrentUserRoles implements CurrentRoles {
 
     @Override
     public long hasRole() {
+        long bit = 0;
         MamsSession session = this.mamsSessionAttribute.currentSession();
-        if (Objects.isNull(session))
-            return 0;
+        if (Objects.isNull(session) || StringUtils.isBlank(session.getUserid()))
+            return Role.Tourist.getBit();
+        bit |= Role.AUTHENTICATED_BIT;
+
         String userid = session.getUserid();
         List<ChlUserVo> chlUserVos = this.chlUserApi.queryByUserid(userid);
-        if (CollectionUtils.isEmpty(chlUserVos))
-            return Role.Authenticated.getBit();
 
         // 添加渠道用户角色表
-        Optional.of(chlUserVos).stream().flatMap(Collection::stream).filter(Objects::nonNull).map(ChlUserVo::getRoleBit).forEach(session::addRole);
-        session.addRole(Role.Authenticated.getBit());// 添加登录用户角色表
+        if (CollectionUtils.isNotEmpty(chlUserVos)) {
+            for (ChlUserVo chlUserVo : chlUserVos) {
+                if (Objects.isNull(chlUserVo))
+                    continue;
+                Long roleBit = chlUserVo.getRoleBit();
+                if (Objects.isNull(roleBit))
+                    continue;
+                bit |= roleBit;
+            }
+        }
 
+        // 判定证件用户角色
         List<IdCardUserVo> idCardUserVos = this.idCardUserApi.queryByUserid(userid);
         if (CollectionUtils.isNotEmpty(idCardUserVos))
-            session.addRole(Role.IdCardUser.getBit());
-        return session.getRoleBit();
+            bit |= Role.ID_CARD_USER_BIT;
+        return bit;
     }
 }

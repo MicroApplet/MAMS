@@ -31,4 +31,8 @@ import java.util.List;
  */
 public interface IdCardUserMapperService extends IService<IdCardUserPo> {
     List<IdCardUserPo> queryByUserid(String userid);
+
+    IdCardUserPo queryByUseridAndIdType(String userid, String idType);
+
+    IdCardUserPo queryByUseridAndIdTypeAndIdNo(String userid, String idType, String idNo);
 }

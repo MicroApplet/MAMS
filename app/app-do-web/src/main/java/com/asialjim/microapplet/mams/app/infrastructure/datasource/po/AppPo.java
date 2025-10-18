@@ -51,10 +51,9 @@ public class AppPo implements Serializable {
     private String id;
 
     public String getId() {
-        if (StringUtils.isNotBlank(this.id))
-            return this.id;
-
-        return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+        if (StringUtils.isBlank(this.id))
+            return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+        return this.id;
     }
 
     private String name;

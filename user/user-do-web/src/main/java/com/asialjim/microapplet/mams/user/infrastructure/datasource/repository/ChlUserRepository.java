@@ -115,4 +115,8 @@ public class ChlUserRepository {
         ChlUserPo po = this.chlUserMapperService.queryById(root);
         return ChlUserPo.toVo(po);
     }
+
+    public ChlUserPo queryByUserIdAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType) {
+        return this.chlUserMapperService.queryByUserIdAndChlAndChlAppidAndChlAppType(userid, chl, chlAppid, chlAppType);
+    }
 }

@@ -17,8 +17,9 @@
 package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.asialjim.microapplet.mams.user.vo.UserIdCardAuthenticateReq;
+import com.asialjim.microapplet.mams.user.vo.UserIdCardSensitiveVo;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,8 +31,14 @@ import java.util.List;
  * @since 2025/10/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface IdCardUserApi {
-    String path = "/id-card-user";
+    String path = "/user/id-card";
 
     @GetMapping("/user/{id}")
     List<IdCardUserVo> queryByUserid(@PathVariable("id") String userid);
+
+    @GetMapping("/status")
+    UserIdCardSensitiveVo status(@RequestParam(required = false) String idType);
+
+    @PostMapping("/authenticate")
+    UserIdCardSensitiveVo authenticate(@RequestBody UserIdCardAuthenticateReq req);
 }

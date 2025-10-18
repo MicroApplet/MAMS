@@ -75,4 +75,6 @@ public interface ChlUserMapperService extends IService<ChlUserPo> {
      * @return {@link List<ChlUserPo>}
      */
     List<ChlUserPo> queryByUserid(String id);
+
+    ChlUserPo queryByUserIdAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType);
 }

@@ -44,6 +44,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * 用户认证服务
@@ -72,7 +73,7 @@ public class AuthService {
      * @since 2025/9/23
      */
     public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, String chlAppType, LoginReq req) {
-        log.info("登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
+        log.info("\r\n登录({}, {}, {},{}),参数: {}", appid, chl, chlAppid, chlAppType, req);
 
         ChlAppVo chlAppVo = null;
         if (StringUtils.isAllBlank(chlAppid, chlAppType)) {
@@ -91,7 +92,18 @@ public class AuthService {
         String userid = session.getUserid();
         List<ChlUserVo> chlUserVos = this.chlUserApi.queryByUserid(userid);
         // 添加渠道用户角色表
-        Optional.ofNullable(chlUserVos).stream().flatMap(Collection::stream).filter(Objects::nonNull).map(ChlUserVo::getRoleBit).forEach(session::addRole);
+        Optional.ofNullable(chlUserVos)
+                .ifPresent(items -> {
+                    for (ChlUserVo item : items) {          //便利当前用户每一个渠道用户信息
+                        if (Objects.isNull(item))
+                            continue;
+                        Long roleBit = item.getRoleBit();   // 获取渠道用户角色表
+                        if (Objects.isNull(roleBit))
+                            continue;
+                        session.addRole(roleBit);           // 用户角色做并集
+                    }
+                });
+
         session.addRole(Role.Authenticated.getBit());// 添加登录用户角色表
         final String sessionId = UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY);
         if (log.isDebugEnabled()) log.debug("创建会话:{}", sessionId);
@@ -119,9 +131,12 @@ public class AuthService {
      */
     public MamsSession auth(String token) {
         final MamsSession session = this.sessionRepository.getCache(token);
-        log.info("用户令牌：{} 会话：{}",token,session);
+        log.info("用户令牌：{} 会话：{}", token, session);
         this.jwtConfigProperty.verify(token, session);
-        return session;
+        session.expireAfter(jwtConfigProperty.jwtTimeout());
+        MamsSession mamsSession = this.sessionRepository.setCache(session);
+        log.info("令牌续期：{} 会话：{}",token,mamsSession);
+        return mamsSession;
     }
 
     /**

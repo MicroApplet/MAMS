@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.infrastructure.datasource.po;
 
+import com.asialjim.microapplet.mams.user.vo.UserVo;
 import com.mybatisflex.annotation.Column;
 import com.mybatisflex.annotation.Id;
 import com.mybatisflex.annotation.KeyType;
@@ -51,10 +52,9 @@ public class UserPo implements Serializable {
     private String id;
 
     public String getId() {
-        if (StringUtils.isNotBlank(this.id))
-            return this.id;
-
-        return String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+        if (StringUtils.isBlank(this.id))
+            this.id = String.valueOf(SNOW_FLAKE_ID_KEY_GENERATOR.nextId());
+        return this.id;
     }
 
     private String appid;
@@ -93,5 +93,24 @@ public class UserPo implements Serializable {
             }
             this.roleBit |= bit; // 使用按位或添加角色
         }
+    }
+
+
+    public static UserVo toVo(UserPo po) {
+        if (Objects.isNull(po))
+            return null;
+
+        final UserVo vo = new UserVo();
+        vo.setId(po.getId());
+        vo.setAppid(po.getAppid());
+        vo.setOrgId(po.getOrgId());
+        vo.setNickname(po.getNickname());
+        vo.setUsername(po.getUsername());
+        vo.setPassword("***");
+        vo.setRoleBit(po.getRoleBit());
+        vo.setDeleted(po.getDeleted());
+        vo.setCreateTime(po.getCreateTime());
+        vo.setUpdateTime(po.getUpdateTime());
+        return vo;
     }
 }

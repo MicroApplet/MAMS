@@ -53,12 +53,12 @@ public class UserMamsSessionAttribute implements MamsSessionAttribute {
         RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) requestAttributes;
         if (Objects.isNull(servletRequestAttributes))
-            return null;
+            return new MamsSession();
 
         HttpServletRequest request = servletRequestAttributes.getRequest();
         //noinspection ConstantValue
         if (Objects.isNull(request))
-            return null;
+            return new MamsSession();
 
         String sessionJson = request.getHeader(Headers.CURRENT_SESSION);
         if (StringUtils.isNotBlank(sessionJson))
@@ -69,7 +69,7 @@ public class UserMamsSessionAttribute implements MamsSessionAttribute {
             token = Optional.ofNullable(WebUtils.getCookie(request, Headers.USER_TOKEN)).map(Cookie::getValue).orElse(StringUtils.EMPTY);
 
         if (StringUtils.isBlank(token))
-            return null;
+            return new MamsSession();
 
         return authApi.auth(token);
     }

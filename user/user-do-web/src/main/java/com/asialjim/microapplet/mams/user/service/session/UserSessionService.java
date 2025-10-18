@@ -18,7 +18,8 @@ package com.asialjim.microapplet.mams.user.service.session;
 
 import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.security.MamsSession;
-import com.asialjim.microapplet.commons.security.Role;
+import com.asialjim.microapplet.commons.security.CurrentRoleBean;
+import com.asialjim.microapplet.commons.security.CurrentRoles;
 import com.asialjim.microapplet.mams.app.api.AppApi;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
@@ -53,11 +54,12 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class UserSessionService {
+    private final MVCMamsSessionAttribute mvcMamsSessionAttribute;
     private final ChlUserRepository chlUserRepository;
+    private final CurrentRoleBean currentRoleBean;
     private final UserRepository userRepository;
     private final ChlAppApi chlAppApi;
     private final AppApi appApi;
-    private final MVCMamsSessionAttribute mvcMamsSessionAttribute;
 
     /**
      * 用户登录
@@ -135,13 +137,12 @@ public class UserSessionService {
         return usr;
     }
 
-
     public MamsSession current() {
         MamsSession mamsSession = this.mvcMamsSessionAttribute.currentSession();
         if (Objects.isNull(mamsSession))
             throw Res.UserAuthFailure401Thr.ex();
-
-        mamsSession.setRoleBit(Role.Authenticated.getBit());
+        CurrentRoles currentRoles = this.currentRoleBean.currentRole();
+        mamsSession.addRole(currentRoles.hasRole());
         return mamsSession;
     }
 

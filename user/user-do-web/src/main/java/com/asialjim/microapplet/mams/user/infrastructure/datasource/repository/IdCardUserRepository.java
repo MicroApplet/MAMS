@@ -20,6 +20,7 @@ import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.IdCardUse
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.IdCardUserMapperService;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,7 @@ import java.util.Objects;
  * @version 1.0
  * @since 2025/9/22, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class IdCardUserRepository {
@@ -48,5 +50,22 @@ public class IdCardUserRepository {
                 .map(IdCardUserPo::toVo)
                 .filter(Objects::nonNull)
                 .toList();
+    }
+
+    public IdCardUserVo queryByUseridAndIdType(String userid, String idType) {
+        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdType(userid,idType);
+        return IdCardUserPo.toVo(po);
+    }
+
+    public IdCardUserVo queryByUseridAndIdTypeAndIdNo(String userid, String idType, String idNo) {
+        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdTypeAndIdNo(userid,idType,idNo);
+        return IdCardUserPo.toVo(po);
+    }
+
+    public IdCardUserVo save(IdCardUserVo vo) {
+        IdCardUserPo po = IdCardUserPo.fromVo(vo);
+        boolean save = this.idCardUserMapperService.save(po);
+        log.info("新增证件用户：{} 结果：{}",po,save);
+        return IdCardUserPo.toVo(po);
     }
 }

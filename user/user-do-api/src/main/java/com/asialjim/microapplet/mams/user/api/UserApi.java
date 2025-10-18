@@ -32,4 +32,7 @@ public interface UserApi {
 
     @GetMapping("/{id}")
     UserVo queryByUserid(@PathVariable("id") String userid);
+
+    @GetMapping("/phone")
+    String currentUserPhone();
 }

@@ -66,6 +66,18 @@ public class ChlUserMapperServiceImpl extends ServiceImpl<ChlUserBaseMapper, Chl
                 .one();
     }
 
+
+
+    @Override
+    @Cacheable(value = UserCache.Name.chlUserPoOf, key = "#userid + ':' + #chl + ':' + #chlAppid + ':' + #chlAppType")
+    public ChlUserPo queryByUserIdAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType) {
+        return queryChain()
+                .where(ChlUserPo::getUserid).eq(userid)
+                .where(ChlUserPo::getChlType).eq(chl)
+                .where(ChlUserPo::getChlAppid).eq(chlAppid)
+                .where(ChlUserPo::getChlAppType).eq(chlAppType)
+                .one();
+    }
     /**
      * 按id查询
      *
@@ -127,4 +139,5 @@ public class ChlUserMapperServiceImpl extends ServiceImpl<ChlUserBaseMapper, Chl
     public List<ChlUserPo> queryByUserid(String id) {
         return queryChain().where(ChlUserPo::getUserid).eq(id).list();
     }
+
 }
