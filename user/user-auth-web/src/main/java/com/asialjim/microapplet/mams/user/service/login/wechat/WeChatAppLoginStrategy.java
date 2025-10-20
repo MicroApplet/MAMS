@@ -22,19 +22,17 @@ import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import com.asialjim.microapplet.mams.user.api.UserSessionApi;
-import com.asialjim.microapplet.mams.user.service.login.wechat.cons.WeChatLoginRes;
+import com.asialjim.microapplet.wechat.cons.WeChatLoginRes;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.LoginReq;
+import com.asialjim.microapplet.mams.wx.applet.api.WxAppletUserInfoApi;
+import com.asialjim.microapplet.wechat.applet.session.WeChatAppletUserSession;
 import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
-import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
-import com.asialjim.microapplet.wechat.remoting.context.BaseWeChatApiRes;
-import com.asialjim.microapplet.wechat.remoting.context.WeChatApiRes;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.Optional;
 
 /**
  * 微信小程序登录策略
@@ -50,6 +48,8 @@ public class WeChatAppLoginStrategy implements WeChatTypeLoginStrategy {
     private UserSessionApi userSessionApi;
     @Resource
     private WeChatAppletUserRemoting weChatAppletUserRemoting;
+    @Resource
+    private WxAppletUserInfoApi wxAppletUserInfoApi;
 
     /**
      * 支持CHL应用类型
@@ -71,14 +71,7 @@ public class WeChatAppLoginStrategy implements WeChatTypeLoginStrategy {
      */
     @Override
     public MamsSession login(ChlAppVo chlApp, LoginReq req) {
-        WeChatAppletUserLoginRes session;
-        try {
-            session = this.weChatAppletUserRemoting.login(chlApp.getChlAppId(), chlApp.getChlAppSecret(), req.getCode());
-            if (WeChatApiRes.notSuccess(session))
-                throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(Optional.ofNullable(session).map(BaseWeChatApiRes::getErrmsg).orElse("微信用户登录失败")));
-        } catch (Throwable e) {
-            throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(e.getMessage()));
-        }
+        WeChatAppletUserSession session = this.wxAppletUserInfoApi.login(chlApp.getChlAppId(), req.getCode());
 
         final ChlUserVo chlUser = new ChlUserVo();
         chlUser.setAppid(chlApp.getAppid());

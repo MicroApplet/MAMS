@@ -16,15 +16,27 @@
 
 package com.asialjim.microapplet.mams.service;
 
+import com.asialjim.microapplet.common.concurrent.ConcurrentRunner;
+import com.asialjim.microapplet.common.event.EventUtil;
 import com.asialjim.microapplet.wechat.applet.meta.PhoneInfo;
 import com.asialjim.microapplet.wechat.applet.meta.UserAuthorizationCode;
+import com.asialjim.microapplet.wechat.applet.session.WeChatAppletUserSession;
 import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import com.asialjim.microapplet.wechat.applet.user.meta.GetUserPhoneNumberRes;
+import com.asialjim.microapplet.wechat.applet.user.meta.WeChatAppletUserLoginRes;
+import com.asialjim.microapplet.wechat.application.WeChatApplication;
+import com.asialjim.microapplet.wechat.application.WeChatApplicationRepository;
+import com.asialjim.microapplet.wechat.cons.WeChatLoginRes;
+import com.asialjim.microapplet.wechat.remoting.context.BaseWeChatApiRes;
+import com.asialjim.microapplet.wechat.remoting.context.WeChatApiRes;
+import com.asialjim.microapplet.wechat.user.WeChatUserLoginEvent;
+import com.asialjim.microapplet.wechat.user.WeChatUserVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.Optional;
 
 /**
@@ -37,9 +49,10 @@ import java.util.Optional;
 @Slf4j
 @Service
 public class WxAppletUserInfoService {
-
     @Resource
     private WeChatAppletUserRemoting weChatAppletUserRemoting;
+    @Resource
+    private WeChatApplicationRepository.Aggregator aggregator;
 
     public String userPurePhoneNumber(String wxAppid, String code, String encryptedData, String iv) {
         GetUserPhoneNumberRes getUserPhoneNumberRes = this.weChatAppletUserRemoting.userPhoneNumber(wxAppid, new UserAuthorizationCode().setCode(code));
@@ -50,5 +63,32 @@ public class WxAppletUserInfoService {
                 .map(PhoneInfo::getPurePhoneNumber)
                 .filter(StringUtils::isNotBlank)
                 .orElse(StringUtils.EMPTY);
+    }
+
+    public WeChatAppletUserSession login(String wxAppid, String code) {
+        WeChatApplication app = this.aggregator.appByIndexThrowable(wxAppid);
+        WeChatAppletUserLoginRes login;
+        try {
+            login = this.weChatAppletUserRemoting.login(app.getAppid(), app.getSecret(), code);
+            if (WeChatApiRes.notSuccess(login))
+                throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(Optional.ofNullable(login)
+                        .map(BaseWeChatApiRes::getErrmsg).orElse("微信用户登录失败")));
+        } catch (Throwable e) {
+            throw WeChatLoginRes.WeChatUserLoginFailure.ex(Collections.singletonList(e.getMessage()));
+        }
+
+        ConcurrentRunner.runAllTask(() -> {
+            WeChatUserVo user = new WeChatUserVo();
+            user.setOpenid(login.getOpenid());
+            user.setUnionId(login.getUnionid());
+            user.setAppid(app.getAppid());
+            EventUtil.push(new WeChatUserLoginEvent().setWeChatUser(user));
+        });
+
+        WeChatAppletUserSession session = new WeChatAppletUserSession();
+        session.setOpenid(login.getOpenid());
+        session.setUnionid(login.getUnionid());
+        session.setSessionKey(login.getSessionKey());
+        return session;
     }
 }

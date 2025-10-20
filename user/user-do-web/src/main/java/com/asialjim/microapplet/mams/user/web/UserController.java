@@ -48,4 +48,15 @@ public class UserController implements UserApi {
     public String currentUserPhone() {
         return this.userService.currentUserPhone();
     }
+
+    @Override
+    public String currentNickname() {
+        return this.userService.currentNickname();
+    }
+
+    @Override
+    public String currentAvatar() {
+        return this.userService.currentAvatar();
+    }
+
 }

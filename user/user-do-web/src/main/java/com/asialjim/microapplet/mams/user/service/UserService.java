@@ -26,8 +26,11 @@ import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.UserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.ChlUserRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.UserRepository;
 import com.asialjim.microapplet.mams.user.vo.UserVo;
+import com.asialjim.microapplet.mams.wx.common.api.WeChatUserApi;
+import com.asialjim.microapplet.wechat.user.WeChatUserVo;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.catalina.User;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
@@ -49,6 +52,41 @@ public class UserService {
     private ChlUserRepository chlUserRepository;
     @Resource
     private UserRepository userRepository;
+    @Resource
+    private WeChatUserApi weChatUserApi;
+
+
+    public String currentAvatar() {
+        MamsSession mamsSession = this.mamsSessionAttribute.currentLoginSession();
+        ChannelType channelType = ChannelType.codeOf(mamsSession.getChl());
+        switch (channelType) {
+            case WeChat -> {
+                WeChatUserVo weChatUserVo = weChatUserApi.queryByOpenid(mamsSession.getChlUserid());
+                return Optional.ofNullable(weChatUserVo).map(WeChatUserVo::getAvatar).orElse(StringUtils.EMPTY);
+            }
+            default -> {
+
+            }
+        }
+        return StringUtils.EMPTY;
+    }
+
+
+    public String currentNickname() {
+        MamsSession mamsSession = this.mamsSessionAttribute.currentLoginSession();
+        ChannelType channelType = ChannelType.codeOf(mamsSession.getChl());
+        switch (channelType) {
+            case WeChat -> {
+                WeChatUserVo weChatUserVo = weChatUserApi.queryByOpenid(mamsSession.getChlUserid());
+                return Optional.ofNullable(weChatUserVo).map(WeChatUserVo::getNickname).orElse(StringUtils.EMPTY);
+            }
+            default -> {
+
+            }
+        }
+        UserPo userPo = this.userRepository.queryById(mamsSession.getUserid());
+        return Optional.ofNullable(userPo).map(UserPo::getNickname).orElse(StringUtils.EMPTY);
+    }
 
     public String currentUserPhone() {
         MamsSession mamsSession = this.mamsSessionAttribute.currentLoginSession();
@@ -61,12 +99,12 @@ public class UserService {
             case WeChat -> chlAppType = ChannelAppType.WeChatPhone.getCode();
             case Mobile -> chlAppType = ChannelAppType.Phone.getCode();
         }
-        log.info("获取用户：{}  {} 渠道 {} 应用下的 {} 手机号",userid, chl,chlAppid, chlAppType);
+        log.info("获取用户：{}  {} 渠道 {} 应用下的 {} 手机号", userid, chl, chlAppid, chlAppType);
         if (StringUtils.isBlank(chlAppType))
             return StringUtils.EMPTY;
 
-        ChlUserPo chlUserPo = this.chlUserRepository.queryByUserIdAndChlAndChlAppidAndChlAppType(userid,chl, chlAppid, chlAppType);
-        log.info("获取用户：{}  {} 渠道 {} 应用下的 {} 渠道用户信息：{}",userid, chl,chlAppid, chlAppType,chlUserPo);
+        ChlUserPo chlUserPo = this.chlUserRepository.queryByUserIdAndChlAndChlAppidAndChlAppType(userid, chl, chlAppid, chlAppType);
+        log.info("获取用户：{}  {} 渠道 {} 应用下的 {} 渠道用户信息：{}", userid, chl, chlAppid, chlAppType, chlUserPo);
 
         return Optional.ofNullable(chlUserPo)
                 .map(ChlUserPo::getChlUserid)
@@ -78,4 +116,5 @@ public class UserService {
         UserPo userPo = this.userRepository.queryById(userid);
         return UserPo.toVo(userPo);
     }
+
 }

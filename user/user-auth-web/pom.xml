@@ -50,7 +50,12 @@
             <artifactId>user-auth-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>wx-applet-do-cloud</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
 
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
@@ -88,6 +93,7 @@
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-security-core</artifactId>
         </dependency>
+
     </dependencies>
 
 </project>

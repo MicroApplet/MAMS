@@ -1,5 +1,5 @@
 /*
- *    Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *    Copyright 2014-$year.today <a href="mailto:asialjim@qq.com">Asial Jim</a>
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -14,27 +14,15 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.service.login.wechat.cons;
-
-import com.asialjim.microapplet.common.context.ResCode;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
+package com.asialjim.microapplet.mams.wx.common.cons;
 
 /**
- * 微信用户登录相关的响应结果
+ * APP 应用常量
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/24, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
-@Getter
-@AllArgsConstructor
-public enum WeChatLoginRes implements ResCode {
-    WeChatUserLoginFailure(400,true,"WECHAT:USER:LOGIN-FAILURE","微信登录失败");
-
-    private final int status;
-    private final boolean thr;
-    private final String code;
-    private final String msg;
+public interface WxCommonServerCons {
+    String APP_FEIGN_NAME = "${feign.domain.wx.common.service}";
 }

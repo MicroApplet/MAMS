@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.wx.applet.api;
 
+import com.asialjim.microapplet.wechat.applet.session.WeChatAppletUserSession;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,4 +37,7 @@ public interface WxAppletUserInfoApi {
                                @RequestParam String code,
                                @RequestParam(required = false) String encryptedData,
                                @RequestParam(required = false) String iv);
+
+    @GetMapping("/login")
+    WeChatAppletUserSession login(@RequestParam String wxAppid, @RequestParam String code);
 }

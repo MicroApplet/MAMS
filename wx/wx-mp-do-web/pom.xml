@@ -70,6 +70,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>wechat-official-repository</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>wechat-official-service</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
@@ -100,14 +109,6 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-official-repository</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-official-service</artifactId>
         </dependency>
 
     </dependencies>

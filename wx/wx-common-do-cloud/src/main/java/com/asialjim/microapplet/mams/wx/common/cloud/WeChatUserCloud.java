@@ -14,31 +14,19 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.user.api;
+package com.asialjim.microapplet.mams.wx.common.cloud;
 
-import com.asialjim.microapplet.mams.user.vo.UserVo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.asialjim.microapplet.mams.wx.common.api.WeChatUserApi;
+import com.asialjim.microapplet.mams.wx.common.cons.WxCommonServerCons;
+import org.springframework.cloud.openfeign.FeignClient;
 
 /**
- * 用户相关API
+ * 微信用户云服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
- * @since 2025/9/30, &nbsp;&nbsp; <em>version:1.0</em>
+ * @since 2025/10/20, &nbsp;&nbsp; <em>version:1.0</em>
  */
-public interface UserApi {
-    String path = "/user";
-
-    @GetMapping("/{id}")
-    UserVo queryByUserid(@PathVariable("id") String userid);
-
-    @GetMapping("/phone")
-    String currentUserPhone();
-
-    @GetMapping("/nickname")
-    String currentNickname();
-
-    @GetMapping("/avatar")
-    String currentAvatar();
+@FeignClient(value = WxCommonServerCons.APP_FEIGN_NAME, path = WeChatUserApi.path)
+public interface WeChatUserCloud extends WeChatUserApi {
 }
