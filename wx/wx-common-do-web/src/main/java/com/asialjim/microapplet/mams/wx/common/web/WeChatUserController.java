@@ -17,6 +17,8 @@
 package com.asialjim.microapplet.mams.wx.common.web;
 
 import com.asialjim.microapplet.mams.wx.common.api.WeChatUserApi;
+import com.asialjim.microapplet.mams.wx.common.vo.UpdateAvatarRequest;
+import com.asialjim.microapplet.mams.wx.common.vo.UpdateNicknameRequest;
 import com.asialjim.microapplet.wechat.user.WeChatUserRepository;
 import com.asialjim.microapplet.wechat.user.WeChatUserVo;
 import jakarta.annotation.Resource;
@@ -40,5 +42,15 @@ public class WeChatUserController implements WeChatUserApi {
     @Override
     public WeChatUserVo queryByOpenid(String id) {
         return this.weChatUserRepository.queryByOpenid(id);
+    }
+
+    @Override
+    public WeChatUserVo updateAvatarByOpenid(String id, UpdateAvatarRequest req) {
+        return this.weChatUserRepository.updateAvatarByOpenid(id,req.getAvatar());
+    }
+
+    @Override
+    public WeChatUserVo updateNicknameByOpenid(String id, UpdateNicknameRequest req) {
+        return this.weChatUserRepository.updateNicknameByOpenid(id,req.getNickname());
     }
 }

@@ -37,18 +37,6 @@
     <dependencies>
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-common-module</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-common-remoting</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-common-repository</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
             <artifactId>wechat-common-service</artifactId>
         </dependency>
 

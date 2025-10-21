@@ -16,9 +16,13 @@
 
 package com.asialjim.microapplet.mams.wx.common.api;
 
+import com.asialjim.microapplet.mams.wx.common.vo.UpdateAvatarRequest;
+import com.asialjim.microapplet.mams.wx.common.vo.UpdateNicknameRequest;
 import com.asialjim.microapplet.wechat.user.WeChatUserVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 /**
  * 微信用户API
@@ -32,4 +36,10 @@ public interface WeChatUserApi {
 
     @GetMapping("/{id}")
     WeChatUserVo queryByOpenid(@PathVariable("id") String id);
+
+    @PutMapping("/{id}/avatar")
+    WeChatUserVo updateAvatarByOpenid(@PathVariable("id") String id, @RequestBody UpdateAvatarRequest req);
+
+    @PutMapping("/{id}/nickname")
+    WeChatUserVo updateNicknameByOpenid(@PathVariable("id") String id, @RequestBody UpdateNicknameRequest req);
 }

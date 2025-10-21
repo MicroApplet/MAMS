@@ -48,6 +48,10 @@
 
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>wechat-common-service</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
             <artifactId>wechat-applet-starter</artifactId>
         </dependency>
 

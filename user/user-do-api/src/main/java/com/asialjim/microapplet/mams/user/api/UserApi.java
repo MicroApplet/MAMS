@@ -16,9 +16,11 @@
 
 package com.asialjim.microapplet.mams.user.api;
 
+import com.asialjim.microapplet.mams.user.vo.UpdateAvatarReq;
+import com.asialjim.microapplet.mams.user.vo.UpdateNicknameReq;
 import com.asialjim.microapplet.mams.user.vo.UserVo;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户相关API
@@ -39,6 +41,15 @@ public interface UserApi {
     @GetMapping("/nickname")
     String currentNickname();
 
+    @PutMapping("/nickname")
+    String updateNickname(@RequestBody UpdateNicknameReq req);
+
     @GetMapping("/avatar")
     String currentAvatar();
+
+    @PutMapping("/avatar")
+    String updateAvatar(@RequestBody UpdateAvatarReq req);
+
+    @PostMapping("/avatar")
+    String uploadAvatar(@RequestPart("avatar") MultipartFile avatar);
 }

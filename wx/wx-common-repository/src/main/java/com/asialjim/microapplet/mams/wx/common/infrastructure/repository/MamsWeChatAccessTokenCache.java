@@ -19,6 +19,8 @@ package com.asialjim.microapplet.mams.wx.common.infrastructure.repository;
 import com.asialjim.microapplet.mams.wx.common.infrastructure.cache.MamsWxCommonCache;
 import com.asialjim.microapplet.wechat.remoting.context.WeChatAccessTokenCache;
 import lombok.AllArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -102,6 +104,7 @@ public class MamsWeChatAccessTokenCache implements WeChatAccessTokenCache {
 
     @AllArgsConstructor
     static class UUidLock extends ReentrantLock {
+        private static final Logger log = LoggerFactory.getLogger(UUidLock.class);
         private static final String KEY = "tmp:wechat:api:access-token:lock:";
         private final StringRedisTemplate stringRedisTemplate;
         private final String appid;
@@ -109,9 +112,11 @@ public class MamsWeChatAccessTokenCache implements WeChatAccessTokenCache {
 
         @Override
         public void lock() {
+            log.info("尝试枷锁");
             boolean tag;
             do {
                 tag = tryLock(5, TimeUnit.SECONDS);
+                log.info("枷锁结果：{}",tag);
             } while (!tag);
         }
 
@@ -119,6 +124,7 @@ public class MamsWeChatAccessTokenCache implements WeChatAccessTokenCache {
         public boolean tryLock(long time, TimeUnit unit) {
             String key = KEY + appid;
             Boolean ok = stringRedisTemplate.opsForValue().setIfAbsent(key, uuid, time, unit);
+            log.info("redis 加锁结果");
             return Boolean.TRUE.equals(ok);
         }
 

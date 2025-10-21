@@ -25,6 +25,7 @@ import com.asialjim.microapplet.wechat.remoting.context.WeChatAccessTokenReposit
 import com.asialjim.microapplet.wechat.remoting.context.WeChatApiRes;
 import com.asialjim.microapplet.wechat.remoting.meta.WeChatAccessTokenRes;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -42,6 +43,7 @@ import java.util.concurrent.locks.Lock;
  * @version 1.0
  * @since 2025年9月23日, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 @AllArgsConstructor
 public class MamsWeChatAccessTokenRepository implements WeChatAccessTokenRepository {
@@ -90,7 +92,9 @@ public class MamsWeChatAccessTokenRepository implements WeChatAccessTokenReposit
         if (StringUtils.isNotBlank(accessToken))
             return accessToken;
 
+        log.info("access_token 获取失败，尝试远程获取");
         Lock lock = accessTokenCache.getLock(targetAppid);
+        log.info("access_token 获取锁：{}", lock);
         lock.lock();
         try {
             accessToken = accessTokenCache.get(appid);

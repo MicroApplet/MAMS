@@ -22,10 +22,13 @@ import com.asialjim.microapplet.mams.user.api.UserSessionApi;
 import com.asialjim.microapplet.mams.user.service.UserService;
 import com.asialjim.microapplet.mams.user.service.session.UserSessionService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import com.asialjim.microapplet.mams.user.vo.UpdateAvatarReq;
+import com.asialjim.microapplet.mams.user.vo.UpdateNicknameReq;
 import com.asialjim.microapplet.mams.user.vo.UserVo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 用户会话控制器
@@ -55,8 +58,22 @@ public class UserController implements UserApi {
     }
 
     @Override
+    public String updateNickname(UpdateNicknameReq req) {
+        return this.userService.updateNickname(req);
+    }
+
+    @Override
     public String currentAvatar() {
         return this.userService.currentAvatar();
     }
 
+    @Override
+    public String updateAvatar(UpdateAvatarReq req) {
+        return this.userService.updateAvatar(req);
+    }
+
+    @Override
+    public String uploadAvatar(MultipartFile data) {
+        return this.userService.uploadAvatar(data);
+    }
 }

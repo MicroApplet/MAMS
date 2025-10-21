@@ -71,11 +71,7 @@
 
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-official-repository</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>wechat-official-service</artifactId>
+            <artifactId>wechat-official-starter</artifactId>
         </dependency>
 
         <dependency>

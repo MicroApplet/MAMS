@@ -84,6 +84,11 @@ public class WeChatPhoneUserRegistrarStrategy implements ChlUserRegistrarStrateg
         // 手机号密文向量
         String iv = user.getChlUserToken();
 
+        log.info("appid:{}",wxAppid);
+        log.info("code:{}",code);
+        log.info("encrypt:{}",encryptedData);
+        log.info("iv:{}",iv);
+
         String phone = this.wxAppletUserInfoApi.userPurePhoneNumber(wxAppid,code,encryptedData,iv);
         if (StringUtils.isBlank(phone))
             UserRs.UserRegisterFailure.thr(Collections.singletonList("用户微信手机号为空"));
