@@ -41,4 +41,9 @@ public interface IdCardUserApi {
 
     @PostMapping("/authenticate")
     UserIdCardSensitiveVo authenticate(@RequestBody UserIdCardAuthenticateReq req);
+
+    @GetMapping("/userid-list")
+    List<String> queryUseridByNameOfIdNoForAppid(@RequestParam(required = false) String name,
+                                                 @RequestParam(required = false) String idNo,
+                                                 @RequestParam String appid);
 }

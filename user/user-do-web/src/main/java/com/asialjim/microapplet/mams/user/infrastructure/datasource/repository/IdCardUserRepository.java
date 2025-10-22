@@ -19,9 +19,14 @@ package com.asialjim.microapplet.mams.user.infrastructure.datasource.repository;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.IdCardUserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.IdCardUserMapperService;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryChain;
+import com.mybatisflex.core.query.QueryWrapper;
+import com.mybatisflex.core.util.LambdaGetter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -53,19 +58,33 @@ public class IdCardUserRepository {
     }
 
     public IdCardUserVo queryByUseridAndIdType(String userid, String idType) {
-        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdType(userid,idType);
+        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdType(userid, idType);
         return IdCardUserPo.toVo(po);
     }
 
     public IdCardUserVo queryByUseridAndIdTypeAndIdNo(String userid, String idType, String idNo) {
-        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdTypeAndIdNo(userid,idType,idNo);
+        IdCardUserPo po = this.idCardUserMapperService.queryByUseridAndIdTypeAndIdNo(userid, idType, idNo);
         return IdCardUserPo.toVo(po);
     }
 
     public IdCardUserVo save(IdCardUserVo vo) {
         IdCardUserPo po = IdCardUserPo.fromVo(vo);
         boolean save = this.idCardUserMapperService.save(po);
-        log.info("新增证件用户：{} 结果：{}",po,save);
+        log.info("新增证件用户：{} 结果：{}", po, save);
         return IdCardUserPo.toVo(po);
+    }
+
+    public List<String> queryUseridByNameOfIdNoForAppid(String name, String idNo, String appid) {
+        QueryChain<IdCardUserPo> chain = this.idCardUserMapperService.queryChain();
+        if (StringUtils.isNotBlank(name))
+            chain.where(IdCardUserPo::getName).eq(name);
+        if (StringUtils.isNotBlank(idNo))
+            chain.where(IdCardUserPo::getIdNo).eq(idNo);
+        if (StringUtils.isNotBlank(appid))
+            chain.where(IdCardUserPo::getAppid).eq(appid);
+        //noinspection unchecked
+        return chain.select(IdCardUserPo::getUserid)
+                .pageAs(Page.of(1, 1000), String.class)
+                .getRecords();
     }
 }

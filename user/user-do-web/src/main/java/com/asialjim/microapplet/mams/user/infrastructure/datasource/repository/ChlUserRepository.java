@@ -19,6 +19,8 @@ package com.asialjim.microapplet.mams.user.infrastructure.datasource.repository;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.ChlUserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.ChlUserMapperService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.query.QueryChain;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -118,5 +120,21 @@ public class ChlUserRepository {
 
     public ChlUserPo queryByUserIdAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType) {
         return this.chlUserMapperService.queryByUserIdAndChlAndChlAppidAndChlAppType(userid, chl, chlAppid, chlAppType);
+    }
+
+    public List<String> queryUseridByChlAppidTypeForAppid(String chl, String chlAppid, String chlAppType, String appid) {
+        QueryChain<ChlUserPo> chain = chlUserMapperService.queryChain();
+        if (StringUtils.isNotBlank(chl))
+            chain.where(ChlUserPo::getChlType).eq(chl);
+        if (StringUtils.isNotBlank(chlAppid))
+            chain.where(ChlUserPo::getChlAppid).eq(chlAppid);
+        if (StringUtils.isNotBlank(chlAppType))
+            chain.where(ChlUserPo::getChlAppType).eq(chlAppType);
+        if (StringUtils.isNotBlank(appid))
+            chain.where(ChlUserPo::getAppid).eq(appid);
+        //noinspection unchecked
+        return chain.select(ChlUserPo::getUserid)
+                .pageAs(Page.of(1, 1000), String.class)
+                .getRecords();
     }
 }

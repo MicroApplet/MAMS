@@ -31,6 +31,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.IDN;
 import java.util.List;
 
 /**
@@ -60,5 +61,10 @@ public class IdCardUserController implements IdCardUserApi {
     @Override
     public UserIdCardSensitiveVo authenticate(@Validated UserIdCardAuthenticateReq req) {
         return this.idCardUserService.authenticate(req);
+    }
+
+    @Override
+    public List<String> queryUseridByNameOfIdNoForAppid(String name, String idNo, String appid) {
+        return this.idCardUserService.queryUseridByNameOfIdNoForAppid(name, idNo,appid);
     }
 }

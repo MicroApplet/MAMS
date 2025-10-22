@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.web;
 
 import com.asialjim.microapplet.mams.user.api.ChlUserApi;
+import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.ChlUserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.ChlUserRepository;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,16 @@ public class ChlUserController implements ChlUserApi {
     @Override
     public List<ChlUserVo> queryByUserid(String userid) {
         return this.chlUserRepository.queryByUserId(userid);
+    }
+
+    @Override
+    public ChlUserVo queryByUseridAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType) {
+        ChlUserPo chlUserPo = this.chlUserRepository.queryByUserIdAndChlAndChlAppidAndChlAppType(userid, chl, chlAppid, chlAppType);
+        return ChlUserPo.toVo(chlUserPo);
+    }
+
+    @Override
+    public List<String> queryUseridByChlAppidTypeForAppid(String chl, String chlAppid, String chlAppType, String appid) {
+        return this.chlUserRepository.queryUseridByChlAppidTypeForAppid(chl,chlAppid,chlAppType,appid);
     }
 }

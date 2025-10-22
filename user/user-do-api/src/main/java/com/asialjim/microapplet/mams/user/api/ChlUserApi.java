@@ -17,9 +17,9 @@
 package com.asialjim.microapplet.mams.user.api;
 
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
-import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -36,4 +36,16 @@ public interface ChlUserApi {
 
     @GetMapping("/user/{userid}")
     List<ChlUserVo> queryByUserid(@PathVariable("userid") String userid);
+
+    @GetMapping("/user/{userid}/chl/{chl}/appid/{chlAppid}/app-type/{chlAppType}")
+    ChlUserVo queryByUseridAndChlAndChlAppidAndChlAppType(@PathVariable("userid") String userid,
+                                                          @PathVariable("chl") String chl,
+                                                          @PathVariable("chlAppid") String chlAppid,
+                                                          @PathVariable("chlAppType") String chlAppType);
+
+    @GetMapping("/userid")
+    List<String> queryUseridByChlAppidTypeForAppid(@RequestParam String chl,
+                                                   @RequestParam String chlAppid,
+                                                   @RequestParam String chlAppType,
+                                                   @RequestParam String appid);
 }

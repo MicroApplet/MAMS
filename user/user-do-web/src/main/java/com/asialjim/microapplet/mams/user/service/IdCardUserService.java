@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.service;
 
+import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.human.IdCardType;
 import com.asialjim.microapplet.common.human.IdCardTypeRs;
 import com.asialjim.microapplet.common.security.MamsSession;
@@ -30,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -91,5 +94,13 @@ public class IdCardUserService {
         }
 
         return this.current(req.getIdType());
+    }
+
+    public List<String> queryUseridByNameOfIdNoForAppid(String name, String idNo, String appid) {
+        if (StringUtils.isAllBlank(name,idNo))
+            Res.ParameterEmptyEx.thr(Collections.singletonList("姓名、证件号不可都为空"));
+        if (StringUtils.isNotBlank(appid))
+            Res.ParameterEmptyEx.thr(Collections.singletonList("应用编号不可都为空"));
+        return this.idCardUserRepository.queryUseridByNameOfIdNoForAppid(name,idNo,appid);
     }
 }
