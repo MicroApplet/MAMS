@@ -33,7 +33,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2025/9/22, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface AuthApi {
-    String path = StringUtils.EMPTY;
+    String path = "";
 
 
     /**

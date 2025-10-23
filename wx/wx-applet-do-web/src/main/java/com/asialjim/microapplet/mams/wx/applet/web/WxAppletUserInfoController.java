@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.web;
+package com.asialjim.microapplet.mams.wx.applet.web;
 
-import com.asialjim.microapplet.mams.service.WxAppletUserInfoService;
+import com.asialjim.microapplet.mams.wx.applet.service.WxAppletUserInfoService;
 import com.asialjim.microapplet.mams.wx.applet.api.WxAppletUserInfoApi;
 import com.asialjim.microapplet.wechat.applet.session.WeChatAppletUserSession;
 import lombok.AllArgsConstructor;

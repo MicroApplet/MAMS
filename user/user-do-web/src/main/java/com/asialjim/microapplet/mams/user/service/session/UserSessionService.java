@@ -78,7 +78,12 @@ public class UserSessionService {
 
         UserPo mainUser;
         ChlUserPo chlUserPo = this.chlUserRepository.queryByChlTypeChlAppidChlAppTypeAndChlUserId(chlUser.getChlType(), chlUser.getChlAppId(), chlUser.getChlAppType(), chlUser.getChlUserId());
-        log.info("当前渠道用户：{} 查询结果：{}", chlUser.getChlUserId(), chlUserPo);
+        log.info("\r\n查询渠道：{}  {} 应用： {} 用户： {} 结果：\r\n\t{}",
+                chlUser.getChlType(),
+                chlUser.getChlAppType(),
+                chlUser.getChlAppId(),
+                chlUser.getChlUserId(),
+                chlUserPo);
 
         // 创建渠道用户
         if (Objects.isNull(chlUserPo)) {

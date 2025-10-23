@@ -1,9 +1,9 @@
 server:
-  port: ${port:10022}
+  port: ${port:10024}
 
 spring:
   application:
-    name: user_auth
+    name: user-auth
 
   config:
     import:

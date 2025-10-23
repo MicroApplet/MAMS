@@ -1,9 +1,13 @@
 server:
-  port: ${port:10102}
+  port: ${port:10114}
+  # 10111 给 公众号领域服务对应 /api/domain/wx/mp
+  # 10112 给 公众号应用服务对应 /api/rest/wx/mp
+  # 10113 给 公众号管理服务对应 /api/admin/wx/mp
+  # 10114 给 公众号开放服务对应 /api/open/wx/mp
 
 spring:
   application:
-    name: wx_mp_domain
+    name: wx-mp-open
 
   config:
     import:

@@ -24,5 +24,5 @@ package com.asialjim.microapplet.mams.wx.applet.cons;
  * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface WxAppletServerCons {
-    String APP_FEIGN_NAME = "${feign.domain.wx.applet.service}";
+    String APP_FEIGN_NAME = "${feign.wx.applet.domain}";
 }

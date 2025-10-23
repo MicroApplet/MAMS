@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams.service;
+package com.asialjim.microapplet.mams.wx.applet.service;
 
 import com.asialjim.microapplet.common.concurrent.ConcurrentRunner;
 import com.asialjim.microapplet.common.event.EventUtil;

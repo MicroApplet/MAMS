@@ -20,6 +20,7 @@ import com.asialjim.microapplet.mams.user.infrastructure.cache.UserCache;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.mapper.ChlUserBaseMapper;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.ChlUserPo;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.service.ChlUserMapperService;
+import com.mybatisflex.core.query.QueryChain;
 import com.mybatisflex.spring.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -58,12 +59,15 @@ public class ChlUserMapperServiceImpl extends ServiceImpl<ChlUserBaseMapper, Chl
                                                                   String chlAppType,
                                                                   String chlUserId) {
 
-        return queryChain()
+
+        QueryChain<ChlUserPo> chain = queryChain()
                 .where(ChlUserPo::getChlType).eq(chlType)
                 .where(ChlUserPo::getChlAppid).eq(chlAppId)
                 .where(ChlUserPo::getChlAppType).eq(chlAppType)
-                .where(ChlUserPo::getChlUserid).eq(chlUserId)
-                .one();
+                .where(ChlUserPo::getChlUserid).eq(chlUserId);
+
+        System.out.println(chain.toSQL());
+        return chain.one();
     }
 
 

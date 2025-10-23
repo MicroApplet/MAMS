@@ -27,8 +27,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025/9/25, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class WxMpDomain {
+public class WxMpOpen {
     public static void main(String[] args) {
-        App.voidStart(WxMpDomain.class,args);
+        App.voidStart(WxMpOpen.class,args);
     }
 }

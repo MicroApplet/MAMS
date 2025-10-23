@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package com.asialjim.microapplet.mams;
+package com.asialjim.microapplet.mams.wx.applet;
 
 
 import com.asialjim.microapplet.common.application.App;

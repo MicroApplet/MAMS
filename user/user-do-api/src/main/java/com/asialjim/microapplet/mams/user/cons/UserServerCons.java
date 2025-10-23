@@ -24,5 +24,6 @@ package com.asialjim.microapplet.mams.user.cons;
  * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface UserServerCons {
-    String APP_FEIGN_NAME = "${feign.domain.user.service}";
+    String APP_FEIGN_NAME = "${feign.user.domain}";
+
 }

@@ -1,8 +1,0 @@
-
-mybatis-flex:
-  global-config:
-    version-column: version
-    logic-delete-column: deleted
-    normal-value-of-logic-delete: 0
-  configuration:
-    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

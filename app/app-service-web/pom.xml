@@ -36,6 +36,41 @@
 
 
 
+    <dependencies>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>app-do-cloud</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>user-auth-cloud</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-web-tomcat</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-web-nacos</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-web-feign</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-cache-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet</groupId>
+            <artifactId>commons-security-core</artifactId>
+        </dependency>
+
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -49,5 +84,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

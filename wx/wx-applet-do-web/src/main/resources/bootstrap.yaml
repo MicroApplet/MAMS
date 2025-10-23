@@ -1,9 +1,9 @@
 server:
-  port: ${port:10103}
+  port: ${port:10121}
 
 spring:
   application:
-    name: wx_applet_domain
+    name: wx-applet-domain
 
   config:
     import:

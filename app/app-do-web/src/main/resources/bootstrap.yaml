@@ -1,9 +1,9 @@
 server:
-  port: ${port:10012}
+  port: ${port:10011}
 
 spring:
   application:
-    name: app_domain
+    name: app-domain
 
   config:
     import:

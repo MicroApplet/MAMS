@@ -33,7 +33,7 @@ import java.util.List;
  * @since 2025/9/18, &nbsp;&nbsp; <em>version:1.0</em>
  */
 public interface AppApi {
-    String path = StringUtils.EMPTY;
+    String path = "";
 
     /**
      * 按id查询

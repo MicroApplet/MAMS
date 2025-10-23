@@ -49,6 +49,7 @@ public class AuthController implements AuthApi {
      * @param chlAppid 登录渠道应用编号
      * @param req      登录参数
      * @return {@link String}
+     * @ignoreResponseBodyAdvice
      */
     @RwIgnore
     @Override
@@ -59,7 +60,7 @@ public class AuthController implements AuthApi {
     /**
      * 身份验证
      *
-     * @param token    令牌
+     * @param token 令牌
      * @return {@link MamsSession}
      */
     @Override
