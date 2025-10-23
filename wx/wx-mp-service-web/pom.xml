@@ -46,11 +46,7 @@
             <artifactId>app-do-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>wx-mp-do-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
