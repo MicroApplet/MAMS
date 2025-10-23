@@ -13,9 +13,7 @@
     <packaging>pom</packaging>
     <modules>
         <module>app-do-api</module>
-        <module>app-service-api</module>
         <module>app-do-cloud</module>
-        <module>app-service-cloud</module>
         <module>app-do-web</module>
         <module>app-service-web</module>
         <module>app-admin-web</module>

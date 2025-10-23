@@ -97,25 +97,6 @@
 
 
     <build>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.codehaus.mojo</groupId>
-                    <artifactId>versions-maven-plugin</artifactId>
-                    <version>2.16.2</version>
-                    <executions>
-                        <execution>
-                            <id>pre-release-update</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>update-child-modules</goal>
-                            </goals>
-                            <inherited>false</inherited>
-                        </execution>
-                    </executions>
-                </plugin>
-            </plugins>
-        </pluginManagement>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -124,27 +105,6 @@
             <plugin>
                 <groupId>com.ly.smart-doc</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <configFile>./src/main/resources/smart-doc.json</configFile>
-                    <projectName>${project.description}</projectName>
-                    <includes>
-                        <!-- 使用了mybatis-plus的Page分页需要include所使用的源码包 -->
-                        <!--
-                        <include>com.baomidou:mybatis-plus-extension</include>
-                        -->
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <!--如果不需要在执行编译时启动smart-doc，则将phase注释掉-->
-                        <phase>compile</phase>
-                        <goals>
-                            <!--smart-doc提供了html、openapi、markdown等goal，可按需配置-->
-                            <goal>html</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

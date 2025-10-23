@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: serviceapp
+    name: app_service
 
   config:
     import:

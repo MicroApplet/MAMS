@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: userdomain
+    name: user_domain
   config:
     import:
       - nacos:feign.yaml

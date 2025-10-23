@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: adminapp
+    name: app_admin
 
   config:
     import:

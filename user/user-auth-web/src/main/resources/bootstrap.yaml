@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: userauth
+    name: user_auth
 
   config:
     import:

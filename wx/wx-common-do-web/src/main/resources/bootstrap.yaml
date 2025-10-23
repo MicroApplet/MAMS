@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: wxcommon
+    name: wx_common_domain
 
   config:
     import:

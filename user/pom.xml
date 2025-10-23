@@ -36,6 +36,7 @@
         <module>user-auth-cloud</module>
         <module>user-auth-web</module>
         <module>user-admin-web</module>
+        <module>user-service-web</module>
     </modules>
 
     <properties>

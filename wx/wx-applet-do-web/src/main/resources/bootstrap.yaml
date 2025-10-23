@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: wxapplet
+    name: wx_applet_domain
 
   config:
     import:

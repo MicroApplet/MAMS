@@ -1,0 +1,12 @@
+{
+    "serverUrl": "https://dev.asialjim.cn/api/open/user/auth",
+    "outPath": "src/main/resources/static/doc",
+    "isStrict": false,
+    "allInOne": true,
+    "createDebugPage": true,
+    "packageFilters": "com.asialjim.microapplet.mams.user.web",
+    "style": "xt256",
+    "projectName": "smart-doc文档",
+    "showAuthor": false,
+    "allInOneDocFileName": "index.html"
+}
