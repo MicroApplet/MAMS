@@ -21,7 +21,9 @@ import com.asialjim.microapplet.mams.user.infrastructure.datasource.po.ChlUserPo
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.ChlUserRepository;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -41,18 +43,24 @@ public class ChlUserController implements ChlUserApi {
 
 
     @Override
-    public List<ChlUserVo> queryByUserid(String userid) {
+    public List<ChlUserVo> queryByUserid(@PathVariable("userid") String userid) {
         return this.chlUserRepository.queryByUserId(userid);
     }
 
     @Override
-    public ChlUserVo queryByUseridAndChlAndChlAppidAndChlAppType(String userid, String chl, String chlAppid, String chlAppType) {
+    public ChlUserVo queryByUseridAndChlAndChlAppidAndChlAppType(@PathVariable("userid") String userid,
+                                                                 @PathVariable("chl") String chl,
+                                                                 @PathVariable("chlAppid") String chlAppid,
+                                                                 @PathVariable("chlAppType") String chlAppType) {
         ChlUserPo chlUserPo = this.chlUserRepository.queryByUserIdAndChlAndChlAppidAndChlAppType(userid, chl, chlAppid, chlAppType);
         return ChlUserPo.toVo(chlUserPo);
     }
 
     @Override
-    public List<String> queryUseridByChlAppidTypeForAppid(String chl, String chlAppid, String chlAppType, String appid) {
-        return this.chlUserRepository.queryUseridByChlAppidTypeForAppid(chl,chlAppid,chlAppType,appid);
+    public List<String> queryUseridByChlAppidTypeForAppid(@RequestParam String chl,
+                                                          @RequestParam String chlAppid,
+                                                          @RequestParam String chlAppType,
+                                                          @RequestParam String appid) {
+        return this.chlUserRepository.queryUseridByChlAppidTypeForAppid(chl, chlAppid, chlAppType, appid);
     }
 }

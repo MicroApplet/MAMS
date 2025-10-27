@@ -23,28 +23,31 @@ import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.common.utils.PasswordStorage;
 import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
-import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.context.AppRs;
 import com.asialjim.microapplet.mams.app.context.ChlRs;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import com.asialjim.microapplet.mams.user.api.ChlUserApi;
+import com.asialjim.microapplet.mams.user.api.IdCardUserApi;
 import com.asialjim.microapplet.mams.user.infrastructure.config.JwtConfigProperty;
 import com.asialjim.microapplet.mams.user.infrastructure.repository.SessionRepository;
 import com.asialjim.microapplet.mams.user.service.login.ChlLoginStrategy;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
+import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import com.asialjim.microapplet.mams.user.vo.LoginReq;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
+import java.math.BigInteger;
 import java.time.Duration;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * 用户认证服务
@@ -60,8 +63,9 @@ public class AuthService {
     private final List<ChlLoginStrategy> chlLoginStrategies;
     private final JwtConfigProperty jwtConfigProperty;
     private final SessionRepository sessionRepository;
-    private final ChlAppApi chlAppApi;
+    private final IdCardUserApi idCardUserApi;
     private final ChlUserApi chlUserApi;
+    private final ChlAppApi chlAppApi;
 
     /**
      * 用户登录
@@ -131,9 +135,45 @@ public class AuthService {
      */
     public MamsSession auth(String token) {
         final MamsSession session = this.sessionRepository.getCache(token);
+        if (Objects.isNull(session))
+            return new MamsSession().setRoleBit(Role.TOURIST_BIT);
+
         log.info("用户令牌：{} 会话：{}", token, session);
         this.jwtConfigProperty.verify(token, session);
         session.expireAfter(jwtConfigProperty.jwtTimeout());
+
+        long bit = 0;
+        // 添加游客角色
+        bit |= Role.TOURIST_BIT;
+        log.info("添加游客角色结果：{}", BigInteger.valueOf(bit).toString(2));
+        // 添加登录角色
+        bit |= Role.AUTHENTICATED_BIT;
+        log.info("添加登录角色结果：{}", BigInteger.valueOf(bit).toString(2));
+
+        String userid = session.getUserid();
+        List<ChlUserVo> chlUserVos = this.chlUserApi.queryByUserid(userid);
+
+        // 添加渠道用户角色表
+        if (CollectionUtils.isNotEmpty(chlUserVos)) {
+            for (ChlUserVo chlUserVo : chlUserVos) {
+                if (Objects.isNull(chlUserVo))
+                    continue;
+                Long roleBit = chlUserVo.getRoleBit();
+                if (Objects.isNull(roleBit))
+                    continue;
+                bit |= roleBit;
+                log.info("添加\t{}\t\t角色结果：{}", roleBit, BigInteger.valueOf(bit).toString(2));
+            }
+        }
+
+        // 判定证件用户角色
+        List<IdCardUserVo> idCardUserVos = this.idCardUserApi.queryByUserid(userid);
+        if (CollectionUtils.isNotEmpty(idCardUserVos)) {
+            bit |= Role.ID_CARD_USER_BIT;
+            log.info("添加证件角色结果：{}", BigInteger.valueOf(bit).toString(2));
+        }
+        session.setRoleBit(bit);
+
         MamsSession mamsSession = this.sessionRepository.setCache(session);
         log.info("令牌续期：{} 会话：{}",token,mamsSession);
         return mamsSession;

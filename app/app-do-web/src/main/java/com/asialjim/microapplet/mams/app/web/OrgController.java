@@ -20,11 +20,12 @@ import com.asialjim.microapplet.mams.app.api.OrgApi;
 import com.asialjim.microapplet.mams.app.infrastructure.datasource.repository.OrgRepository;
 import com.asialjim.microapplet.mams.app.vo.OrgVo;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * APP 服务
+ * 机构 服务
  *
  * @author <a href="mailto:asialjim@hotmail.com">Asial Jim</a>
  * @version 1.0
@@ -43,7 +44,7 @@ public class OrgController implements OrgApi {
      * @return {@link OrgVo}
      */
     @Override
-    public OrgVo queryById(String id) {
+    public OrgVo queryById(@PathVariable("id") String id) {
         return this.orgRepository.queryById(id);
     }
 }

@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
+import com.asialjim.microapplet.common.cons.Headers;
 import com.asialjim.microapplet.common.context.Res;
 import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.common.security.MamsSession;
@@ -25,8 +26,7 @@ import com.asialjim.microapplet.mams.user.vo.LoginReq;
 import com.asialjim.microapplet.web.mvc.annotation.RwIgnore;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 身份验证控制器
@@ -53,7 +53,11 @@ public class AuthController implements AuthApi {
      */
     @RwIgnore
     @Override
-    public ResponseEntity<Result<String>> login(String appid, String chl, String chlAppid, String chlAppType, LoginReq req) {
+    public ResponseEntity<Result<String>> login(@RequestHeader(name = Headers.APP_ID) String appid,
+                                                @RequestHeader(name = Headers.APP_CHL) String chl,
+                                                @RequestHeader(name = Headers.APP_CHL_APPID, required = false) String chlAppid,
+                                                @RequestHeader(name = Headers.APP_CHL_APP_TYPE, required = false) String chlAppType,
+                                                @RequestBody LoginReq req) {
         return this.authService.login(appid, chl, chlAppid, chlAppType, req);
     }
 
@@ -64,7 +68,7 @@ public class AuthController implements AuthApi {
      * @return {@link MamsSession}
      */
     @Override
-    public MamsSession auth(String token) {
+    public MamsSession auth(@RequestParam(name = Headers.TOKEN) String token) {
         return this.authService.auth(token);
     }
 
@@ -74,7 +78,7 @@ public class AuthController implements AuthApi {
      * @param token 令牌
      */
     @Override
-    public String logout(String token) {
+    public String logout(@RequestParam(name = Headers.TOKEN) String token) {
         this.authService.logout(token);
         return Res.OK.getMsg();
     }

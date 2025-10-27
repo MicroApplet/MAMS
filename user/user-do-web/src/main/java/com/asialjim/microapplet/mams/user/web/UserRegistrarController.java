@@ -22,6 +22,7 @@ import com.asialjim.microapplet.mams.user.api.UserRegistrarApi;
 import com.asialjim.microapplet.mams.user.service.registrar.UserRegistrarService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,7 +46,7 @@ public class UserRegistrarController implements UserRegistrarApi {
      * @return {@link ChlUserVo}
      */
     @Override
-    public ChlUserVo register(ChlUserVo user) {
+    public ChlUserVo register(@RequestBody ChlUserVo user) {
         return this.userRegistrarService.register(user);
     }
 
@@ -61,7 +62,8 @@ public class UserRegistrarController implements UserRegistrarApi {
      * @return {@link ChlUserVo}
      */
     @Override
-    public ChlUserVo logoff(MamsSession session) {
+    public ChlUserVo logoff(@RequestBody MamsSession session) {
+        // TODO
         return null;
     }
 }

@@ -152,8 +152,8 @@ public class UserService {
         return Optional.ofNullable(userPo).map(UserPo::getNickname).orElse(StringUtils.EMPTY);
     }
 
-    public String currentUserPhone() {
-        MamsSession mamsSession = this.mamsSessionAttribute.currentLoginSession();
+
+    public String userPhone(MamsSession mamsSession) {
         String userid = mamsSession.getUserid();
         String chl = mamsSession.getChl();
         String chlAppid = mamsSession.getChlAppid();
@@ -175,6 +175,11 @@ public class UserService {
                 .map(ChlUserPo::getChlUserid)
                 .map(SensitiveUtils::chinaMobilePhone)
                 .orElse(StringUtils.EMPTY);
+    }
+
+    public String currentUserPhone() {
+        MamsSession mamsSession = this.mamsSessionAttribute.currentLoginSession();
+        return userPhone(mamsSession);
     }
 
     public UserVo queryByUserid(String userid) {

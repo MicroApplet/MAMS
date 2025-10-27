@@ -23,6 +23,7 @@ import com.asialjim.microapplet.mams.app.infrastructure.datasource.repository.Ch
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import jakarta.annotation.Resource;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -53,7 +54,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link ChlAppVo}
      */
     @Override
-    public ChlAppVo queryById(String id) {
+    public ChlAppVo queryById(@PathVariable("id") String id) {
         return this.chlAppRepository.queryById(id);
     }
 
@@ -64,7 +65,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link List<ChlAppVo>}
      */
     @Override
-    public List<ChlAppVo> queryByAppid(String appid) {
+    public List<ChlAppVo> queryByAppid(@PathVariable("id") String appid) {
         return this.chlAppRepository.queryByAppid(appid);
     }
 
@@ -76,7 +77,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link List<ChlAppVo>}
      */
     @Override
-    public List<ChlAppVo> queryByAppidAndChl(String appid, String chl) {
+    public List<ChlAppVo> queryByAppidAndChl(@PathVariable("id") String appid, @PathVariable("chl") String chl) {
         return this.chlAppRepository.queryByAppidAndChl(appid, chl);
     }
 
@@ -89,17 +90,19 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link ChlAppVo}
      */
     @Override
-    public ChlAppVo queryByAppidAndChlAndChlAppid(String appid, String chl, String chlAppid) {
+    public ChlAppVo queryByAppidAndChlAndChlAppid(@PathVariable("id") String appid, @PathVariable("chl") String chl, @PathVariable("chlAppid") String chlAppid) {
         return this.chlAppRepository.queryByAppidAndChlAndChlAppid(appid, chl, chlAppid);
     }
 
     @Override
-    public ChlAppVo queryByAppidAndChlAndChlAppType(String appid, String chl, String chlAppType) {
+    public ChlAppVo queryByAppidAndChlAndChlAppType(@PathVariable("id") String appid,
+                                             @PathVariable("chl") String chl,
+                                             @PathVariable("chlAppType") String chlAppType) {
         return this.chlAppRepository.queryByAppidAndChlAndChlAppType(appid, chl, chlAppType);
     }
 
     @Override
-    public ChlAppVo queryRootByAppid(String appid) {
+    public ChlAppVo queryRootByAppid(@PathVariable("id")String appid) {
         List<ChlAppVo> vos = this.chlAppRepository.queryByAppidAndChl(appid, ChannelType.PC.getCode());
         return vos.stream()
                 .filter(Objects::nonNull)
@@ -129,7 +132,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link List<ChlAppVo>}
      */
     @Override
-    public List<ChlAppVo> queryByOrgId(String orgId) {
+    public List<ChlAppVo> queryByOrgId(@PathVariable("id") String orgId) {
         return this.chlAppRepository.queryByOrgId(orgId);
     }
 
@@ -141,7 +144,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link ChlAppVo}
      */
     @Override
-    public ChlAppVo queryByChlAndChlAppid(String chl, String appid) {
+    public ChlAppVo queryByChlAndChlAppid(@PathVariable("chl") String chl, @PathVariable("appid") String appid) {
         return this.chlAppRepository.queryByChlAndChlAppid(chl, appid);
     }
 
@@ -153,7 +156,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link ChlAppVo}
      */
     @Override
-    public ChlAppVo queryByChlAndChlIndex(String chl, String appid) {
+    public ChlAppVo queryByChlAndChlIndex(@PathVariable("chl") String chl, @PathVariable("index") String appid) {
         return this.chlAppRepository.queryByChlAndChlIndex(chl, appid);
     }
 
@@ -164,7 +167,7 @@ public class ChlAppController implements ChlAppApi {
      * @return {@link List<ChlAppVo>}
      */
     @Override
-    public List<ChlAppVo> queryByChl(String code) {
+    public List<ChlAppVo> queryByChl(@PathVariable("chl") String code) {
         return this.chlAppRepository.queryByChl(code);
     }
 }

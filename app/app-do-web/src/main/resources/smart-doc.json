@@ -11,18 +11,10 @@
     "author": "Asial Jim",
     "requestHeaders": [
         {
-            "name": "Content-Type",
-            "type": "string",
-            "desc": "",
-            "value": "application/json; charset=UTF-8",
-            "required": false,
-            "pathPatterns": "/**"
-        },
-        {
             "name": "authorization",
             "type": "string",
             "desc": "用户令牌",
-            "required": false,
+            "required": true,
             "pathPatterns": "/api/**",
             "excludePathPatterns": "/api/open/**"
         },
@@ -30,7 +22,7 @@
             "name": "x-user-token",
             "type": "string",
             "desc": "用户令牌",
-            "required": false,
+            "required": true,
             "pathPatterns": "/api/**",
             "excludePathPatterns": "/api/open/**"
         }

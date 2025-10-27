@@ -24,8 +24,7 @@ import com.asialjim.microapplet.mams.app.infrastructure.datasource.repository.Ap
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import jakarta.annotation.Resource;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,17 +50,17 @@ public class AppController implements AppApi {
      * @return {@link AppVo}
      */
     @Override
-    public AppVo queryById(String id) {
+    public AppVo queryById(@PathVariable("id") String id) {
         return this.appRepository.queryVoById(id);
     }
 
     @Override
-    public AppVo save(AppVo vo) {
+    public AppVo save(@RequestBody AppVo vo) {
         return this.appRepository.create(vo);
     }
 
     @Override
-    public AppVo update(AppVo vo) {
+    public AppVo update(@RequestBody AppVo vo) {
         return this.appRepository.updateById(vo);
     }
 
@@ -94,12 +93,12 @@ public class AppController implements AppApi {
      * @return {@link List<AppVo>}
      */
     @Override
-    public List<AppVo> queryByOrgId(String id) {
+    public List<AppVo> queryByOrgId(@PathVariable("id") String id) {
         return this.appRepository.queryVoByOrgId(id);
     }
 
     @Override
-    public Result<List<AppVo>> list(Long page, Long size) {
-        return this.appRepository.list(page,size);
+    public Result<List<AppVo>> list(@RequestParam Long page,@RequestParam Long size) {
+        return this.appRepository.list(page, size);
     }
 }

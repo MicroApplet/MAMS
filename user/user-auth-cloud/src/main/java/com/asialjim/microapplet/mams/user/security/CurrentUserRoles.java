@@ -24,6 +24,7 @@ import com.asialjim.microapplet.mams.user.api.IdCardUserApi;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
@@ -39,40 +40,22 @@ import java.util.Objects;
  * @version 1.0
  * @since 2025/10/13, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CurrentUserRoles implements CurrentRoles {
+   /*
     private final ChlUserApi chlUserApi;
     private final IdCardUserApi idCardUserApi;
+    */
     private final MamsSessionAttribute mamsSessionAttribute;
 
     @Override
     public long hasRole() {
-        long bit = 0;
         MamsSession session = this.mamsSessionAttribute.currentSession();
         if (Objects.isNull(session) || StringUtils.isBlank(session.getUserid()))
             return Role.Tourist.getBit();
-        bit |= Role.AUTHENTICATED_BIT;
+        return session.getRoleBit();
 
-        String userid = session.getUserid();
-        List<ChlUserVo> chlUserVos = this.chlUserApi.queryByUserid(userid);
-
-        // 添加渠道用户角色表
-        if (CollectionUtils.isNotEmpty(chlUserVos)) {
-            for (ChlUserVo chlUserVo : chlUserVos) {
-                if (Objects.isNull(chlUserVo))
-                    continue;
-                Long roleBit = chlUserVo.getRoleBit();
-                if (Objects.isNull(roleBit))
-                    continue;
-                bit |= roleBit;
-            }
-        }
-
-        // 判定证件用户角色
-        List<IdCardUserVo> idCardUserVos = this.idCardUserApi.queryByUserid(userid);
-        if (CollectionUtils.isNotEmpty(idCardUserVos))
-            bit |= Role.ID_CARD_USER_BIT;
-        return bit;
     }
 }

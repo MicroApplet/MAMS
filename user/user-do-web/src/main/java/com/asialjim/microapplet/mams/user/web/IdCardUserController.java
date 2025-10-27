@@ -16,22 +16,15 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
-import com.asialjim.microapplet.commons.security.RoleNeed;
-import com.asialjim.microapplet.mams.user.api.ChlUserApi;
 import com.asialjim.microapplet.mams.user.api.IdCardUserApi;
-import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.ChlUserRepository;
 import com.asialjim.microapplet.mams.user.infrastructure.datasource.repository.IdCardUserRepository;
 import com.asialjim.microapplet.mams.user.service.IdCardUserService;
-import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import com.asialjim.microapplet.mams.user.vo.UserIdCardAuthenticateReq;
 import com.asialjim.microapplet.mams.user.vo.UserIdCardSensitiveVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.net.IDN;
 import java.util.List;
 
 /**
@@ -49,22 +42,24 @@ public class IdCardUserController implements IdCardUserApi {
     private final IdCardUserService idCardUserService;
 
     @Override
-    public List<IdCardUserVo> queryByUserid(String userid) {
+    public List<IdCardUserVo> queryByUserid(@PathVariable("id") String userid) {
         return this.idCardUserRepository.queryByUserid(userid);
     }
 
     @Override
-    public UserIdCardSensitiveVo status(String idType) {
+    public UserIdCardSensitiveVo status(@RequestParam(required = false) String idType) {
         return this.idCardUserService.current(idType);
     }
 
     @Override
-    public UserIdCardSensitiveVo authenticate(@Validated UserIdCardAuthenticateReq req) {
+    public UserIdCardSensitiveVo authenticate(@RequestBody UserIdCardAuthenticateReq req) {
         return this.idCardUserService.authenticate(req);
     }
 
     @Override
-    public List<String> queryUseridByNameOfIdNoForAppid(String name, String idNo, String appid) {
-        return this.idCardUserService.queryUseridByNameOfIdNoForAppid(name, idNo,appid);
+    public List<String> queryUseridByNameOfIdNoForAppid(@RequestParam(required = false) String name,
+                                                        @RequestParam(required = false) String idNo,
+                                                        @RequestParam String appid) {
+        return this.idCardUserService.queryUseridByNameOfIdNoForAppid(name, idNo, appid);
     }
 }

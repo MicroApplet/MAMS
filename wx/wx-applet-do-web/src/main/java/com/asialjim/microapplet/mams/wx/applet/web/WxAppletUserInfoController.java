@@ -21,6 +21,7 @@ import com.asialjim.microapplet.mams.wx.applet.api.WxAppletUserInfoApi;
 import com.asialjim.microapplet.wechat.applet.session.WeChatAppletUserSession;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -37,12 +38,15 @@ public class WxAppletUserInfoController implements WxAppletUserInfoApi {
     private final WxAppletUserInfoService wxAppletUserInfoService;
 
     @Override
-    public String userPurePhoneNumber(String wxAppid, String code, String encryptedData, String iv) {
+    public String userPurePhoneNumber(@RequestParam String wxAppid,
+                                      @RequestParam String code,
+                                      @RequestParam(required = false) String encryptedData,
+                                      @RequestParam(required = false) String iv) {
         return this.wxAppletUserInfoService.userPurePhoneNumber(wxAppid, code, encryptedData, iv);
     }
 
     @Override
-    public WeChatAppletUserSession login(String wxAppid, String code) {
+    public WeChatAppletUserSession login(@RequestParam String wxAppid, @RequestParam String code) {
         return this.wxAppletUserInfoService.login(wxAppid, code);
     }
 }

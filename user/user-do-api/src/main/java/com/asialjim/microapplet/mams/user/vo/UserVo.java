@@ -42,16 +42,45 @@ public class UserVo implements Serializable {
     @Serial
     private static final long serialVersionUID = 6803897188340656704L;
 
+    /**
+     * 用户编号
+     */
     private String id;
 
+    /**
+     * 用户所属应用编号
+     */
     private String appid;
+    /**
+     * 用户所属机构编号
+     */
     private String orgId;
+    /**
+     * 用户昵称
+     */
     private String nickname;
+    /**
+     * 用户名
+     */
     private String username;
+    /**
+     * 用户密码
+     */
     private String password;
+    /**
+     * 用户角色位图
+     */
     private long roleBit;
+    /**
+     * 逻辑删除标志
+     */
     private Boolean deleted;
+    /**
+     * 用户注册时间
+     */
     private LocalDateTime createTime;
+    /**
+     * 用户更新时间
+     */
     private LocalDateTime updateTime;
-
 }

@@ -18,16 +18,12 @@ package com.asialjim.microapplet.mams.user.web;
 
 import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.api.UserApi;
-import com.asialjim.microapplet.mams.user.api.UserSessionApi;
 import com.asialjim.microapplet.mams.user.service.UserService;
-import com.asialjim.microapplet.mams.user.service.session.UserSessionService;
-import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import com.asialjim.microapplet.mams.user.vo.UpdateAvatarReq;
 import com.asialjim.microapplet.mams.user.vo.UpdateNicknameReq;
 import com.asialjim.microapplet.mams.user.vo.UserVo;
-import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -38,42 +34,101 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 2025/9/19, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(UserApi.path)
 public class UserController implements UserApi {
-    @Resource private UserService userService;
+    private final UserService userService;
 
+    /**
+     * 根据用户编号，查询主用户信息
+     *
+     * @param userid {@link String userid}
+     * @return {@link UserVo }
+     * @since 2025/10/24
+     */
     @Override
-    public UserVo queryByUserid(String userid) {
+    public UserVo queryByUserid(@PathVariable("id") String userid) {
         return this.userService.queryByUserid(userid);
     }
 
+    /**
+     * 获取当前登录用户手机号
+     *
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
     public String currentUserPhone() {
         return this.userService.currentUserPhone();
     }
 
+    /**
+     * 获取指定会话用户手机号
+     *
+     * @param session {@link MamsSession session}
+     * @return {@link String }
+     * @since 2025/10/24
+     */
+    @Override
+    public String userPhone(@RequestBody MamsSession session) {
+        return this.userService.userPhone(session);
+    }
+
+    /**
+     * 获取当前用户昵称
+     *
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
     public String currentNickname() {
         return this.userService.currentNickname();
     }
 
+    /**
+     * 更新当前用户昵称
+     *
+     * @param req {@link UpdateNicknameReq req}
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
-    public String updateNickname(UpdateNicknameReq req) {
+    public String updateNickname(@RequestBody UpdateNicknameReq req) {
         return this.userService.updateNickname(req);
     }
 
+    /**
+     * 获取当前用户头像
+     *
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
     public String currentAvatar() {
         return this.userService.currentAvatar();
     }
 
+    /**
+     * 更新当前用户头像
+     *
+     * @param req {@link UpdateAvatarReq req}
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
-    public String updateAvatar(UpdateAvatarReq req) {
+    public String updateAvatar(@RequestBody UpdateAvatarReq req) {
         return this.userService.updateAvatar(req);
     }
 
+    /**
+     * 上传当前用户头像并更新
+     *
+     * @param avatar {@link MultipartFile avatar}
+     * @return {@link String }
+     * @since 2025/10/24
+     */
     @Override
-    public String uploadAvatar(MultipartFile data) {
-        return this.userService.uploadAvatar(data);
+    public String uploadAvatar(@RequestPart("avatar") MultipartFile avatar) {
+        return this.userService.uploadAvatar(avatar);
     }
 }

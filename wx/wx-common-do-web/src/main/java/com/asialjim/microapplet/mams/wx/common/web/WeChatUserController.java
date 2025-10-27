@@ -22,6 +22,8 @@ import com.asialjim.microapplet.mams.wx.common.vo.UpdateNicknameRequest;
 import com.asialjim.microapplet.wechat.user.WeChatUserRepository;
 import com.asialjim.microapplet.wechat.user.WeChatUserVo;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,17 +42,17 @@ public class WeChatUserController implements WeChatUserApi {
 
 
     @Override
-    public WeChatUserVo queryByOpenid(String id) {
+    public WeChatUserVo queryByOpenid(@PathVariable("id") String id) {
         return this.weChatUserRepository.queryByOpenid(id);
     }
 
     @Override
-    public WeChatUserVo updateAvatarByOpenid(String id, UpdateAvatarRequest req) {
+    public WeChatUserVo updateAvatarByOpenid(@PathVariable("id") String id, @RequestBody UpdateAvatarRequest req) {
         return this.weChatUserRepository.updateAvatarByOpenid(id,req.getAvatar());
     }
 
     @Override
-    public WeChatUserVo updateNicknameByOpenid(String id, UpdateNicknameRequest req) {
+    public WeChatUserVo updateNicknameByOpenid(@PathVariable("id") String id, @RequestBody UpdateNicknameRequest req) {
         return this.weChatUserRepository.updateNicknameByOpenid(id,req.getNickname());
     }
 }

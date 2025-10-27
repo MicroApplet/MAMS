@@ -22,6 +22,7 @@ import com.asialjim.microapplet.mams.user.service.session.UserSessionService;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import jakarta.annotation.Resource;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,7 +47,7 @@ public class UserSessionController implements UserSessionApi {
      * @return {@link MamsSession}
      */
     @Override
-    public MamsSession login(ChlUserVo vo) {
+    public MamsSession login(@RequestBody ChlUserVo vo) {
         return this.userSessionService.login(vo);
     }
 

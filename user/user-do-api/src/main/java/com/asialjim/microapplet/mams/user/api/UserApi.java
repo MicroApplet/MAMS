@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.user.api;
 
+import com.asialjim.microapplet.common.security.MamsSession;
 import com.asialjim.microapplet.mams.user.vo.UpdateAvatarReq;
 import com.asialjim.microapplet.mams.user.vo.UpdateNicknameReq;
 import com.asialjim.microapplet.mams.user.vo.UserVo;
@@ -37,6 +38,9 @@ public interface UserApi {
 
     @GetMapping("/phone")
     String currentUserPhone();
+
+    @PostMapping("/phone")
+    String userPhone(@RequestBody MamsSession session);
 
     @GetMapping("/nickname")
     String currentNickname();
