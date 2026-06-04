@@ -1,0 +1,34 @@
+server:
+  port: ${port:10114}
+  # 10111 给 公众号领域服务对应 /api/domain/wx/mp
+  # 10112 给 公众号应用服务对应 /api/rest/wx/mp
+  # 10113 给 公众号管理服务对应 /api/admin/wx/mp
+  # 10114 给 公众号开放服务对应 /api/open/wx/mp
+
+spring:
+  application:
+    name: wx-mp-open
+
+  config:
+    import:
+      - nacos:sensitive_enc.yaml
+      - nacos:feign.yaml
+      - nacos:redis.yaml
+      - nacos:dynamic.datasource.yaml
+      - nacos:datasource.yaml
+      - nacos:thread.yaml
+      - nacos:log.yaml
+      - nacos:mvc.yaml
+      - nacos:nacos.yaml
+
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        group: ${spring.cloud.nacos.discovery.group}
+        enable-remote-sync-config: true
+        refresh-enabled: true

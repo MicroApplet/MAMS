@@ -1,0 +1,112 @@
+{
+    "serverUrl": "https://dev.gateway.api.asialjim.cn/api/open/user/auth",
+    "outPath": "src/main/resources/static/doc",
+    "isStrict": false,
+    "allInOne": true,
+    "createDebugPage": true,
+    "packageFilters": "com.asialjim.microapplet.mams.user.web",
+    "style": "xt256",
+    "projectName": "用户认证文档",
+    "showAuthor": true,
+    "author": "Asial Jim",
+    "requestHeaders": [
+        {
+            "name": "authorization",
+            "type": "string",
+            "desc": "用户令牌",
+            "required": true,
+            "pathPatterns": "/api/**",
+            "excludePathPatterns": "/api/open/**"
+        },
+        {
+            "name": "x-user-token",
+            "type": "string",
+            "desc": "用户令牌",
+            "required": true,
+            "pathPatterns": "/api/**",
+            "excludePathPatterns": "/api/open/**"
+        }
+    ],
+    "responseBodyAdvice": {
+        "className": "com.asialjim.microapplet.common.context.Result"
+    },
+    "customResponseFields": [
+        {
+            "name": "status",
+            "desc": "网络状态码",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "200"
+        },
+        {
+            "name": "thr",
+            "desc": "是否弹窗错误",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "false"
+        },
+        {
+            "name": "pageable",
+            "desc": "是否分页展示",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "false"
+        },
+        {
+            "name": "code",
+            "desc": "业务状态码",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "0"
+        },
+        {
+            "name": "msg",
+            "desc": "错误信息",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "ok"
+        },
+        {
+            "name": "data",
+            "desc": "响应数据",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false
+        },
+        {
+            "name": "errs",
+            "desc": "错误详情",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "ok"
+        },
+        {
+            "name": "page",
+            "desc": "分页参数：当前页码",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "1"
+        },
+        {
+            "name": "size",
+            "desc": "分页参数：每页记录数",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "10"
+        },
+        {
+            "name": "pages",
+            "desc": "分页参数：总共多少页",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "10"
+        },
+        {
+            "name": "total",
+            "desc": "分页参数：总记录数",
+            "ownerClassName": "com.asialjim.microapplet.common.context.Result",
+            "ignore": false,
+            "value": "100"
+        }
+    ],
+    "allInOneDocFileName": "index.html"
+}

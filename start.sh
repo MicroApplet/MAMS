@@ -1,34 +1,51 @@
 #!/bin/sh
 
-# applet/applet-web
-# shellcheck disable=SC2164
-cd /drone/src
-mkdir -p /app/build/applet/web
-# shellcheck disable=SC2164
-cd ./applet/applet-web
-sh start.sh
+
+# ////////////////////////////////////////////
+# ==============
+sh /drone/src/aigateway/web/docker.sh
 
 
-# channel/channel-wechat/channel-wechat-official/channel-wechat-official-web
-# shellcheck disable=SC2164
-cd /drone/src
-mkdir -p /app/build/channel/wechat/official/web
-# shellcheck disable=SC2164
-cd ./channel/channel-wechat/channel-wechat-official/channel-wechat-official-web
-sh start.sh
 
-# channel/channel-wechat/channel-wechat-official/channel-wechat-applet-web
-# shellcheck disable=SC2164
-cd /drone/src
-mkdir -p /app/build/channel/wechat/applet/web
-# shellcheck disable=SC2164
-cd ./channel/channel-wechat/channel-wechat-applet/channel-wechat-applet-web
-sh start.sh
 
-# user/user-web
-# shellcheck disable=SC2164
-cd /drone/src
-mkdir -p /app/build/user/web
-# shellcheck disable=SC2164
-cd ./user/user-web
-sh start.sh
+# ////////////////////////////////////////////
+# ==============
+sh /drone/src/app/admin/docker.sh
+
+# ==============
+sh /drone/src/app/do/docker.sh
+
+# ==============
+sh /drone/src/app/service/docker.sh
+
+
+
+# ////////////////////////////////////////////
+# ==============
+sh /drone/src/user/admin/docker.sh
+
+# ==============
+sh /drone/src/user/auth/docker.sh
+
+# ==============
+sh /drone/src/user/do/docker.sh
+
+# ==============
+sh /drone/src/user/service/docker.sh
+
+
+
+
+
+# ////////////////////////////////////////////
+# ==============
+sh /drone/src/wx-applet/do/docker.sh
+
+# ==============
+sh /drone/src/wx-common/do/docker.sh
+
+# ==============
+sh /drone/src/wx-mp/admin/docker.sh
+
+# ==============
+sh /drone/src/wx-mp/open/docker.sh

@@ -79,16 +79,15 @@
     </scm>
 
     <modules>
-        <module>org</module>
-        <module>applet</module>
+        <module>app</module>
         <module>user</module>
-        <module>channel</module>
+        <module>wx</module>
         <module>aigateway</module>
     </modules>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
     </properties>
 
     <profiles>
