@@ -16,7 +16,7 @@ public class SseEmitterHelper {
     private static final ObjectMapper mapper = new ObjectMapper();
     private SseEmitterHelper() {}
 
-    public static void send(SseEmitter emitter, SseEvent event) {
+    public static void send(SseEmitter emitter, SseEvent<?> event) {
         try {
             emitter.send(SseEmitter.event()
                     .name(event.getType().getEventName())
