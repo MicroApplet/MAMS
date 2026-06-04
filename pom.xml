@@ -83,6 +83,7 @@
         <module>applet</module>
         <module>user</module>
         <module>channel</module>
+        <module>aigateway</module>
     </modules>
 
     <properties>
