@@ -43,10 +43,13 @@
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>commons-common</artifactId>
+            <version>${project.version}</version>
         </dependency>
+        <!--suppress VulnerableLibrariesLocal -->
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>
             <artifactId>sensitive-jackson</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
