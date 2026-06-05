@@ -17,7 +17,7 @@ public class SseEmitterHelper {
     public static void send(SseEmitter emitter, SseEvent<?> event) {
         try {
             emitter.send(SseEmitter.event()
-                    .name(event.getType().getEventName())
+                    .name(event.eventName())
                     .data(event.payloadStr()), MediaType.parseMediaType(event.contentType()));
         } catch (Exception e) {
             log.warn("SSE 发送失败: event={}", event.getType(), e);
