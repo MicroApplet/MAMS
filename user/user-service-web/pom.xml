@@ -72,10 +72,6 @@
             <artifactId>commons-security-core</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.asialjim.microapplet</groupId>
-            <artifactId>sensitive-spring</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

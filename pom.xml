@@ -210,7 +210,6 @@
                     <preparationGoals>
                         clean
                         versions:use-releases
-                        versions:update-parent
                         verify
                     </preparationGoals>
                 </configuration>
@@ -336,6 +335,14 @@
                     <target>${maven.compiler.target}</target>
                     <encoding>UTF-8</encoding>
                     <compilerArgument>-parameters</compilerArgument>
+
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>1.18.46</version>
+                        </path>
+                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
 

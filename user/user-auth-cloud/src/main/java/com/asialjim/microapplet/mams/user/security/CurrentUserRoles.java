@@ -17,6 +17,8 @@
 package com.asialjim.microapplet.mams.user.security;
 
 import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.commons.security.CurrentRoles;
+import com.asialjim.microapplet.commons.security.Role;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
