@@ -1,7 +1,6 @@
 package com.asialjim.microapplet.mams.aigateway.sse;
 
 import com.asialjim.microapplet.commons.sse.SseEvent;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -13,14 +12,13 @@ import java.util.Map;
  */
 public class SseEmitterHelper {
     private static final Logger log = LoggerFactory.getLogger(SseEmitterHelper.class);
-    private static final ObjectMapper mapper = new ObjectMapper();
     private SseEmitterHelper() {}
 
     public static void send(SseEmitter emitter, SseEvent<?> event) {
         try {
             emitter.send(SseEmitter.event()
                     .name(event.getType().getEventName())
-                    .data(mapper.writeValueAsString(event.getPayload()), MediaType.APPLICATION_JSON));
+                    .data(event.payloadStr()), MediaType.parseMediaType(event.contentType()));
         } catch (Exception e) {
             log.warn("SSE 发送失败: event={}", event.getType(), e);
             completeWithError(emitter, e);
