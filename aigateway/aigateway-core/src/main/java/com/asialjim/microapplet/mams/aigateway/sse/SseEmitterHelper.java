@@ -20,7 +20,7 @@ public class SseEmitterHelper {
                     .name(event.eventName())
                     .data(event.payloadStr()), MediaType.parseMediaType(event.contentType()));
         } catch (Exception e) {
-            log.warn("SSE 发送失败: event={}", event.getType(), e);
+            log.warn("SSE 发送失败: event={}", event.eventName(), e);
             completeWithError(emitter, e);
         }
     }
