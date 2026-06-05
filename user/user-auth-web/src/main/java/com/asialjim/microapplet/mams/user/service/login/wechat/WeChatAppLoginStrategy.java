@@ -17,6 +17,7 @@
 package com.asialjim.microapplet.mams.user.service.login.wechat;
 
 import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;

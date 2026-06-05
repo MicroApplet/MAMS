@@ -16,10 +16,10 @@
 
 package com.asialjim.microapplet.mams.user.vo;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import tools.jackson.databind.JsonNode;
 
 import java.io.Serial;
 import java.io.Serializable;
