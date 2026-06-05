@@ -17,9 +17,6 @@
 package com.asialjim.microapplet.mams.app.web;
 
 import com.asialjim.microapplet.common.context.Result;
-import com.asialjim.microapplet.commons.security.Role;
-import com.asialjim.microapplet.commons.security.RoleCode;
-import com.asialjim.microapplet.commons.security.RoleNeed;
 import com.asialjim.microapplet.mams.app.api.AppApi;
 import com.asialjim.microapplet.mams.app.vo.AppVo;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +34,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/app")
 @RequiredArgsConstructor
-@RoleNeed(any = {RoleCode.ROOT_BIT,RoleCode.SYSTEM_BIT})
 public class AppController {
     private final AppApi appApi;
 

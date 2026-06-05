@@ -16,13 +16,7 @@
 
 package com.asialjim.microapplet.mams.app.web;
 
-import com.asialjim.microapplet.common.context.Result;
-import com.asialjim.microapplet.commons.security.Role;
-import com.asialjim.microapplet.commons.security.RoleCode;
-import com.asialjim.microapplet.commons.security.RoleNeed;
-import com.asialjim.microapplet.mams.app.api.AppApi;
 import com.asialjim.microapplet.mams.app.api.ChlAppApi;
-import com.asialjim.microapplet.mams.app.vo.AppVo;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +33,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/chl-app")
 @RequiredArgsConstructor
-@RoleNeed(any = {RoleCode.ROOT_BIT,RoleCode.SYSTEM_BIT})
 public class ChlAppController {
     private final ChlAppApi chlAppApi;
 

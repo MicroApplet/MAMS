@@ -17,20 +17,12 @@
 package com.asialjim.microapplet.mams.user.security;
 
 import com.asialjim.microapplet.common.security.MamsSession;
-import com.asialjim.microapplet.commons.security.CurrentRoles;
-import com.asialjim.microapplet.commons.security.Role;
-import com.asialjim.microapplet.mams.user.api.ChlUserApi;
-import com.asialjim.microapplet.mams.user.api.IdCardUserApi;
-import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
-import com.asialjim.microapplet.mams.user.vo.IdCardUserVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import com.asialjim.microapplet.common.security.MamsSessionAttribute;
 
-import java.util.List;
 import java.util.Objects;
 
 /**

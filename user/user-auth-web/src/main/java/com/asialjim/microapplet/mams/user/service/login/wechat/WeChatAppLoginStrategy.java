@@ -17,7 +17,6 @@
 package com.asialjim.microapplet.mams.user.service.login.wechat;
 
 import com.asialjim.microapplet.common.security.MamsSession;
-import com.asialjim.microapplet.commons.security.Role;
 import com.asialjim.microapplet.mams.app.cons.ChannelAppType;
 import com.asialjim.microapplet.mams.app.cons.ChannelType;
 import com.asialjim.microapplet.mams.app.vo.ChlAppVo;
@@ -31,8 +30,6 @@ import com.asialjim.microapplet.wechat.applet.user.WeChatAppletUserRemoting;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 /**
  * 微信小程序登录策略

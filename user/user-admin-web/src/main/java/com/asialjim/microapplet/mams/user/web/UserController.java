@@ -16,8 +16,6 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
-import com.asialjim.microapplet.commons.security.RoleCode;
-import com.asialjim.microapplet.commons.security.RoleNeed;
 import com.asialjim.microapplet.mams.user.api.UserApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -32,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@RoleNeed(any = {RoleCode.ROOT_BIT,RoleCode.SYSTEM_BIT})
 public class UserController {
     private final UserApi userApi;
 
