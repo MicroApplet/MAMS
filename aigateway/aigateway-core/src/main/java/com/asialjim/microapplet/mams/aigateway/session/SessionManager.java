@@ -1,10 +1,12 @@
 package com.asialjim.microapplet.mams.aigateway.session;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
+@ConditionalOnMissingBean(name = "redisSessionManager")
 public class SessionManager {
     private final Map<String, Session> sessions = new ConcurrentHashMap<>();
     public Session getOrCreate(String sessionId, String userId, String platform) {
