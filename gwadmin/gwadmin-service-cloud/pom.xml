@@ -5,18 +5,18 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>gwadmin</artifactId>
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-service-cloud</artifactId>
-    <name>Gateway :: Service :: Cloud</name>
-    <description>Gateway route management service implementation</description>
+    <artifactId>gwadmin-service-cloud</artifactId>
+    <name>GwAdmin :: Service :: Cloud</name>
+    <description>Gateway admin route management service implementation</description>
 
     <dependencies>
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>gateway-service-api</artifactId>
+            <artifactId>gwadmin-service-api</artifactId>
         </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet</groupId>

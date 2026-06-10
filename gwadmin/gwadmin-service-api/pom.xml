@@ -5,13 +5,13 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.asialjim.microapplet.mams</groupId>
-        <artifactId>gateway</artifactId>
+        <artifactId>gwadmin</artifactId>
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway-service-api</artifactId>
-    <name>Gateway :: Service :: API</name>
-    <description>Gateway route API interfaces and DTOs</description>
+    <artifactId>gwadmin-service-api</artifactId>
+    <name>GwAdmin :: Service :: API</name>
+    <description>Gateway admin route API interfaces and DTOs</description>
 
     <dependencies>
         <dependency>

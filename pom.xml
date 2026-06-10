@@ -83,7 +83,7 @@
         <module>user</module>
         <module>wx</module>
         <module>aigateway</module>
-        <module>gateway</module>
+        <module>gwadmin</module>
     </modules>
 
     <properties>

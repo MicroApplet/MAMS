@@ -9,15 +9,15 @@
         <version>3.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>gateway</artifactId>
+    <artifactId>gwadmin</artifactId>
     <packaging>pom</packaging>
-    <name>Gateway :: Parent</name>
-    <description>Gateway Route Management Submodule</description>
+    <name>GwAdmin :: Parent</name>
+    <description>Gateway Admin Route Management Submodule</description>
 
     <modules>
-        <module>gateway-service-api</module>
-        <module>gateway-service-cloud</module>
-        <module>gateway-service-web</module>
+        <module>gwadmin-service-api</module>
+        <module>gwadmin-service-cloud</module>
+        <module>gwadmin-service-web</module>
     </modules>
 
     <properties>
@@ -30,12 +30,12 @@
         <dependencies>
             <dependency>
                 <groupId>com.asialjim.microapplet.mams</groupId>
-                <artifactId>gateway-service-api</artifactId>
+                <artifactId>gwadmin-service-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.asialjim.microapplet.mams</groupId>
-                <artifactId>gateway-service-cloud</artifactId>
+                <artifactId>gwadmin-service-cloud</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

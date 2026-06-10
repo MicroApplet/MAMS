@@ -27,8 +27,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @since 2025/12/31, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @SpringBootApplication
-public class GatewayServiceApplication {
+public class GwAdminApplication {
     public static void main(String[] args) {
-        App.voidStart(GatewayServiceApplication.class, args);
+        App.voidStart(GwAdminApplication.class, args);
     }
 }
