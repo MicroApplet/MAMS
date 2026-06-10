@@ -1,6 +1,5 @@
 package com.asialjim.microapplet.mams.aigateway.intent;
 
-import com.asialjim.microapplet.mams.aigateway.session.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -19,12 +18,12 @@ public class IntentRecognitionEngine {
         log.info("意图识别器已注册: {}", recognizer.name());
     }
 
-    public IntentResult recognize(String message, Session session) {
+    public IntentResult recognize(String message) {
         if (recognizers.isEmpty()) { log.warn("无可用的意图识别器"); return defaultResult(message); }
         IntentResult best = null;
         for (IntentRecognizer r : recognizers) {
             try {
-                IntentResult result = r.recognize(message, session);
+                IntentResult result = r.recognize(message);
                 if (result == null) continue;
                 if (best == null || result.getConfidence() > best.getConfidence()) best = result;
             } catch (Exception e) { log.warn("识别器 {} 异常: {}", r.name(), e.getMessage()); }

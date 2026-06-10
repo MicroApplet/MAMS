@@ -1,6 +1,5 @@
 package com.asialjim.microapplet.mams.aigateway.intent;
 
-import com.asialjim.microapplet.mams.aigateway.session.Session;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;

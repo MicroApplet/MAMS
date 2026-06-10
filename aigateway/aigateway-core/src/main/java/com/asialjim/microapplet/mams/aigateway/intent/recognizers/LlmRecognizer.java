@@ -4,7 +4,6 @@ import com.asialjim.microapplet.mams.aigateway.config.AimamsProperties;
 import com.asialjim.microapplet.mams.aigateway.intent.IntentRecognitionEngine;
 import com.asialjim.microapplet.mams.aigateway.intent.IntentRecognizer;
 import com.asialjim.microapplet.mams.aigateway.intent.IntentResult;
-import com.asialjim.microapplet.mams.aigateway.session.Session;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class LlmRecognizer implements IntentRecognizer {
     @Override public String name() { return "llm_recognizer"; }
 
     @Override
-    public IntentResult recognize(String message, Session session) {
+    public IntentResult recognize(String message) {
         if (message == null || message.isBlank()) return null;
         String endpoint = properties.getIntent().getLlmEndpoint();
         if (endpoint == null || endpoint.isBlank()) return null;

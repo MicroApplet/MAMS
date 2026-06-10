@@ -1,7 +1,6 @@
 package com.asialjim.microapplet.mams.aigateway.intent;
 
 import com.asialjim.microapplet.mams.aigateway.config.AimamsProperties;
-import com.asialjim.microapplet.mams.aigateway.session.Session;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +31,7 @@ public class RuleRecognizer implements IntentRecognizer {
     @Override public String name() { return "rule_recognizer"; }
 
     @Override
-    public IntentResult recognize(String message, Session session) {
+    public IntentResult recognize(String message) {
         if (message == null || message.isBlank()) return null;
         for (CompiledRule rule : rules) {
             if (rule.matches(message)) {
