@@ -1,5 +1,7 @@
 package com.asialjim.microapplet.mams.aigateway.controller;
 
+import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.common.security.MamsSessionContextHolder;
 import com.asialjim.microapplet.mams.aigateway.channel.ChannelExecutorRouter;
 import com.asialjim.microapplet.mams.aigateway.intent.IntentRecognitionEngine;
 import com.asialjim.microapplet.mams.aigateway.intent.IntentResult;
@@ -14,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -36,6 +40,8 @@ public class AiChatController {
     public SseEmitter chat(@RequestBody ChatRequest req, @RequestHeader("X-User-Id") String userId,
                            @RequestHeader(value="X-User-Role",required=false) String role,
                            @RequestHeader(value="X-Platform",required=false) String platform) {
+
+        Optional<MamsSession> currentSessionOpt = MamsSessionContextHolder.current();
         String sid = req.getSessionId() != null ? req.getSessionId() : UUID.randomUUID().toString();
         Session session = sessionManager.getOrCreate(sid, userId, platform != null ? platform : "unknown");
         if (role != null) session.setRoleBit(role);

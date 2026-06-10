@@ -16,13 +16,13 @@
 
 package com.asialjim.microapplet.mams.gateway.service;
 
-import com.asialjim.microapplet.common.utils.JsonUtil;
+import com.asialjim.microapplet.common.utils.JacksonUtil;
 import com.asialjim.microapplet.mams.gateway.route.RouteConfigProperty;
-import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import tools.jackson.dataformat.yaml.YAMLMapper;
 
 /**
  * 路由发布器 — 将路由配置推送到 Nacos
@@ -35,7 +35,7 @@ import org.springframework.stereotype.Component;
 public class RoutePublisher {
     private static final Logger log = LoggerFactory.getLogger(RoutePublisher.class);
     private static final String DATA_ID = "route.yaml";
-    private static final JsonUtil<YAMLMapper, YAMLMapper.Builder> yamlUtil = JsonUtil.instance(YAMLMapper.builder());
+    private static final JacksonUtil<YAMLMapper, YAMLMapper.Builder> yamlUtil = JacksonUtil.instance(YAMLMapper.builder());
 
     @Value("${spring.cloud.nacos.discovery.group}")
     private String group;
@@ -51,7 +51,7 @@ public class RoutePublisher {
      */
     public void publishToNacos(RouteConfigProperty config) {
         try {
-            String yamlContent = yamlUtil.writeValueAsString(new GatewayRouteWrapper(config));
+            String yamlContent = yamlUtil.toStr(new GatewayRouteWrapper(config));
             nacosConfigManager.getConfigService().publishConfig(DATA_ID, group, yamlContent);
             log.info("路由配置已发布到 Nacos: dataId={}, group={}, routes={}",
                     DATA_ID, group, config.getRoutes().size());
@@ -72,9 +72,9 @@ public class RoutePublisher {
             }
 
             GatewayRouteWrapper wrapper = yamlUtil.toBean(configContent, GatewayRouteWrapper.class);
-            if (wrapper != null && wrapper.getGateway() != null) {
-                log.info("从 Nacos 加载路由配置: {} 条", wrapper.getGateway().getRoutes().size());
-                return wrapper.getGateway();
+            if (wrapper != null && wrapper.gateway() != null) {
+                log.info("从 Nacos 加载路由配置: {} 条", wrapper.gateway().getRoutes().size());
+                return wrapper.gateway();
             }
             return new RouteConfigProperty();
         } catch (Exception e) {
