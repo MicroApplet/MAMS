@@ -34,9 +34,8 @@
         <module>wx-applet-do-api</module>
         <module>wx-applet-do-cloud</module>
         <module>wx-applet-do-web</module>
-        <module>wx-mp-open-web</module>
         <module>wx-common-repository</module>
-        <module>wx-mp-admin-web</module>
+        <module>wx-service-web</module>
     </modules>
 
     <properties>
