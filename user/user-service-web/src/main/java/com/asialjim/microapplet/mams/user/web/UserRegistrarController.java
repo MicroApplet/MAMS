@@ -16,14 +16,11 @@
 
 package com.asialjim.microapplet.mams.user.web;
 
-import com.asialjim.microapplet.common.security.MamsSession;
+import com.asialjim.microapplet.common.context.Result;
 import com.asialjim.microapplet.mams.user.api.UserRegistrarApi;
 import com.asialjim.microapplet.mams.user.vo.ChlUserVo;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 用户会话控制器
@@ -35,29 +32,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/registrar")
-public class UserRegistrarController {
+public class UserRegistrarController  {
     private final UserRegistrarApi userRegistrarApi;
 
-    /**
-     * 注册
-     *
-     * @param user 用户
-     * @return {@link ChlUserVo}
-     */
     @PostMapping("/register")
     public ChlUserVo register(@RequestBody ChlUserVo user) {
         return this.userRegistrarApi.register(user);
     }
 
-    /**
-     * 下线
-     *
-     * @param session 会话
-     * @return {@link ChlUserVo}
-     */
-    @PostMapping("/logoff")
-    public ChlUserVo logoff(@RequestBody MamsSession session) {
-        return this.userRegistrarApi.logoff(session);
+    @GetMapping("/root")
+    public Result<Void> root() {
+        return this.userRegistrarApi.root();
     }
 
 }

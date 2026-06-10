@@ -34,8 +34,6 @@
         <module>user-do-web</module>
         <module>user-auth-api</module>
         <module>user-auth-cloud</module>
-        <module>user-auth-web</module>
-        <module>user-admin-web</module>
         <module>user-service-web</module>
     </modules>
 

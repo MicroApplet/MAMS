@@ -40,11 +40,6 @@
     <dependencies>
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>app-admin-web</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet.mams</groupId>
             <artifactId>app-do-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
