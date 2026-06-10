@@ -1,0 +1,28 @@
+server:
+  port: ${port:20020}
+
+spring:
+  application:
+    name: gateway-service
+
+  config:
+    import:
+      - nacos:sensitive_enc.yaml
+      - nacos:feign.yaml
+      - nacos:redis.yaml
+      - nacos:thread.yaml
+      - nacos:log.yaml
+      - nacos:mvc.yaml
+      - nacos:nacos.yaml
+
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        group: ${spring.cloud.nacos.discovery.group}
+        enable-remote-sync-config: true
+        refresh-enabled: true
