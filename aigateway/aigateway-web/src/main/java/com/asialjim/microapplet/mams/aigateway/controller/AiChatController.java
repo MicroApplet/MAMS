@@ -17,7 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -37,14 +36,18 @@ public class AiChatController {
     }
 
     @PostMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public SseEmitter chat(@RequestBody ChatRequest req, @RequestHeader("X-User-Id") String userId,
-                           @RequestHeader(value="X-User-Role",required=false) String role,
-                           @RequestHeader(value="X-Platform",required=false) String platform) {
+    public SseEmitter chat(@RequestBody ChatRequest req) {
 
-        Optional<MamsSession> currentSessionOpt = MamsSessionContextHolder.current();
+        MamsSession mamsSession = MamsSessionContextHolder.current()
+                .orElseThrow(() -> new IllegalStateException("未找到用户会话，请先登录"));
+        String userId = mamsSession.getUserid();
+        String platform = mamsSession.getChlAppType();
+
         String sid = req.getSessionId() != null ? req.getSessionId() : UUID.randomUUID().toString();
         Session session = sessionManager.getOrCreate(sid, userId, platform != null ? platform : "unknown");
-        if (role != null) session.setRoleBit(role);
+        session.setRoleBit(mamsSession.getRoleBitStr());
+        session.setChl(mamsSession.getChl());
+        session.setChlAppId(mamsSession.getChlAppid());
         log.info("AI 对话: session={}, userId={}, message={}", sid, userId, req.getMessage());
         SseEmitter emitter = new SseEmitter(300_000L);
         executor.submit(() -> {
