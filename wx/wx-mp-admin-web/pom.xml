@@ -41,6 +41,11 @@
 
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>wx-mp-open-web</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
             <artifactId>user-do-cloud</artifactId>
             <version>${project.version}</version>
         </dependency>
