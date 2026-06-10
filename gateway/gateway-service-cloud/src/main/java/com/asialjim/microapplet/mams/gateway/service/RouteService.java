@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.mams.gateway.service;
 
+import com.asialjim.microapplet.mams.gateway.route.Prefix;
 import com.asialjim.microapplet.mams.gateway.route.RouteApi;
 import com.asialjim.microapplet.mams.gateway.route.RouteConfigProperty;
 import com.asialjim.microapplet.mams.gateway.route.RouteNode;
@@ -57,6 +58,10 @@ public class RouteService implements RouteApi {
     public void addRoute(RouteNode routeNode) {
         Objects.requireNonNull(routeNode, "路由节点不能为空");
         Objects.requireNonNull(routeNode.getName(), "路由名称不能为空");
+        Objects.requireNonNull(routeNode.getPrefix(), "路由前缀不能为空");
+
+        // 校验路由前缀是否在允许范围内
+        validatePrefix(routeNode.getPrefix());
 
         // 检查是否已存在同名路由
         for (RouteNode existing : this.routes) {
@@ -66,7 +71,7 @@ public class RouteService implements RouteApi {
         }
 
         this.routes.add(routeNode);
-        log.info("添加路由: {}", routeNode.getName());
+        log.info("添加路由: {} -> /api/{}/{}", routeNode.getName(), routeNode.getPrefix(), routeNode.getPath());
         publishCurrentRoutes();
     }
 
@@ -75,13 +80,17 @@ public class RouteService implements RouteApi {
         Objects.requireNonNull(routeNode, "路由节点不能为空");
         Objects.requireNonNull(routeNode.getName(), "路由名称不能为空");
 
+        if (routeNode.getPrefix() != null) {
+            validatePrefix(routeNode.getPrefix());
+        }
+
         boolean removed = this.routes.removeIf(r -> Objects.equals(r.getName(), routeNode.getName()));
         if (!removed) {
             throw new IllegalArgumentException("路由 '" + routeNode.getName() + "' 不存在");
         }
 
         this.routes.add(routeNode);
-        log.info("更新路由: {}", routeNode.getName());
+        log.info("更新路由: {} -> /api/{}/{}", routeNode.getName(), routeNode.getPrefix(), routeNode.getPath());
         publishCurrentRoutes();
     }
 
@@ -102,6 +111,16 @@ public class RouteService implements RouteApi {
     public void publishRoutes(RouteConfigProperty config) {
         Objects.requireNonNull(config, "路由配置不能为空");
 
+        // 全量校验所有路由前缀
+        if (config.getRoutes() != null) {
+            for (RouteNode route : config.getRoutes()) {
+                if (route.getPrefix() == null) {
+                    throw new IllegalArgumentException("路由 '" + route.getName() + "' 缺少前缀");
+                }
+                validatePrefix(route.getPrefix());
+            }
+        }
+
         this.routes.clear();
         if (config.getRoutes() != null) {
             this.routes.addAll(config.getRoutes());
@@ -121,6 +140,15 @@ public class RouteService implements RouteApi {
             routePublisher.publishToNacos(config);
         } catch (Exception e) {
             log.error("发布路由到 Nacos 失败: {}", e.getMessage(), e);
+        }
+    }
+
+    /**
+     * 校验路由前缀是否在允许范围内
+     */
+    private void validatePrefix(Prefix prefix) {
+        if (prefix != Prefix.rest && prefix != Prefix.open && prefix != Prefix.admin && prefix != Prefix.ai) {
+            throw new IllegalArgumentException("路由前缀 '" + prefix + "' 不在允许范围内。允许的前缀: rest, open, admin, ai");
         }
     }
 
