@@ -31,10 +31,10 @@
         <module>wx-common-do-api</module>
         <module>wx-common-do-cloud</module>
         <module>wx-common-do-web</module>
+        <module>wx-common-repository</module>
         <module>wx-applet-do-api</module>
         <module>wx-applet-do-cloud</module>
         <module>wx-applet-do-web</module>
-        <module>wx-common-repository</module>
         <module>wx-service-web</module>
     </modules>
 
