@@ -1,0 +1,42 @@
+server:
+  port: ${port:80}
+
+spring:
+  application:
+    name: app-fun
+    group: app
+
+  config:
+    import:
+      - nacos:route.yaml
+      - nacos:gateway.yaml
+      - nacos:redis.yaml
+      - nacos:sensitive_enc.yaml
+      - nacos:feign.yaml
+      - nacos:log.yaml
+      - nacos:nacos.yaml
+  cloud:
+    nacos:
+      config:
+        enabled: true
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: ${spring.cloud.nacos.discovery.namespace}
+        username: ${spring.cloud.nacos.discovery.username}
+        password: ${spring.cloud.nacos.discovery.password}
+        group: ${spring.cloud.nacos.discovery.group}
+        enable-remote-sync-config: true
+        refresh-enabled: true
+    gateway:
+      # 关键：关闭默认的路由发现，只使用显式配置的路由
+      discovery:
+        locator:
+          enabled: false # 确保此项为false:cite[1]
+          lower-case-service-id: true
+
+logging:
+  level:
+    com:
+      alibaba:
+        nacos:
+          client:
+            naming: error

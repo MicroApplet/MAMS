@@ -1,0 +1,16 @@
+server:
+  port: ${port:20030}
+
+spring:
+  application:
+    name: callback-wx-mp
+
+mams:
+  chl:
+    wx:
+      base-url: https://api.weixin.qq.com
+  callback:
+    wx:
+      mp:
+        oauth:
+          default-redirect-uri: /

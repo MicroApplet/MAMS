@@ -1,0 +1,33 @@
+/*
+ * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.asialjim.microapplet.app.infrastructure.repository.service;
+
+import com.asialjim.microapplet.app.infrastructure.repository.po.AppPo;
+import com.mybatisflex.core.paginate.Page;
+import com.mybatisflex.core.service.IService;
+
+import java.util.List;
+
+public interface AppMapperService
+    extends IService<AppPo> {
+
+    Page<AppPo> page(Integer page, Integer size);
+
+    AppPo queryByPlatformTypeAndAppid(String platformTypeCode, String appid);
+
+    List<AppPo> queryByAppid(String appid);
+}
