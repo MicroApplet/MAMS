@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams</groupId>
         <artifactId>user</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>user-admin</artifactId>

@@ -20,17 +20,11 @@ import com.asialjim.microapplet.app.entity.web.AppVo;
 import com.asialjim.microapplet.commons.chl.SupportPlatformAppType;
 import com.asialjim.microapplet.mams.chl.wx.core.application.WeChatApplication;
 import com.asialjim.microapplet.mams.chl.wx.core.application.WeChatApplicationRepository;
-import com.asialjim.microapplet.session.LoginReqVo;
-import com.asialjim.microapplet.session.Session;
-import com.asialjim.microapplet.session.SessionRepository;
-import com.asialjim.microapplet.session.SessionTokenBean;
-import com.asialjim.microapplet.spring.App;
+import com.asialjim.microapplet.session.*;
 import com.asialjim.microapplet.user.cloud.ChlUserCloud;
 import com.asialjim.microapplet.user.cloud.ChlUserLoginLogCloud;
 import com.asialjim.microapplet.user.entity.vo.ChlUserVo;
-import com.asialjim.microapplet.user.event.ChlUserLoginEvent;
 import jakarta.annotation.Resource;
-import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -52,7 +46,7 @@ public class MamsOAuthPageLogin implements OAuthPageLogin {
     @Resource
     private ChlUserLoginLogCloud chlUserLoginLogCloud;
     @Resource
-    private SessionRepository sessionRepository;
+    private SessionCtx sessionCtx;
     @Resource
     private ChlUserCloud chlUserCloud;
 
@@ -99,7 +93,7 @@ public class MamsOAuthPageLogin implements OAuthPageLogin {
         if (StringUtils.isNotBlank(lastLoginTime)) {
             session.setLastLoginTime(LocalDateTime.parse(lastLoginTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS")));
         }
-        sessionRepository.save(session);
+        this.sessionCtx.save(session);
         return session.getToken();
     }
 }

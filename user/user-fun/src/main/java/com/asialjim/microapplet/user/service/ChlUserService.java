@@ -24,6 +24,7 @@ import com.asialjim.microapplet.user.entity.vo.UserVo;
 import com.asialjim.microapplet.user.entity.web.code.CustomerCode;
 import com.asialjim.microapplet.user.infrastructure.repository.ChlUserRepository;
 import com.asialjim.microapplet.user.infrastructure.repository.UserRepository;
+import jakarta.annotation.Resource;
 import lombok.AllArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -42,11 +43,13 @@ import java.util.stream.Collectors;
  * @since 2026/3/6, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @Service
-@AllArgsConstructor
 public class ChlUserService {
-    private final ChlUserRepository chlUserRepository;
-    private final UserRepository userRepository;
-    private final SessionCtx sessionCtx;
+    @Resource
+    private ChlUserRepository chlUserRepository;
+    @Resource
+    private UserRepository userRepository;
+    @Resource
+    private SessionCtx sessionCtx;
 
 
     public ChlUserVo current() {
@@ -65,7 +68,7 @@ public class ChlUserService {
     /**
      * 注册渠道用户，调用时机为：用户在渠道应用登录后
      *
-     * @param body   {@link ChlUserVo body}
+     * @param body {@link ChlUserVo body}
      * @return {@link ChlUserVo }
      * @since {@code }
      */
@@ -78,7 +81,7 @@ public class ChlUserService {
         String openid = body.getOpenid();
         // 查询是否已经注册过了
         ChlUserVo target = this.chlUserRepository.queryByPlatformTypeAndAppidAndOpenid(
-                platformTypeCode,appId,openid
+                platformTypeCode, appId, openid
         );
         // 数据已存在
         // 用户已存在，执行用户数据合并与更新
@@ -139,12 +142,11 @@ public class ChlUserService {
     }
 
 
-
     public ChlUserVo queryById(String id) {
         return this.chlUserRepository.queryById(id);
     }
 
     public ChlUserVo queryByChlTypeAndOpenid(String chlType, String openid) {
-        return this.chlUserRepository.queryByChlTypeAndOpenid(chlType,openid);
+        return this.chlUserRepository.queryByChlTypeAndOpenid(chlType, openid);
     }
 }

@@ -22,7 +22,7 @@
     <parent>
         <groupId>com.asialjim.microapplet.mams</groupId>
         <artifactId>user</artifactId>
-        <version>3.0.0-SNAPSHOT</version>
+        <version>4.0.0-SNAPSHOT</version>
     </parent>
 
     <artifactId>user-fun</artifactId>
@@ -35,15 +35,38 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.asialjim.microapplet.mams</groupId>
+            <artifactId>user-api</artifactId>
+            <version>${project.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.asialjim.microapplet.cache</groupId>
+            <artifactId>starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.asialjim.microapplet.commons</groupId>
+            <artifactId>sensitive</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.asialjim.microapplet.web</groupId>
             <artifactId>mvc</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>com.asialjim.microapplet.commons</groupId>
+            <artifactId>spring</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.mybatis-flex</groupId>
             <artifactId>mybatis-flex-spring-boot4-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>com.zaxxer</groupId>
@@ -58,16 +81,6 @@
         <dependency>
             <groupId>io.github.linpeilie</groupId>
             <artifactId>mapstruct-plus-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.asialjim.microapplet.mams</groupId>
-            <artifactId>user-api</artifactId>
-            <version>3.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-redis</artifactId>
         </dependency>
     </dependencies>
 

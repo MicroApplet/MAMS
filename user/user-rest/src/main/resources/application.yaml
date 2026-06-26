@@ -1,10 +1,10 @@
 server:
-  port: ${port:20001}
+  port: ${port:20003}
 
 spring:
   application:
-    name: app-fun
-    group: fun
+    name: user-rest
+    group: rest
 
   config:
     import:

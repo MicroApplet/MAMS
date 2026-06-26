@@ -38,7 +38,7 @@ public class UserLoginListener implements ApplicationListener<ChlUserLoginEvent>
     @Resource
     private ChlUserLoginLogCloud chlUserLoginLogCloud;
     @Resource
-    private SessionRepository sessionRepository;
+    private SessionCtx sessionCtx;
     @Resource
     private ChlUserCloud chlUserCloud;
 
@@ -90,7 +90,6 @@ public class UserLoginListener implements ApplicationListener<ChlUserLoginEvent>
         if (StringUtils.isNotBlank(anonymousCode)) {
             log.info("当前用户：{} 以匿名方式登录，不注册渠道用户", userSession);
         }
-
-        this.sessionRepository.save(userSession);
+        this.sessionCtx.save(userSession);
     }
 }

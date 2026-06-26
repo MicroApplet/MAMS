@@ -16,9 +16,12 @@
 
 package com.asialjim.microapplet.user.infrastructure.repository.datasource.po;
 
+import com.asialjim.microapplet.sensitive.SensitiveType;
+import com.asialjim.microapplet.sensitive.annotation.Sensitive;
 import com.asialjim.microapplet.user.entity.vo.IdCardUserVo;
 import com.asialjim.microapplet.user.infrastructure.util.UserIdGenerator;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.StringUtils;
 import tools.jackson.databind.annotation.JsonDeserialize;
 import tools.jackson.databind.annotation.JsonSerialize;
 import tools.jackson.databind.ext.javatime.deser.LocalDateDeserializer;
@@ -66,6 +69,8 @@ public class IdCardUserPo implements Serializable {
     private String id;
 
     public String getId() {
+        if (StringUtils.isNotBlank(this.id))
+            return this.id;
         // 生成方案
         // 平台类型 + @ + 应用编号 + : + 证件类型 + # + 证件号.toHexStr()
         return getPlatformType() +
@@ -116,6 +121,7 @@ public class IdCardUserPo implements Serializable {
      * 模糊查询条件进行加密后，也应当能匹配到对应的密文
      * 如 查询条件为 张* 时，应当能匹配到 密文 werihl 即张三密文的前面部分 如此才不影响模糊查询
      */
+    @Sensitive(SensitiveType.ChineseName)
     private String name;
 
 
@@ -128,11 +134,13 @@ public class IdCardUserPo implements Serializable {
      * 证件号,应当加密存储
      * 加密存储方案应当与 name 字段相同
      */
+    @Sensitive(SensitiveType.ChineseCitizenIdCard)
     private String idNumber;
 
     /**
      * 主手机号
      */
+    @Sensitive(SensitiveType.ChineseMobilePhone)
     private String phone;
 
     /**
