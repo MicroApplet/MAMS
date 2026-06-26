@@ -41,11 +41,11 @@ public class SensitiveTest implements CommandLineRunner {
         po.setIdNumber("511021198801250458");
         po.setPhone("17311111111");
 
-        log.info(fmt("敏感数据日志fmt：{}", po));
-        log.info("敏感数据日志1：{}",po);
+//        log.info(fmt("敏感数据日志fmt：{}", po));
+//        log.info("敏感数据日志1：{}",po);
         idCardUserMapperService.save(po);
         IdCardUserPo byId = idCardUserMapperService.getById("1111");
         System.out.println(byId);
-        log.info("敏感数据日志2：{}",byId);
+//        log.info("敏感数据日志2：{}",byId);
     }
 }

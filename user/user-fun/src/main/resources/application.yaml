@@ -24,11 +24,14 @@ spring:
         group: ${NACOS_GROUP}
         enable-remote-sync-config: true
         refresh-enabled: true
-
 logging:
   level:
     com:
+      asialjim.microapplet.user.infrastructure.repository: DEBUG
       alibaba:
         nacos:
           client:
             naming: error
+mybatis-flex:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
