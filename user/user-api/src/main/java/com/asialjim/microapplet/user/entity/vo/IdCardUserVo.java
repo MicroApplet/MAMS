@@ -83,6 +83,7 @@ public class IdCardUserVo implements  Serializable {
      * 证件姓名
      */
     private String name;
+    private String nameIdx;
 
     /**
      * 证件类型
