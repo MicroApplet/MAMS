@@ -159,6 +159,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <finalName>app</finalName>
+                    <mainClass>com.asialjim.microapplet.user.UserRest</mainClass>
                 </configuration>
             </plugin>
 

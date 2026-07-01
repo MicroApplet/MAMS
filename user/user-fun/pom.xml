@@ -136,6 +136,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <finalName>app</finalName>
+                    <mainClass>com.asialjim.microapplet.user.UserFun</mainClass>
                 </configuration>
             </plugin>
 
