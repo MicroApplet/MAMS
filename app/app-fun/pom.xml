@@ -35,6 +35,8 @@
     </properties>
 
     <dependencies>
+
+
         <dependency>
             <groupId>com.asialjim.microapplet.mams</groupId>
             <artifactId>app-api</artifactId>
