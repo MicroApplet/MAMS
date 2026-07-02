@@ -1,6 +1,5 @@
 server:
-  # port: ${port:20003}
-  port: 20003
+  port: ${port:20005}
 
 spring:
   application:

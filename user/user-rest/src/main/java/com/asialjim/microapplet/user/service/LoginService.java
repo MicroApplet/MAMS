@@ -66,30 +66,25 @@ public class LoginService {
         String appType = chlUserVo.getAppType();
         PlatformAppType platformAppType = PlatformAppType.codeOf(platformType, appType);
         userSession.setPlatType(platformType);
-        //userSession.setPlatformId(chlUserVo.getPlatformId());
         userSession.setAppid(chlUserVo.getAppId());
         userSession.setOpenid(chlUserVo.getOpenid());
         userSession.setUnionid(chlUserVo.getUnionid());
         userSession.setSessionKey(chlUserVo.getUserToken());
 
-        //noinspection ReplaceAllNonRegex
-        userSession.setId(platformAppType.uniCode() + ":" + UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY));
+        userSession.setId(platformAppType.uniCode() + ":" + UUID.randomUUID().toString().replace("-", StringUtils.EMPTY));
         userSession.setToken(token);
         userSession.setTrace(MDC.get(MamsHttpHeaders.TRACE_ID));
-        //userSession.setUserSession(userSession);
         LoginReqVo req = new LoginReqVo();
         req.setCode(code);
         AppVo app = this.applicationCloud.queryAppByAppidAndHostOrPlatformType(StringUtils.EMPTY, platformType, chlUserVo.getAppId(), "暂不支持该APPID登录", "请指定登录渠道");
         App.publish(new ChlUserLoginEvent(userSession, req, app));
-        //this.authenticator.current(microBankUserSession);
         return token;
     }
 
-    public String login(String host, String requestChannel, String appid, LoginReqVo req) {
-        AppVo app = this.applicationCloud.queryAppByAppidAndHostOrPlatformType(host, requestChannel, appid, "暂不支持该APPID登录", "请指定登录渠道");
+    public String login(String requestChannel, String appid, LoginReqVo req) {
+        AppVo app = this.applicationCloud.queryAppByAppidAndHostOrPlatformType(StringUtils.EMPTY, requestChannel, appid, "暂不支持该APPID登录", "请指定登录渠道");
         PlatformType platformType = PlatformType.of(app.getPlatformType());
         PlatformAppType platformAppType = PlatformAppType.codeOf(platformType.getCode(), app.getAppType());
-
 
         PlatformAppLoginHandler handler = this.handlerOf(platformAppType);
         Session session = handler.login(appid, app, req);
@@ -101,23 +96,25 @@ public class LoginService {
                 """, app, req, session);
 
         String token = SessionTokenBean.create();
-        //MicroBankUserSession session = new MicroBankUserSession();
-        //noinspection ReplaceAllNonRegex
-        session.setId(platformAppType.uniCode() + ":" + UUID.randomUUID().toString().replaceAll("-", StringUtils.EMPTY));
+        session.setId(platformAppType.uniCode() + ":" + UUID.randomUUID().toString().replace("-", StringUtils.EMPTY));
         session.setTrace(MDC.get(MamsHttpHeaders.TRACE_ID));
         session.setToken(token);
 
         session.setPlatType(platformType.getCode());
-        //session.setPlatformId(app.getPlatformId());
         session.setAppid(app.getAppId());
         session.setAppType(platformAppType.getCode());
-        //session.setUserSession(session);
 
         App.publish(new ChlUserLoginEvent(session, req, app));
         return session.getToken();
     }
 
     private PlatformAppLoginHandler handlerOf(PlatformAppType platformAppType) {
-        return handlerMap.computeIfAbsent(platformAppType, type -> this.platformAppLoginHandlers.stream().filter(Objects::nonNull).filter(item -> item.support(type)).findFirst().orElseThrow(() -> SessionResCode.UnSupportPlatformAppType.exWithData("登录业务")));
+        return handlerMap.computeIfAbsent(platformAppType,
+                type -> this.platformAppLoginHandlers.stream()
+                        .filter(Objects::nonNull)
+                        .filter(item -> item.support(type))
+                        .findFirst()
+                        .orElseThrow(() -> SessionResCode.UnSupportPlatformAppType.exWithData("登录业务"))
+        );
     }
 }

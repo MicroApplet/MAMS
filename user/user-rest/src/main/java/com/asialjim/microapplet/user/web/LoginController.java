@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
  * @since 2026/3/5, &nbsp;&nbsp; <em>version:1.0</em>
  */
 @RestController
-public class LoginController  {
+public class LoginController {
     @Resource
     private LoginService loginService;
 
@@ -59,12 +59,11 @@ public class LoginController  {
             AgreementType.PrivacyPolicyAgreement
     })
     public String login(
-            @RequestHeader(value = HttpHeaders.HOST, required = false) String host,
             @RequestHeader(MamsHttpHeaders.APP_ID) String appid,
-            @RequestHeader(value = MamsHttpHeaders.PLATFORM_TYPE, required = false) String requestChannel,
+            @RequestHeader(MamsHttpHeaders.PLATFORM_TYPE) String requestChannel,
             @RequestBody LoginReqVo req) {
 
-        return this.loginService.login(host, requestChannel, appid, req);
+        return this.loginService.login(requestChannel, appid, req);
     }
 
 
