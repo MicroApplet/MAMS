@@ -58,6 +58,13 @@
             <scope>compile</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.asialjim.microapplet.wx</groupId>
+            <artifactId>wx-applet-cloud</artifactId>
+            <version>4.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+
 
 
         <dependency>

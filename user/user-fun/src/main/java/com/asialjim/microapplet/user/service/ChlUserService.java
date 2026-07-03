@@ -16,6 +16,7 @@
 
 package com.asialjim.microapplet.user.service;
 
+import com.asialjim.microapplet.commons.chl.PlatformAppType;
 import com.asialjim.microapplet.commons.chl.PlatformType;
 import com.asialjim.microapplet.session.Session;
 import com.asialjim.microapplet.session.SessionCtx;
@@ -25,15 +26,12 @@ import com.asialjim.microapplet.user.entity.web.code.CustomerCode;
 import com.asialjim.microapplet.user.infrastructure.repository.ChlUserRepository;
 import com.asialjim.microapplet.user.infrastructure.repository.UserRepository;
 import jakarta.annotation.Resource;
-import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Strings;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-import java.util.concurrent.atomic.AtomicReference;
-import java.util.stream.Collectors;
 
 /**
  * 渠道用户服务
@@ -42,6 +40,7 @@ import java.util.stream.Collectors;
  * @version 1.0
  * @since 2026/3/6, &nbsp;&nbsp; <em>version:1.0</em>
  */
+@Slf4j
 @Service
 public class ChlUserService {
     @Resource
@@ -73,74 +72,75 @@ public class ChlUserService {
      * @since {@code }
      */
     public ChlUserVo register(ChlUserVo body) {
+        if (Objects.isNull(body))
+            return body;
         if (StringUtils.isBlank(body.getOpenid()))
             CustomerCode.RegisterChlUserParamErr.thr("未指定openid");
 
-        String platformTypeCode = body.getPlatformType();
-        String appId = body.getAppId();
+        PlatformAppType platformAppType = PlatformAppType.codeOf(body.getPlatformType(), body.getAppType());
+        PlatformType platformType = platformAppType.getPlatformType();
+
+        String appid = body.getAppId();
         String openid = body.getOpenid();
+        String unionid = StringUtils.isNotBlank(body.getUnionid()) ? body.getUnionid() : openid;
         // 查询是否已经注册过了
-        ChlUserVo target = this.chlUserRepository.queryByPlatformTypeAndAppidAndOpenid(
-                platformTypeCode, appId, openid
-        );
-        // 数据已存在
-        // 用户已存在，执行用户数据合并与更新
-        if (Objects.nonNull(target))
-            return this.updateWhenRegister(body, target);
+        ChlUserVo target = this.chlUserRepository.queryByPlatformTypeAndAppidAndOpenid(platformType.getCode(), appid, openid);
+        log.info("{} 平台 {} 应用 {} 用户 已保存数据信息：{}", platformType.getCode(), appid, openid, target);
+        if (Objects.isNull(target))
+            target = body;
 
-        PlatformType platformType = PlatformType.of(body.getPlatformType());
+        target.setUnionid(body.getUnionid()); // 可能之前没有绑定开放平台，获取不到unionid，但之后能够获取到了，需要更新
+        target.setUserCode(body.getUserCode());// 用户授权码，随时变更
+        target.setUserToken(body.getUserToken());// 一般为用户的access_token
 
-        // 定位该渠道该用户是否已经在其他的应用中注册过，如果注册过则需要合并主用户号
-        List<ChlUserVo> otherAppUsers = this.chlUserRepository.queryByPlatformTypeAndAppidAndUnionId(platformType.getCode(), body.getAppId(), body.getUnionid());
-        AtomicReference<String> useridRef = new AtomicReference<>();
-        Set<String> useridSet = otherAppUsers.stream().map(ChlUserVo::getUserId).peek(useridRef::set).collect(Collectors.toSet());
-        if (useridSet.size() > 1)
-            throw CustomerCode.ExistMoreThan1MainUserId.ex();
+        // 主用户编号
+        String userId = target.getUserId();
+        // 主用户
+        UserVo userVo = StringUtils.isNotBlank(userId) ? this.userRepository.getById(userId) : null;
+        log.info("{} 平台 {} 应用 {} 用户 主用户编号：{}， 主用户信息：{}", platformType.getCode(), appid, openid, userId, userVo);
 
-        String userid = useridRef.get();
-        if (StringUtils.isNotBlank(userid)) {
-            // 用户已经注册过,合并用户
-            body.setUserId(userid);
-        } else {
-            // 存在unionid时才创建主用户
-            if (StringUtils.isNotBlank(body.getUnionid())) {
-                UserVo userVo = this.userRepository.queryByPlatformAndUnionid(platformType.getCode(), body.getPlatformId(), body.getUnionid());
-                if (Objects.isNull(userVo)) {
-                    // 创建主用户号
-                    userVo = new UserVo();
-                    userVo.setPlatformType(platformType.getCode());
-                    userVo.setPlatformId(body.getPlatformId());
-                    userVo.setUnionid(body.getUnionid());
-                    userVo.setNickname(platformType.getName() + "用户");
-                    userVo = this.userRepository.save(userVo);
-                }
+        if (Objects.isNull(userVo)) {
+            userVo = new UserVo();
+            userVo.setPlatformType(platformType.getCode());
+            userVo.setPlatformId(body.getPlatformId());
+            userVo.setUnionid(unionid);
+            userVo.setNickname(platformType.getName() + "用户");
+            userVo = this.userRepository.save(userVo);
 
-                body.setUserId(userVo.getId());
-            }
+            log.info("注册新的主用户信息：{}", userVo);
+            target.setUserId(userVo.getId());
+            return this.chlUserRepository.save(target);
         }
 
-        return this.chlUserRepository.save(body);
+        // 主用户信息 与 渠道用户平台信息一致
+        if (Strings.CS.equals(userVo.getUnionid(), unionid)
+                && Strings.CS.equals(userVo.getPlatformId(), body.getPlatformId())
+                && Strings.CS.equals(userVo.getPlatformType(), platformType.getCode())) {
+
+            log.info("主用户信息 与 渠道用户平台信息一致");
+            return target;
+        }
+
+        // 主用户信息 与 渠道用户平台不一致
+        UserVo another = this.userRepository.queryByPlatformAndUnionid(platformType.getCode(), target.getPlatformId(), unionid);
+        log.info("{} 平台 {} platform-id: {} 用户 主用户信息：{}",
+                platformType.getCode(), target.getPlatformId(), unionid, another);
+
+        if (Objects.nonNull(another)) {
+            log.info("主用户信息不一致，切换主用户到：{}", userVo.getId());
+            // 切换主用户
+            target.setUserId(userVo.getId());
+            return this.chlUserRepository.save(target);
+        } else {
+            userVo.setPlatformType(platformType.getCode());
+            userVo.setPlatformId(target.getPlatformId());
+            userVo.setUnionid(unionid);
+            userVo.setNickname(platformType.getName() + "用户");
+            this.userRepository.updateById(userVo);
+            log.info("主用户信息不一致，修改主用户：{}", userVo);
+            return this.chlUserRepository.save(target);
+        }
     }
-
-    @SuppressWarnings("CommentedOutCode")
-    public ChlUserVo updateWhenRegister(ChlUserVo source, ChlUserVo target) {
-       /*
-        // 以下这些数据不允许在注册的时候更新
-        target.setId(source.getId());
-        target.setUserId(source.getUserId());
-        target.setChlType(source.getChlType());
-        target.setAppId(source.getAppId());
-        target.setAppType(source.getAppType());
-        target.setOpenid(source.getOpenid());
-        */
-
-        target.setUnionid(source.getUnionid()); // 可能之前没有绑定开放平台，获取不到unionid，但之后能够获取到了，需要更新
-        target.setUserCode(source.getUserCode());// 用户授权码，随时变更
-        target.setUserToken(source.getUserToken());// 一般为用户的access_token
-
-        return this.chlUserRepository.updateById(target);
-    }
-
 
     public ChlUserVo queryById(String id) {
         return this.chlUserRepository.queryById(id);

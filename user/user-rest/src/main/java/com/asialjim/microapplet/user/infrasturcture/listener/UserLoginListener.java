@@ -82,14 +82,16 @@ public class UserLoginListener implements ApplicationListener<ChlUserLoginEvent>
             String appid = userSession.getAppid();
             String lastLoginTime = this.chlUserLoginLogCloud.record(platformTypeCode, appid, openid);
             if (StringUtils.isNotBlank(lastLoginTime)) {
-                DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
-                LocalDateTime loginTime = LocalDateTime.parse(lastLoginTime, dateTimeFormatter);
-                userSession.setLastLoginTime(loginTime);
+                lastLoginTime = lastLoginTime.replace("\"",StringUtils.EMPTY);
+                if (StringUtils.isNotBlank(lastLoginTime)) {
+                    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+                    LocalDateTime loginTime = LocalDateTime.parse(lastLoginTime, dateTimeFormatter);
+                    userSession.setLastLoginTime(loginTime);
+                }
             }
         }
-        if (StringUtils.isNotBlank(anonymousCode)) {
+        if (StringUtils.isNotBlank(anonymousCode))
             log.info("当前用户：{} 以匿名方式登录，不注册渠道用户", userSession);
-        }
         this.sessionCtx.save(userSession);
     }
 }

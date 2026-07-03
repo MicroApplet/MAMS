@@ -178,4 +178,53 @@ public class ChlUserPo implements Serializable {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS", timezone = "GMT+8")
     private LocalDateTime updateTime;
+
+    public void merge(ChlUserPo po) {
+        if (StringUtils.isBlank(this.id))
+            this.setId(po.getId());
+        if (StringUtils.isBlank(this.userId))
+            this.setUserId(po.getUserId());
+        if (StringUtils.isBlank(this.platformType))
+            this.setPlatformType(po.getPlatformType());
+        if (StringUtils.isBlank(this.platformId))
+            this.setPlatformId(po.getPlatformId());
+        if (StringUtils.isBlank(this.appId))
+            this.setAppId(po.getAppId());
+        if (StringUtils.isBlank(this.appType))
+            this.setAppType(po.getAppType());
+        if (StringUtils.isBlank(this.openid))
+            this.setOpenid(po.getOpenid());
+        if (StringUtils.isBlank(this.unionid))
+            this.setUnionid(po.getUnionid());
+        if (StringUtils.isBlank(this.userCode))
+            this.setUserCode(po.getUserCode());
+        if (StringUtils.isBlank(this.userToken))
+            this.setUserToken(po.getUserToken());
+        this.setUpdateTime(LocalDateTime.now());
+    }
+
+    public void update(ChlUserPo po) {
+        if (StringUtils.isNotBlank(po.getId()))
+            this.setId(po.getId());
+        if (StringUtils.isNotBlank(po.getUserId()))
+            this.setUserId(po.getUserId());
+        if (StringUtils.isNotBlank(po.getPlatformType()))
+            this.setPlatformType(po.getPlatformType());
+        if (StringUtils.isNotBlank(po.getPlatformId()))
+            this.setPlatformId(po.getPlatformId());
+        if (StringUtils.isNotBlank(this.getAppId()))
+            this.setAppId(po.getAppId());
+        if (StringUtils.isNotBlank(po.getAppType()))
+            this.setAppType(po.getAppType());
+        if (StringUtils.isNotBlank(po.getOpenid()))
+            this.setOpenid(po.getOpenid());
+        if (StringUtils.isNotBlank(po.getUnionid()))
+            this.setUnionid(po.getUnionid());
+        if (StringUtils.isNotBlank(po.getUserCode()))
+            this.setUserCode(po.getUserCode());
+        if (StringUtils.isNotBlank(po.getUserToken()))
+            this.setUserToken(po.getUserToken());
+        this.setUpdateTime(LocalDateTime.now());
+    }
+
 }

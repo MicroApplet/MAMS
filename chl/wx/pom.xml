@@ -25,12 +25,16 @@
         <version>4.0.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.asialjim.microapplet.wx</groupId>
     <artifactId>wx</artifactId>
     <name>MAMS :: Chl :: WeChat</name>
     <packaging>pom</packaging>
 
     <modules>
         <module>wx-core</module>
+        <module>wx-applet-api</module>
+        <module>wx-applet-cloud</module>
+        <module>wx-applet-fun</module>
     </modules>
 
     <properties>

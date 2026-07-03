@@ -22,12 +22,19 @@ import com.asialjim.microapplet.commons.chl.SupportPlatformAppType;
 import com.asialjim.microapplet.session.LoginReqVo;
 import com.asialjim.microapplet.session.Session;
 import com.asialjim.microapplet.user.service.login.PlatformAppLoginHandler;
+import com.asialjim.microapplet.wx.applet.api.WxAppletUserInfoApi;
+import com.asialjim.microapplet.wx.applet.session.WxAppletUserSession;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 @Slf4j
 @Component
 public class WechatAppletLoginHandler implements PlatformAppLoginHandler {
+    @Resource
+    private WxAppletUserInfoApi wxAppletUserInfoApi;
 
     @Override
     public PlatformAppType supportAppType() {
@@ -37,6 +44,14 @@ public class WechatAppletLoginHandler implements PlatformAppLoginHandler {
     @Override
     public Session login(String appid, AppVo app, LoginReqVo req) {
         log.info("开始处理: {}微信小程序:{} 登录请求 请求参数: {}", app, appid, req);
-        return null;
+        WxAppletUserSession userSession = this.wxAppletUserInfoApi.login(app.getAppId(), req.getCode());
+        Session session = new Session();
+        session.setOpenid(userSession.getOpenid());
+        session.setUnionid(userSession.getUnionid());
+        session.setNickname(userSession.getNickname());
+        session.setSessionKey(userSession.getSessionKey());
+        session.setUserCode(req.getCode());
+
+        return session;
     }
 }

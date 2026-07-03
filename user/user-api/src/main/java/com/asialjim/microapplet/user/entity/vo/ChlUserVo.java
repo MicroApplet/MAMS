@@ -87,11 +87,6 @@ public class ChlUserVo implements Serializable {
     private String openid;
 
     /**
-     * 用户在UAM系统用户编号
-     */
-    private String uamId;
-
-    /**
      * 渠道用户联合唯一编号
      * 多个用户出现相同的unionid是，标识为同一个人，可以合并账号
      */

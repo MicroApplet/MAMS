@@ -45,6 +45,26 @@ public class UserRepository {
     private final UserMapperService userMapperService;
     private final Converter converter;
 
+    public void deleteById(String id) {
+        this.userMapperService.removeById(id);
+    }
+
+    public UserVo getById(String id) {
+        UserPo exist = this.userMapperService.getById(id);
+        if (Objects.isNull(exist))
+            return null;
+        return this.converter.convert(exist, UserVo.class);
+    }
+
+    public void updateById(UserVo vo) {
+        if (Objects.isNull(vo))
+            return;
+        UserPo convert = this.converter.convert(vo, UserPo.class);
+        if (Objects.isNull(convert))
+            return;
+        this.userMapperService.updateById(convert);
+    }
+
     public UserVo queryByPlatformAndUnionid(String platformType,String platformId,String unionid){
         UserPo exist = this.userMapperService.queryByPlatformAndUnionid(platformType,platformId,unionid);
         if (Objects.isNull(exist))
@@ -58,11 +78,17 @@ public class UserRepository {
         if (StringUtils.isAnyBlank(vo.getUnionid(), vo.getPlatformType()))
             throw CustomerCode.RegisterMainUserParamErr.ex(Collections.singletonList("未指定Unionid,开放平台类型或者开放平台账号"));
 
-
         UserPo po = converter.convert(vo, UserPo.class);
-        boolean save = this.userMapperService.save(po);
-        if (!save)
-            throw CustomerCode.RegisterMainUserFailure.ex(Collections.singletonList("主用户信息数据保存失败"));
+        UserPo exist = this.userMapperService.getById(po.getId());
+        if (Objects.nonNull(exist)){
+            boolean update = this.userMapperService.updateById(po);
+            if (!update)
+                throw CustomerCode.RegisterMainUserFailure.ex(Collections.singletonList("主用户信息数据更新失败"));
+        } else {
+            boolean save = this.userMapperService.save(po);
+            if (!save)
+                throw CustomerCode.RegisterMainUserFailure.ex(Collections.singletonList("主用户信息数据保存失败"));
+        }
 
         // 此处必须转换，因为需要获取主键
         UserVo res = converter.convert(po, UserVo.class);
@@ -70,4 +96,5 @@ public class UserRepository {
         // todo 发布主用户注册成功事件
         return res;
     }
+
 }

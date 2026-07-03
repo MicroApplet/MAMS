@@ -17,13 +17,11 @@
 package com.asialjim.microapplet.user.service;
 
 import com.asialjim.microapplet.app.cloud.ApplicationCloud;
+import com.asialjim.microapplet.app.code.AppCode;
 import com.asialjim.microapplet.app.entity.web.AppVo;
 import com.asialjim.microapplet.commons.chl.PlatformAppType;
 import com.asialjim.microapplet.commons.chl.PlatformType;
-import com.asialjim.microapplet.session.LoginReqVo;
-import com.asialjim.microapplet.session.Session;
-import com.asialjim.microapplet.session.SessionResCode;
-import com.asialjim.microapplet.session.SessionTokenBean;
+import com.asialjim.microapplet.session.*;
 import com.asialjim.microapplet.spring.App;
 import com.asialjim.microapplet.user.api.ChlUserApi;
 import com.asialjim.microapplet.user.code.ChlUserCode;
@@ -38,6 +36,7 @@ import org.slf4j.MDC;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -52,6 +51,8 @@ public class LoginService {
     private ApplicationCloud applicationCloud;
     @Resource
     private ChlUserApi chlUserApi;
+    @Resource
+    private SessionCtx sessionCtx;
 
 
     @Profile("dev")
@@ -78,11 +79,14 @@ public class LoginService {
         req.setCode(code);
         AppVo app = this.applicationCloud.queryAppByAppidAndHostOrPlatformType(StringUtils.EMPTY, platformType, chlUserVo.getAppId(), "暂不支持该APPID登录", "请指定登录渠道");
         App.publish(new ChlUserLoginEvent(userSession, req, app));
+        this.sessionCtx.login(userSession);
         return token;
     }
 
     public String login(String requestChannel, String appid, LoginReqVo req) {
         AppVo app = this.applicationCloud.queryAppByAppidAndHostOrPlatformType(StringUtils.EMPTY, requestChannel, appid, "暂不支持该APPID登录", "请指定登录渠道");
+        if (Objects.isNull(app))
+            AppCode.NoSuchAppidErr.thr(requestChannel,appid);
         PlatformType platformType = PlatformType.of(app.getPlatformType());
         PlatformAppType platformAppType = PlatformAppType.codeOf(platformType.getCode(), app.getAppType());
 
@@ -94,17 +98,21 @@ public class LoginService {
                 用户登录参数: {}
                 用户登录结果: {}
                 """, app, req, session);
+        if (Objects.isNull(session))
+            SessionResCode.LoginFailure.thr();
 
         String token = SessionTokenBean.create();
         session.setId(platformAppType.uniCode() + ":" + UUID.randomUUID().toString().replace("-", StringUtils.EMPTY));
         session.setTrace(MDC.get(MamsHttpHeaders.TRACE_ID));
         session.setToken(token);
-
         session.setPlatType(platformType.getCode());
         session.setAppid(app.getAppId());
         session.setAppType(platformAppType.getCode());
+        session.setLoginTime(LocalDateTime.now());
+        session.setExpireAt(LocalDateTime.now().minusMinutes(30));
 
         App.publish(new ChlUserLoginEvent(session, req, app));
+        this.sessionCtx.login(session);
         return session.getToken();
     }
 

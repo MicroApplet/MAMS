@@ -1,0 +1,63 @@
+/*
+ * Copyright 2014-2025 <a href="mailto:asialjim@qq.com">Asial Jim</a>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package com.asialjim.microapplet.wx.core.client;
+
+import com.asialjim.microapplet.wx.core.interceptor.WeChatAccessTokenInterceptor;
+import jakarta.annotation.Resource;
+import org.springframework.http.converter.HttpMessageConverters;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.support.RestClientAdapter;
+import org.springframework.web.service.invoker.HttpExchangeAdapter;
+import org.springframework.web.service.invoker.HttpServiceProxyFactory;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Consumer;
+
+/**
+ * 微信客户端工厂
+ *
+ * @author Asial Jim
+ * @version 1.0
+ * @since 2026/6/24, &nbsp;&nbsp; <em>version:1.0</em>
+ */
+@Component
+public class WeChatClientFactory {
+    private final Map<Class<?>, Object> clients = new ConcurrentHashMap<>();
+    @Resource
+    private RestClient.Builder restClientBuilder;
+    @Resource
+    private WeChatAccessTokenInterceptor accessTokenInterceptor;
+
+    @SuppressWarnings("unchecked")
+    public <T> T create(Class<T> clientType) {
+        return (T) clients.computeIfAbsent(clientType, this::createClient);
+    }
+
+    private Object createClient(Class<?> clientType) {
+        RestClient restClient = restClientBuilder.clone()
+                .configureMessageConverters(builder -> builder.configureMessageConvertersList(list -> list.add(0,new WeChatResponseHttpMessageConverter())))
+                .requestInterceptor(accessTokenInterceptor)
+                .build();
+
+        HttpExchangeAdapter adapter = RestClientAdapter.create(restClient);
+        return HttpServiceProxyFactory.builderFor(adapter)
+                .build()
+                .createClient(clientType);
+    }
+}

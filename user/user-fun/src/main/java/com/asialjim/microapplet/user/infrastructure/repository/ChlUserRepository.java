@@ -91,8 +91,11 @@ public class ChlUserRepository {
         String id = po.getId();
         if (StringUtils.isNotBlank(id)){
             ChlUserPo exist = this.chlUserMapperService.queryById(id);
-            if (Objects.nonNull(exist))
-                return converter.convert(exist,ChlUserVo.class);
+            if (Objects.nonNull(exist)) {
+                exist.update(po);
+                this.chlUserMapperService.updateById(exist);
+                return converter.convert(exist, ChlUserVo.class);
+            }
         }
 
         boolean save = this.chlUserMapperService.save(po);

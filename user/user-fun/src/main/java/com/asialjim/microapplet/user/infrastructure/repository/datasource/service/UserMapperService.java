@@ -18,8 +18,15 @@ package com.asialjim.microapplet.user.infrastructure.repository.datasource.servi
 
 import com.asialjim.microapplet.user.infrastructure.repository.datasource.po.UserPo;
 import com.mybatisflex.core.service.IService;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
+import java.io.Serializable;
 
 public interface UserMapperService
         extends IService<UserPo> {
     UserPo queryByPlatformAndUnionid(String platformType, String platformId, String unionid);
+    void removeById(String id);
+    void removeByPlatformAndUnionid(String platformType, String platformId, String unionid) ;
+    @Nullable UserPo getById(@NonNull Serializable id) ;
 }

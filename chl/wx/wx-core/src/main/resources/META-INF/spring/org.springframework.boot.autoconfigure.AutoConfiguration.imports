@@ -14,4 +14,4 @@
 # limitations under the License.
 #
 
-com.asialjim.microapplet.mams.chl.wx.core.client.WeChatCoreBean
+com.asialjim.microapplet.wx.core.WeChatCoreBean

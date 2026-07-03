@@ -1,0 +1,37 @@
+server:
+  port: ${port:20006}
+
+spring:
+  application:
+    name: wx-applet-fun
+    group: fun
+
+  config:
+    import:
+      - optional:nacos:datasource.yaml
+      - optional:nacos:redis.yaml
+      - optional:nacos:sensitive.yaml
+      - optional:nacos:nacos.yaml
+
+  cloud:
+    loadbalancer:
+      nacos:
+        enabled: true
+    nacos:
+      config:
+        enabled: true
+        server-addr: ${NACOS_URL}
+        namespace: ${NACOS_NAMESPACE}
+        username: ${NACOS_USERNAME}
+        password: ${NACOS_PASSWORD}
+        group: ${NACOS_GROUP}
+        enable-remote-sync-config: true
+        refresh-enabled: true
+
+logging:
+  level:
+    com:
+      alibaba:
+        nacos:
+          client:
+            naming: error
